@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        applicationId rootProject.ext.android.applicationId
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+        multiDexEnabled true
+
+        vectorDrawables.useSupportLibrary = true
+        ndk {
+            //APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64'
+        }
+    }
+    buildTypes {
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            //混淆
+            minifyEnabled false
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //apk命名
+            android.applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        //这里修改apk文件名
+                        def fileName = "${defaultConfig.applicationId}_v${defaultConfig.versionCode}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
+        }
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile project(':rxtools')
+    //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
+    compile 'com.jaredrummler:animated-svg-view:1.0.4'
+    //下拉刷新上拉加载
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+    // banner
+    compile 'cn.bingoogolapple:bga-banner:2.1.9'
+    //底部导航按钮点击效果
+    compile 'com.aurelhubert:ahbottomnavigation:1.2.0'
+    //侧滑退出
+    compile 'com.gongwen:swipeback:1.0.2'
+    //图片选择 TouchImageView图片缩放
+    compile 'me.iwf.photopicker:PhotoPicker:0.8.4@aar'
+    //view注解
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+}

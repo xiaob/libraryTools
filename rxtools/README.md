@@ -1,0 +1,81 @@
+目录结构
+- base 基类
+-- ActivityBase
+-- AlertDialogBuilder
+-- BaseModel
+-- BasePresenter
+-- BaseView
+-- FragmentBase
+-- RxActivityOptionsTool Activity跳转工具类
+-- TUtil 类转换
+- baserx rxjava 封装
+- interfaces
+-- OnDelayListener 延时任务封装回调
+-- OnNoFastClickListener 重复点击的监听器
+-- OnUpdateListener 颜色渐变动画监听
+-- TimeCount 验证码倒计时
+- irecyclerview  recyclerview封装
+-- adapter
+--- CommonRecycleViewAdapter 万能Adapter
+--- MultiItemRecycleViewAdapter 多条目Adapter
+- model 实体类
+- view
+-- cardstack 银行卡组叠加效果
+-- colorpicker 颜色选择器
+-- heart 爱心点赞控件
+-- imageload 图片加载工具类 使用glide框架封装
+-- likeview 点赞爆炸按钮
+-- mixed 图文混排
+-- popupwindows 标题按钮上的弹窗
+-- progressing 加载动画 SpriteFactory控制不同效果
+-- sidebar 波浪侧边栏(字母快速导航)
+-- swipemenu Item侧滑删除菜单
+-- InnerPagerAdapter  TabLayout 配套的Adapter
+-- LabelsView 自定义标签列表
+-- RxCaptcha 随机生成验证码
+-- RxRoundProgress 弧形进度条
+-- RxRunTextView 跑马灯效果
+-- RxSeatAirplane 飞机票选座控件
+-- RxSeatMovie 电影院选座控件
+-- RxShoppingView 商品数量加减控件
+-- RxTextAutoZoom 文字根据布局大小自动缩放效果
+-- RxTextViewVertical 单行文字上下滚动
+-- RxTextViewVerticalMore 多行文字上下滚动
+-- RxTitle 自定义标题控件
+-- RxToast Toast的封装 normal warning info success
+-- RxViewPagerFixed  修复v4 的ViewPager点击会崩溃
+-- TouchImageView 图片的缩放，双击放大缩小，多点触控的功能
+- RxACache 本地文件缓存工具类
+- RxActivityTool Activity操作相关工具类
+- RxAnimationTool 动画
+- RxAppTool 应用相关操作
+- RxBarTool 状态栏工具
+- RxBeepTool  提示音工具
+- RxBroadcastTool 网络状态改变广播工具
+- RxClipboardTool 剪贴板相关工具
+- RxConstTool 常量工具类
+- RxCrashTool 崩溃日志处理工具
+- RxDataTool 数据处理相关
+- RxDeviceTool 手机硬件信息设备工具类
+- RxEncodeTool 编码解码相关工具类
+- RxEncryptTool 加密解密相关的工具类
+- RxFileTool SD卡操作工具
+- RxImageTool 图像工具类
+- RxIntentTool Intent相关
+- RxJsonTools JSON解析二次封装
+- RxKeyboardTool 键盘相关
+- RxLocationTool 定位相关工具类
+- RxLogTool Log管理
+- RxNetTool 网络相关
+- RxNote
+- RxPermissionsTool 权限请求操作工具类
+- RxPhotoTool 相机相关工具
+- RxProcessTool 进程相关工具
+- RxRegTool 正则判断
+- RxServiceTool
+- RxShellTool Shell相关工具类
+- RxSPTool SharedPreferences工具类
+- RxTabLayoutTool
+- RxTimeTool 时间相关
+- RxTool 常用工具类
+- RxVibrateTool 震动帮助类
