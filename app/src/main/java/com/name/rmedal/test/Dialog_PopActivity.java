@@ -51,13 +51,11 @@ public class Dialog_PopActivity extends BaseActivity {
         setSwipeBackLayout(0);
 
         labellist = new ArrayList<>();
-        labellist.add("showToast");
-        labellist.add("showToastShort");
-        labellist.add("showToastLong");
-        labellist.add("normalToast");
-        labellist.add("errorToast");
-        labellist.add("warningToast");
-        labellist.add("successToast");
+        labellist.add("Dialog");
+        labellist.add("POPLeft");
+        labellist.add("POPRight");
+        labellist.add("POPTop");
+        labellist.add("POPBottom");
         toastLabels.setLabels(labellist); //直接设置一个字符串数组就可以了。
 
         toastLabels.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
@@ -71,26 +69,15 @@ public class Dialog_PopActivity extends BaseActivity {
 
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
-            case "showToast":
-                RxToast.showToast("showToast");
+            case "Dialog":
                 break;
-            case "showToastShort":
-                RxToast.showToastShort("ShortToast");
+            case "POPLeft":
                 break;
-            case "showToastLong":
-                RxToast.showToastLong("LongToast");
+            case "POPRight":
                 break;
-            case "normalToast":
-                RxToast.normal("normal");
+            case "POPTop":
                 break;
-            case "errorToast":
-                RxToast.error("error");
-                break;
-            case "warningToast":
-                RxToast.warning("warning");
-                break;
-            case "successToast":
-                RxToast.success("success");
+            case "POPBottom":
                 break;
         }
 
