@@ -13,6 +13,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 折叠正方体
  */
 public class FoldingCube extends SpriteContainer {
 

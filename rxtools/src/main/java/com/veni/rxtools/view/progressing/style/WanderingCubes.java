@@ -10,6 +10,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 对角旋转正方体
  */
 public class WanderingCubes extends SpriteContainer {
 

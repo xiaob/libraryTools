@@ -57,7 +57,7 @@
             android:name=".test.ToastActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
-            android:name=".test.Dialog_PopActivity"
+            android:name=".test.Dialog_ProgressActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity android:name=".bigimage.PhotosDetailActivity"
             android:theme="@style/AppTheme.SwipeBack"/>

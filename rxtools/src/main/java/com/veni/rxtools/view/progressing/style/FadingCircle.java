@@ -9,6 +9,7 @@ import com.veni.rxtools.view.progressing.sprite.Sprite;
 
 /**
  * Created by ybq.
+ * 衰退圆圈
  */
 public class FadingCircle extends CircleLayoutContainer {
 

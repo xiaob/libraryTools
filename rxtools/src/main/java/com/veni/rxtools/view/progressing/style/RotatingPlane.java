@@ -9,6 +9,7 @@ import com.veni.rxtools.view.progressing.sprite.RectSprite;
 
 /**
  * Created by ybq.
+ * 平面上下左右旋转
  */
 public class RotatingPlane extends RectSprite {
     @Override

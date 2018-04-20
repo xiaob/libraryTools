@@ -58,7 +58,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);
-        mPresenter.checkVersion("1");
+//        mPresenter.checkVersion("1");
     }
 
     /**

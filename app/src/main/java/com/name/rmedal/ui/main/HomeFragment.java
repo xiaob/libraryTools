@@ -4,16 +4,14 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
 import com.name.rmedal.modelbean.FunctionBean;
-import com.name.rmedal.test.Dialog_PopActivity;
+import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -31,8 +29,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -65,7 +61,7 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private CommonRecycleViewAdapter<FunctionBean> functionadapter;
+    private  CommonRecycleViewAdapter<FunctionBean> functionadapter;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -109,10 +105,10 @@ public class HomeFragment extends BaseFragment {
 
     private void setfuctionview() {
         List<FunctionBean> functionlist = new ArrayList<>();
-        functionlist.add(new FunctionBean("Dialog", 0, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("Dialog展示", 0, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
-                Dialog_PopActivity.startAction(context);
+                Dialog_ProgressActivity.startAction(context);
             }
         }));
         functionlist.add(new FunctionBean("Toast_LabelsView", 0, new OnNoFastClickListener() {

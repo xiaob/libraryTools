@@ -11,6 +11,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 三点上下晃动
  */
 public class ThreeBounce extends SpriteContainer {
 

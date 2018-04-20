@@ -5,6 +5,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 复杂脉冲
  */
 public class MultiplePulse extends SpriteContainer {
     @Override

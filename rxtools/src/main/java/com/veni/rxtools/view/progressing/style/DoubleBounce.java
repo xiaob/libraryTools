@@ -9,6 +9,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 两点上下晃动
  */
 public class DoubleBounce extends SpriteContainer {
 

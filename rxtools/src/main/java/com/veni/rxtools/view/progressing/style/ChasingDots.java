@@ -12,6 +12,7 @@ import com.veni.rxtools.view.progressing.sprite.SpriteContainer;
 
 /**
  * Created by ybq.
+ * 点追逐
  */
 public class ChasingDots extends SpriteContainer {
 

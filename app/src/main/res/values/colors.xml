@@ -16,6 +16,6 @@
 
     <color name="alpha_10_black">#1A000000</color>
     <color name="alpha_75_gray">#c08a8a8a</color>
-    <color name="alpha_85_colorPrimary">#d8ce3835</color>
-    <color name="alpha_75_colorPrimary">#c0ce3835</color>
+    <color name="alpha_85_colorPrimary">#d8ffc651</color>
+    <color name="alpha_75_colorPrimary">#c0ffc651</color>
 </resources>

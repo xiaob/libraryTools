@@ -7,6 +7,7 @@ import com.veni.rxtools.view.progressing.sprite.CircleSprite;
 
 /**
  * Created by ybq.
+ * 脉冲
  */
 public class Pulse extends CircleSprite {
 

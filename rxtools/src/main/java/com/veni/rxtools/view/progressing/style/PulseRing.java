@@ -9,6 +9,7 @@ import com.veni.rxtools.view.progressing.sprite.RingSprite;
 
 /**
  * Created by ybq.
+ * 环形脉冲
  */
 public class PulseRing extends RingSprite {
 

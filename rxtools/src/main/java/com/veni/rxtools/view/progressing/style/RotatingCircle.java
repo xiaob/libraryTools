@@ -5,7 +5,9 @@ import android.animation.ValueAnimator;
 import com.veni.rxtools.view.progressing.animation.SpriteAnimatorBuilder;
 import com.veni.rxtools.view.progressing.sprite.CircleSprite;
 
-
+/**
+ * 圆圈上下左右旋转
+ */
 public class RotatingCircle extends CircleSprite {
 
     @Override
