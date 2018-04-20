@@ -42,7 +42,9 @@ public class Dialog_PopActivity extends BaseActivity {
     public void initPresenter() {
 
     }
-private  List<String> labellist;
+
+    private List<String> labellist;
+
     @Override
     public void initView(Bundle savedInstanceState) {
         toastTitle.setLeftFinish(context);
@@ -61,14 +63,14 @@ private  List<String> labellist;
         toastLabels.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
             public void onLabelClick(View label, String labelText, int position) {
                 //label是被点击的标签，labelText是标签的文字，position是标签的位置。
-                String labelstr=  labellist.get(position);
+                String labelstr = labellist.get(position);
                 setfuctionview(labelstr);
             }
         });
     }
 
     private void setfuctionview(String labelstr) {
-        switch (labelstr){
+        switch (labelstr) {
             case "showToast":
                 RxToast.showToast("showToast");
                 break;
