@@ -1505,25 +1505,20 @@ public class RxSeatAirplane extends View {
 
         @Override
         public boolean onDown(MotionEvent e) {
-            // TODO Auto-generated method stub
             return true;
         }
 
         @Override
         public void onShowPress(MotionEvent e) {
-            // TODO Auto-generated method stub
-
         }
 
         @Override
         public boolean onSingleTapUp(MotionEvent e) {
-            // TODO Auto-generated method stub
             return true;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-            // TODO Auto-generated method stub
 
         }
 

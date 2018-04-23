@@ -28,7 +28,6 @@ Observable<LoginData> fromNetwork = HttpManager.getDefault()
 @Override
 protected void _onNext(LoginData data) {
         showToast(R.string.login_success);
-        //TODO login success
         }
 
 @Override
