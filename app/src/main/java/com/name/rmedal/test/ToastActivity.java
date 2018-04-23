@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -16,14 +15,11 @@ import com.name.rmedal.modelbean.FunctionBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.irecyclerview.adapter.CommonRecycleViewAdapter;
 import com.veni.rxtools.view.LabelsView;
 import com.veni.rxtools.view.RxTitle;
 import com.veni.rxtools.view.RxToast;
-import com.veni.rxtools.view.progressing.SpinKitView;
-import com.veni.rxtools.view.progressing.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,9 +73,9 @@ public class ToastActivity extends BaseActivity {
         toastTitle.setLeftFinish(context);
         toastTitle.setTitle("Toast_LabelsView");
         setSwipeBackLayout(0);
-        toastRefreshlayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(RefreshLayout refreshlayout) {
                 clooserefreshlayout();
             }
 
@@ -157,7 +153,7 @@ public class ToastActivity extends BaseActivity {
                     @Override
                     public void call(Long aLong) {
                         toastRefreshlayout.finishRefresh();
-                        toastRefreshlayout.finishLoadmore();
+                        toastRefreshlayout.finishLoadMore();
                     }
                 });
     }

@@ -1,6 +1,7 @@
 package com.name.rmedal.ui.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -17,7 +18,7 @@ import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.rxtools.RxTool;
 import com.veni.rxtools.interfaces.OnNoFastClickListener;
 import com.veni.rxtools.view.RxTitle;
@@ -64,12 +65,11 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(Bundle savedInstanceState) {
         homeRxtitle.setLeftIconVisibility(false);
-        homeRefreshlayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        homeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 clooserefreshlayout();
             }
-
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 clooserefreshlayout();
@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     public void call(Long aLong) {
                         homeRefreshlayout.finishRefresh();
-                        homeRefreshlayout.finishLoadmore();
+                        homeRefreshlayout.finishLoadMore();
                     }
                 });
     }

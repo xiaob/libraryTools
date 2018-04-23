@@ -1,15 +1,12 @@
 package com.name.rmedal.test;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,13 +16,9 @@ import com.name.rmedal.modelbean.FunctionBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.rxtools.RxTool;
 import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.interfaces.OnNoFastClickListener;
-import com.veni.rxtools.irecyclerview.adapter.CommonRecycleViewAdapter;
-import com.veni.rxtools.irecyclerview.adapter.ViewHolderHelper;
-import com.veni.rxtools.irecyclerview.animation.ScaleInAnimation;
 import com.veni.rxtools.view.LabelsView;
 import com.veni.rxtools.view.RxTitle;
 import com.veni.rxtools.view.progressing.SpinKitView;
@@ -47,8 +40,6 @@ public class Dialog_ProgressActivity extends BaseActivity {
 
     @BindView(R.id.toast_rxtitle)
     RxTitle toastTitle;
-//    @BindView(R.id.toast_labels)
-//    LabelsView toastLabels;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -82,13 +73,11 @@ public class Dialog_ProgressActivity extends BaseActivity {
         toastTitle.setLeftFinish(context);
         toastTitle.setTitle("Dialog_Progress");
         setSwipeBackLayout(0);
-
-        toastRefreshlayout.setOnRefreshLoadmoreListener(new OnRefreshLoadmoreListener() {
+        toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 clooserefreshlayout();
             }
-
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 clooserefreshlayout();
@@ -315,7 +304,7 @@ public class Dialog_ProgressActivity extends BaseActivity {
                     @Override
                     public void call(Long aLong) {
                         toastRefreshlayout.finishRefresh();
-                        toastRefreshlayout.finishLoadmore();
+                        toastRefreshlayout.finishLoadMore();
                     }
                 });
     }

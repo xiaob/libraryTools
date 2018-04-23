@@ -49,12 +49,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':rxtools')
+    compile project(':RecyclerAdapterHelper')
+    compile project(':refresh-layout')
     //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
     compile 'com.jaredrummler:animated-svg-view:1.0.5'
 
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     //下拉刷新上拉加载
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
 //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
     // banner
     compile 'cn.bingoogolapple:bga-banner:2.1.9'
