@@ -227,6 +227,7 @@ public class AlertDialogBuilder {
         setLoadingView();
         return this;
     }
+
     /**
      * 加载对话框
      */
@@ -338,6 +339,7 @@ public class AlertDialogBuilder {
                     , drawableseat == 1 ? messageDrawable : null
                     , drawableseat == 2 ? messageDrawable : null
                     , drawableseat == 3 ? messageDrawable : null);
+            dialogMessageTv.setCompoundDrawablePadding(10);
         }
         dialogMessageTv.setText(dialog_message);
         if (dialog_leftstring != null && !dialog_leftstring.equals("")) {
@@ -388,6 +390,7 @@ public class AlertDialogBuilder {
                     , drawableseat == 1 ? messageDrawable : null
                     , drawableseat == 2 ? messageDrawable : null
                     , drawableseat == 3 ? messageDrawable : null);
+            loading_tv.setCompoundDrawablePadding(10);
         }
         loading_tv.setText(dialog_message);
         return loadingdialog;
@@ -431,13 +434,32 @@ public class AlertDialogBuilder {
 
     /**
      * 加载动画
+     * 圆圈 菊花
+     */
+    public AlertDialogBuilder geCircle(int color) {
+        messageDrawable = null;
+        if (context != null) {
+            Circle circle = new Circle();
+            //left 组件在容器X轴上的起点
+            // top 组件在容器Y轴上的起点
+            // right 组件的长度
+            // bottom 组件的高度
+            circle.setBounds(0, 0, 70, 90);
+            circle.setColor(context.getResources().getColor(color));
+            messageDrawable = circle;
+        }
+        return this;
+    }
+
+    /**
+     * 加载动画
      * 三点上下晃动
      */
     public AlertDialogBuilder getThreeBounce(int color) {
         messageDrawable = null;
         if (context != null) {
             ThreeBounce threeBounce = new ThreeBounce();
-            threeBounce.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            threeBounce.setBounds(0, 0, 70, 90);
             threeBounce.setColor(context.getResources().getColor(color));
             messageDrawable = threeBounce;
         }
@@ -452,7 +474,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             DoubleBounce doubleBounce = new DoubleBounce();
-            doubleBounce.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            doubleBounce.setBounds(0, 0, 70, 90);
             doubleBounce.setColor(context.getResources().getColor(color));
             messageDrawable = doubleBounce;
         }
@@ -467,7 +489,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             Wave wave = new Wave();
-            wave.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            wave.setBounds(0, 0, 70, 90);
             wave.setColor(context.getResources().getColor(color));
             messageDrawable = wave;
         }
@@ -481,8 +503,8 @@ public class AlertDialogBuilder {
     public AlertDialogBuilder getWanderingCubes(int color) {
         messageDrawable = null;
         if (context != null) {
-            WanderingCubes  wanderingCubes = new WanderingCubes();
-            wanderingCubes.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            WanderingCubes wanderingCubes = new WanderingCubes();
+            wanderingCubes.setBounds(0, 0, 70, 90);
             wanderingCubes.setColor(context.getResources().getColor(color));
             messageDrawable = wanderingCubes;
         }
@@ -497,24 +519,9 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             ChasingDots chasingDots = new ChasingDots();
-            chasingDots.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            chasingDots.setBounds(0, 0, 70, 90);
             chasingDots.setColor(context.getResources().getColor(color));
             messageDrawable = chasingDots;
-        }
-        return this;
-    }
-
-    /**
-     * 加载动画
-     * 圆圈 菊花
-     */
-    public AlertDialogBuilder geCircle(int color) {
-        messageDrawable = null;
-        if (context != null) {
-            Circle circle = new Circle();
-            circle.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
-            circle.setColor(context.getResources().getColor(color));
-            messageDrawable = circle;
         }
         return this;
     }
@@ -527,7 +534,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             CubeGrid cubeGrid = new CubeGrid();
-            cubeGrid.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            cubeGrid.setBounds(0, 0, 70, 90);
             cubeGrid.setColor(context.getResources().getColor(color));
             messageDrawable = cubeGrid;
         }
@@ -541,8 +548,8 @@ public class AlertDialogBuilder {
     public AlertDialogBuilder geFadingCircle(int color) {
         messageDrawable = null;
         if (context != null) {
-            FadingCircle  fadingCircle = new FadingCircle();
-            fadingCircle.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            FadingCircle fadingCircle = new FadingCircle();
+            fadingCircle.setBounds(0, 0, 70, 90);
             fadingCircle.setColor(context.getResources().getColor(color));
             messageDrawable = fadingCircle;
         }
@@ -557,7 +564,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             FoldingCube foldingCube = new FoldingCube();
-            foldingCube.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            foldingCube.setBounds(0, 0, 70, 90);
             foldingCube.setColor(context.getResources().getColor(color));
             messageDrawable = foldingCube;
         }
@@ -573,7 +580,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             MultiplePulse multiplePulse = new MultiplePulse();
-            multiplePulse.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            multiplePulse.setBounds(0, 0, 70, 90);
             multiplePulse.setColor(context.getResources().getColor(color));
             messageDrawable = multiplePulse;
         }
@@ -588,7 +595,7 @@ public class AlertDialogBuilder {
         messageDrawable = null;
         if (context != null) {
             MultiplePulseRing multiplePulseRing = new MultiplePulseRing();
-            multiplePulseRing.setBounds(0, 0, 100, 100);//四个参数指的是drawable将在被绘制在canvas的哪个矩形区域内。
+            multiplePulseRing.setBounds(0, 0, 70, 90);
             multiplePulseRing.setColor(context.getResources().getColor(color));
             messageDrawable = multiplePulseRing;
         }

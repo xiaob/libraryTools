@@ -2,9 +2,14 @@ package com.name.rmedal.test;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.FunctionBean;
@@ -17,6 +22,8 @@ import com.veni.rxtools.irecyclerview.adapter.CommonRecycleViewAdapter;
 import com.veni.rxtools.view.LabelsView;
 import com.veni.rxtools.view.RxTitle;
 import com.veni.rxtools.view.RxToast;
+import com.veni.rxtools.view.progressing.SpinKitView;
+import com.veni.rxtools.view.progressing.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,8 +44,6 @@ public class ToastActivity extends BaseActivity {
 
     @BindView(R.id.toast_rxtitle)
     RxTitle toastTitle;
-    @BindView(R.id.toast_labels)
-    LabelsView toastLabels;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -66,8 +71,7 @@ public class ToastActivity extends BaseActivity {
 
     private List<String> labellist;
 
-    private CommonRecycleViewAdapter<FunctionBean> functionadapter;
-
+    private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
         toastTitle.setLeftFinish(context);
@@ -86,6 +90,24 @@ public class ToastActivity extends BaseActivity {
         });
         toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
+        functionadapter =new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.activity_toast_spink) {
+            @Override
+            protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
+            }
+        };
+
+        functionadapter.addHeaderView(upHeaderView());
+        functionadapter.openLoadAnimation();
+        toastRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        toastRecyclerview.setAdapter(functionadapter);
+    }
+
+    private View upHeaderView(){
+
+        //添加Header
+        View header = LayoutInflater.from(this).inflate(R.layout.activity_toast_lables, null, false);
+
+        LabelsView toastLabels=  header.findViewById(R.id.toast_labels);
         labellist = new ArrayList<>();
         labellist.add("系统提示");
         labellist.add("普通提示");
@@ -101,8 +123,8 @@ public class ToastActivity extends BaseActivity {
                 setfuctionview(labelstr);
             }
         });
+        return header;
     }
-
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
             case "系统提示":

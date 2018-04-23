@@ -1,10 +1,12 @@
 package com.name.rmedal.test;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,8 +47,8 @@ public class Dialog_ProgressActivity extends BaseActivity {
 
     @BindView(R.id.toast_rxtitle)
     RxTitle toastTitle;
-    @BindView(R.id.toast_labels)
-    LabelsView toastLabels;
+//    @BindView(R.id.toast_labels)
+//    LabelsView toastLabels;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -72,20 +74,9 @@ public class Dialog_ProgressActivity extends BaseActivity {
 
     }
 
-    int[] colors = new int[]{
-            android.graphics.Color.parseColor("#D55400"),
-            android.graphics.Color.parseColor("#2B3E51"),
-            android.graphics.Color.parseColor("#00BD9C"),
-            android.graphics.Color.parseColor("#227FBB"),
-            android.graphics.Color.parseColor("#7F8C8D"),
-            android.graphics.Color.parseColor("#FFCC5C"),
-            android.graphics.Color.parseColor("#D55400"),
-            android.graphics.Color.parseColor("#1AAF5D"),
-    };
     private List<String> labellist;
 
-    private CommonRecycleViewAdapter<FunctionBean> functionadapter;
-
+    private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
         toastTitle.setLeftFinish(context);
@@ -104,6 +95,44 @@ public class Dialog_ProgressActivity extends BaseActivity {
             }
         });
         toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
+
+        functionadapter =new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.activity_toast_spink) {
+            @Override
+            protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
+                viewHolder.setText(R.id.spink_tv, item.getFunctionName());
+                SpinKitView spinKitView = viewHolder.getView(R.id.spink_item);
+                Sprite drawable = item.getSprite();
+                spinKitView.setIndeterminateDrawable(drawable);
+            }
+        };
+        //添加Recyclerview头部
+        functionadapter.addHeaderView(upHeaderView());
+        functionadapter.openLoadAnimation();
+        toastRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        toastRecyclerview.setAdapter(functionadapter);
+
+        List<FunctionBean> functionlist = new ArrayList<>();
+
+        for(int i=0;i< Style.values().length;i++){
+            Style style = Style.values()[i];
+            Sprite drawable = SpriteFactory.create(style);
+            drawable.setColor(R.color.colorAccent);
+            //left 组件在容器X轴上的起点
+            // top 组件在容器Y轴上的起点
+            // right 组件的长度
+            // bottom 组件的高度
+            drawable.setBounds(0, 0, 100, 120);
+            functionlist.add(new FunctionBean(style.name(),drawable,null));
+        }
+        functionadapter.replaceData(functionlist);
+    }
+
+    private View upHeaderView(){
+
+        //添加Header
+        View header = LayoutInflater.from(this).inflate(R.layout.activity_toast_lables, null, false);
+
+        LabelsView toastLabels=  header.findViewById(R.id.toast_labels);
 
         labellist = new ArrayList<>();
         labellist.add("Dialog");
@@ -130,38 +159,8 @@ public class Dialog_ProgressActivity extends BaseActivity {
                 setfuctionview(labelText);
             }
         });
-
-        functionadapter = new CommonRecycleViewAdapter<FunctionBean>(context, R.layout.activity_toast_spink) {
-            @Override
-            public void convert(ViewHolderHelper holder, FunctionBean functionBean) {
-                SpinKitView spinKitView = holder.getView(R.id.spink_item);
-                TextView spink_tv = holder.getView(R.id.spink_tv);
-
-                Sprite drawable = functionBean.getSprite();
-                drawable.setColor(R.color.colorAccent);
-                spinKitView.setIndeterminateDrawable(drawable);
-                spink_tv.setText(functionBean.getFunctionName());
-
-            }
-        };
-
-        toastRecyclerview.setHasFixedSize(true);
-        toastRecyclerview.setNestedScrollingEnabled(false);
-        toastRecyclerview.setAdapter(functionadapter);
-        functionadapter.openLoadAnimation(new ScaleInAnimation());
-        toastRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
-
-        List<FunctionBean> functionlist = new ArrayList<>();
-
-        for(int i=0;i< Style.values().length;i++){
-            Style style = Style.values()[i];
-            Sprite drawable = SpriteFactory.create(style);
-            functionlist.add(new FunctionBean(style.name(),drawable,null));
-        }
-        functionadapter.replaceAll(functionlist);
+        return header;
     }
-
-
 
     private void setfuctionview(String labelstr) {
         switch (labelstr) {

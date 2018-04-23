@@ -18,7 +18,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
-import com.veni.rxtools.RxLogTool;
 import com.veni.rxtools.RxTool;
 import com.veni.rxtools.interfaces.OnNoFastClickListener;
 import com.veni.rxtools.view.RxTitle;
@@ -60,7 +59,6 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private List<FunctionBean> functionlist;
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
 
     @Override
@@ -101,7 +99,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void setfuctionview() {
-        functionlist = new ArrayList<>();
+        List<FunctionBean> functionlist = new ArrayList<>();
         functionlist.add(new FunctionBean("Dialog展示", 0, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
