@@ -6,8 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
 import com.name.rmedal.modelbean.FunctionBean;
@@ -17,11 +18,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
+import com.veni.rxtools.RxLogTool;
 import com.veni.rxtools.RxTool;
 import com.veni.rxtools.interfaces.OnNoFastClickListener;
-import com.veni.rxtools.irecyclerview.adapter.CommonRecycleViewAdapter;
-import com.veni.rxtools.irecyclerview.adapter.ViewHolderHelper;
-import com.veni.rxtools.irecyclerview.animation.ScaleInAnimation;
 import com.veni.rxtools.view.RxTitle;
 
 import java.util.ArrayList;
@@ -61,7 +60,8 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    private  CommonRecycleViewAdapter<FunctionBean> functionadapter;
+    private List<FunctionBean> functionlist;
+    private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -79,32 +79,29 @@ public class HomeFragment extends BaseFragment {
         });
         homeRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
-        functionadapter = new CommonRecycleViewAdapter<FunctionBean>(context, R.layout.fragment_function_item) {
-            @Override
-            public void convert(ViewHolderHelper holder, FunctionBean functionBean) {
-                ImageView function_item_iv = holder.getView(R.id.function_item_iv);
-                TextView function_item_tv = holder.getView(R.id.function_item_tv);
+        functionadapter = new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.fragment_function_item) {
 
-                View convertView = holder.getConvertView();
-                final String name = functionBean.getFunctionName();
-                int image = functionBean.getFunctionImage();
-                OnNoFastClickListener noFastClickListener =functionBean.getNoFastClickListener();
-                function_item_tv.setText(name);
+            @Override
+            protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
+                ImageView function_item_iv = viewHolder.getView(R.id.function_item_iv);
+
+                viewHolder.setText(R.id.function_item_tv, item.getFunctionName());
+                viewHolder.setOnClickListener(R.id.function_item_ll,item.getNoFastClickListener());
+                int image = item.getFunctionImage();
                 if (image != 0) {
                     function_item_iv.setVisibility(View.VISIBLE);
                     function_item_iv.setImageDrawable(ContextCompat.getDrawable(RxTool.getContext(), image));
                 }
-                convertView.setOnClickListener(noFastClickListener);
             }
         };
-        homeFunctions.setAdapter(functionadapter);
-        functionadapter.openLoadAnimation(new ScaleInAnimation());
+        functionadapter.openLoadAnimation();
         homeFunctions.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        homeFunctions.setAdapter(functionadapter);
         setfuctionview();
     }
 
     private void setfuctionview() {
-        List<FunctionBean> functionlist = new ArrayList<>();
+        functionlist = new ArrayList<>();
         functionlist.add(new FunctionBean("Dialog展示", 0, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
@@ -117,7 +114,7 @@ public class HomeFragment extends BaseFragment {
                 ToastActivity.startAction(context);
             }
         }));
-        functionadapter.replaceAll(functionlist);
+        functionadapter.replaceData(functionlist);
     }
 
     private void clooserefreshlayout() {
