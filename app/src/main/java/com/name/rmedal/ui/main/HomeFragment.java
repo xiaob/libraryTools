@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
-import com.name.rmedal.modelbean.BigImageBean;
+import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;

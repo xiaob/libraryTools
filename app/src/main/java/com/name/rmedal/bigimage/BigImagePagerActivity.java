@@ -1,6 +1,5 @@
 package com.name.rmedal.bigimage;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,7 +29,6 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
-import com.name.rmedal.modelbean.BigImageBean;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
 import com.veni.rxtools.RxJsonTools;
 import com.veni.rxtools.RxTabLayoutTool;

@@ -1,4 +1,4 @@
-package com.name.rmedal.modelbean;
+package com.name.rmedal.bigimage;
 
 import java.io.Serializable;
 
