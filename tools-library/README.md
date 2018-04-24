@@ -1,12 +1,12 @@
 目录结构
 - base 基类
 -- ActivityBase
+-- ActivityJumpOptionsTool Activity跳转工具类
 -- AlertDialogBuilder
 -- BaseModel
 -- BasePresenter
 -- BaseView
 -- FragmentBase
--- RxActivityOptionsTool Activity跳转工具类
 -- TUtil 类转换
 - baserx rxjava 封装
 - interfaces

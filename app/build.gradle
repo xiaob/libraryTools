@@ -49,7 +49,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile project(':tools-library')
-    compile project(':RecyclerAdapterHelper')
+    compile project(':recycler-adapter-helper')
     compile project(':refresh-layout')
     //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
     compile 'com.jaredrummler:animated-svg-view:1.0.5'
