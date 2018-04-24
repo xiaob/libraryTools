@@ -81,7 +81,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
      * direction 滑动方向
      * activity style 必须设置Theme.Swipe.Back.NoActionBar
      */
-    public void setSwipeBackLayout(int issupswipebace) {
+    public void setSwipeBackLayout(int issupswipebace/*,boolean isSwipeFromEdge*/) {
         int direction = -1;
         switch (issupswipebace) {
             case 0:
@@ -97,14 +97,15 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
                 direction = SwipeBackLayout.FROM_BOTTOM;
                 break;
         }
-        if (direction != -1 && swipeBackLayout == null) {
-            swipeBackLayout = new SwipeBackLayout(this);
-            swipeBackLayout.attachToActivity(this);
+        if (direction != -1) {
+            if(swipeBackLayout == null){
+                swipeBackLayout = new SwipeBackLayout(this);
+                swipeBackLayout.attachToActivity(this);
+                swipeBackLayout.setMaskAlpha(125);
+                swipeBackLayout.setSwipeBackFactor(0.5f);
+            }
             swipeBackLayout.setDirectionMode(direction);
-//            swipeBackLayout.setSwipeFromEdge(true);
-            swipeBackLayout.setMaskAlpha(125);
-            swipeBackLayout.setSwipeBackFactor(0.5f);
-            swipeBackLayout.setSwipeFromEdge(true);//只可以边缘滑动退出
+            swipeBackLayout.setSwipeFromEdge(false);//是否只能从边缘滑动退出
         }
     }
 
