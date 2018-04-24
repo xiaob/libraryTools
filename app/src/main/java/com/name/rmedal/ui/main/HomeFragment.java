@@ -22,10 +22,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.rxtools.RxJsonTools;
-import com.veni.rxtools.RxTool;
-import com.veni.rxtools.interfaces.OnNoFastClickListener;
-import com.veni.rxtools.view.RxTitle;
+import com.veni.tools.RxJsonTools;
+import com.veni.tools.RxTool;
+import com.veni.tools.interfaces.OnNoFastClickListener;
+import com.veni.tools.StatusBarUtil;
+import com.veni.tools.view.RxTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +69,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        StatusBarUtil.setPaddingSmart(context, homeRxtitle);
         homeRxtitle.setLeftIconVisibility(false);
         homeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

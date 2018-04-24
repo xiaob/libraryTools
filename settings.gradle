@@ -1,1 +1,1 @@
-include ':app', ':rxtools', ':RecyclerAdapterHelper', ':refresh-layout'
+include ':app', ':RecyclerAdapterHelper', ':refresh-layout', ':tools-library'

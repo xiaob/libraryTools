@@ -4,8 +4,8 @@ import com.name.rmedal.api.HttpManager;
 import com.name.rmedal.tools.AppTools;
 import com.name.rmedal.tools.RxHelper;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.veni.rxtools.RxDeviceTool;
-import com.veni.rxtools.RxTool;
+import com.veni.tools.RxDeviceTool;
+import com.veni.tools.RxTool;
 
 import java.util.HashMap;
 

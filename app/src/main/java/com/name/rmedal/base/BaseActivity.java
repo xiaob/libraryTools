@@ -8,12 +8,12 @@ import android.view.MenuItem;
 import com.gw.swipeback.SwipeBackLayout;
 import com.name.rmedal.BuildConfig;
 import com.name.rmedal.R;
-import com.veni.rxtools.base.ActivityBase;
-import com.veni.rxtools.base.BaseModel;
-import com.veni.rxtools.base.BasePresenter;
-import com.veni.rxtools.base.TUtil;
-import com.veni.rxtools.baserx.RxManager;
-import com.veni.rxtools.view.RxToast;
+import com.veni.tools.base.ActivityBase;
+import com.veni.tools.base.BaseModel;
+import com.veni.tools.base.BasePresenter;
+import com.veni.tools.base.TUtil;
+import com.veni.tools.baserx.RxManager;
+import com.veni.tools.view.RxToast;
 
 import butterknife.ButterKnife;
 
@@ -123,7 +123,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     protected void stopErrorProgressDialog(String errtipmsg) {
         stopProgressDialog();
         if (errtipmsg.equals("")) {
-            errtipmsg = getString(com.veni.rxtools.R.string.net_error);
+            errtipmsg = getString(com.veni.tools.R.string.net_error);
         }
         RxToast.error(errtipmsg);
     }

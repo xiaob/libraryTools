@@ -1,6 +1,6 @@
 package com.name.rmedal.modelbean;
 
-import com.veni.rxtools.RxRegTool;
+import com.veni.tools.RxRegTool;
 
 import java.io.Serializable;
 

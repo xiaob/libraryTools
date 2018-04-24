@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/deep_gray_2">
 
-    <com.veni.rxtools.view.RxViewPagerFixed
+    <com.veni.tools.view.RxViewPagerFixed
         android:id="@+id/bigimage_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

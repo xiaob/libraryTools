@@ -17,7 +17,7 @@
         android:layout_gravity="center">
 
 
-        <com.veni.rxtools.view.TouchImageView
+        <com.veni.tools.view.TouchImageView
             android:id="@+id/photo_touch_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

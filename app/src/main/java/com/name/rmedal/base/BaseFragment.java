@@ -1,23 +1,18 @@
 package com.name.rmedal.base;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.name.rmedal.R;
-import com.veni.rxtools.RxBarTool;
-import com.veni.rxtools.base.AlertDialogBuilder;
-import com.veni.rxtools.base.BaseModel;
-import com.veni.rxtools.base.BasePresenter;
-import com.veni.rxtools.base.FragmentBase;
-import com.veni.rxtools.base.TUtil;
-import com.veni.rxtools.baserx.RxManager;
-import com.veni.rxtools.view.RxToast;
+import com.veni.tools.base.BaseModel;
+import com.veni.tools.base.BasePresenter;
+import com.veni.tools.base.FragmentBase;
+import com.veni.tools.base.TUtil;
+import com.veni.tools.baserx.RxManager;
+import com.veni.tools.view.RxToast;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -78,23 +73,10 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
     protected void stopErrorProgressDialog(String errtipmsg) {
         stopProgressDialog();
         if (errtipmsg.equals("")) {
-            errtipmsg = getString(com.veni.rxtools.R.string.net_error);
+            errtipmsg = getString(com.veni.tools.R.string.net_error);
         }
         RxToast.error(errtipmsg);
     }
-
-    /**
-     * 沉浸状态栏（4.4以上系统有效）
-     * 设置透明状态栏
-     * 增加 最顶部的子标签 高度
-     * DisplayUtil.ViewinitState(view);
-     * 最顶部的子标签 必须设置 android:fitsSystemWindows="true" 属性
-     * 否则标题栏会被导航栏遮挡
-     */
-    protected void SetTranslanteBar() {
-        RxBarTool.translucentStatusBar((Activity) context);
-    }
-
 
     @Override
     public void onDestroyView() {

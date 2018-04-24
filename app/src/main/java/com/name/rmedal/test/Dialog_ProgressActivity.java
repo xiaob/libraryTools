@@ -17,14 +17,14 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.rxtools.RxTool;
-import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.view.LabelsView;
-import com.veni.rxtools.view.RxTitle;
-import com.veni.rxtools.view.progressing.SpinKitView;
-import com.veni.rxtools.view.progressing.SpriteFactory;
-import com.veni.rxtools.view.progressing.Style;
-import com.veni.rxtools.view.progressing.sprite.Sprite;
+import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.StatusBarUtil;
+import com.veni.tools.view.LabelsView;
+import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.progressing.SpinKitView;
+import com.veni.tools.view.progressing.SpriteFactory;
+import com.veni.tools.view.progressing.Style;
+import com.veni.tools.view.progressing.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class Dialog_ProgressActivity extends BaseActivity {
      * 启动入口
      */
     public static void startAction(Context context) {
-        new RxActivityOptionsTool().setContext(context)
+        new ActivityJumpOptionsTool().setContext(context)
                 .setClass(Dialog_ProgressActivity.class)
                 .customAnim()
                 .start();
@@ -70,6 +70,9 @@ public class Dialog_ProgressActivity extends BaseActivity {
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
+
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toastTitle);
         toastTitle.setLeftFinish(context);
         toastTitle.setTitle("Dialog_Progress");
         setSwipeBackLayout(0);

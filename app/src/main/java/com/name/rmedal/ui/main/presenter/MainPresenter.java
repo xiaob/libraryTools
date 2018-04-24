@@ -4,8 +4,7 @@ package com.name.rmedal.ui.main.presenter;
 import com.name.rmedal.R;
 import com.name.rmedal.tools.AppTools;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.veni.rxtools.RxLogTool;
-import com.veni.rxtools.baserx.RxSubscriber;
+import com.veni.tools.baserx.RxSubscriber;
 
 /**
  * 作者：Administrator on 2017/12/04 10:36

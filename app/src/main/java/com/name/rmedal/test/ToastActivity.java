@@ -16,10 +16,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.view.LabelsView;
-import com.veni.rxtools.view.RxTitle;
-import com.veni.rxtools.view.RxToast;
+import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.view.LabelsView;
+import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.RxToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class ToastActivity extends BaseActivity {
      * 启动入口
      */
     public static void startAction(Context context) {
-        new RxActivityOptionsTool().setContext(context)
+        new ActivityJumpOptionsTool().setContext(context)
                 .setClass(ToastActivity.class)
                 .customAnim()
                 .start();

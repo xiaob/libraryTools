@@ -7,7 +7,7 @@
     android:gravity="center"
     android:layout_margin="@dimen/hight_10"
     android:orientation="vertical">
-    <com.veni.rxtools.view.progressing.SpinKitView
+    <com.veni.tools.view.progressing.SpinKitView
         android:id="@+id/spink_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

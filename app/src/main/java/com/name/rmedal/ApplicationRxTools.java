@@ -2,8 +2,8 @@ package com.name.rmedal;
 
 import android.app.Application;
 
-import com.veni.rxtools.RxLogTool;
-import com.veni.rxtools.RxTool;
+import com.veni.tools.RxLogTool;
+import com.veni.tools.RxTool;
 
 /**
  * Created by vonde on 2016/12/23.

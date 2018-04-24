@@ -16,11 +16,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.rxtools.RxACache;
-import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.view.LabelsView;
-import com.veni.rxtools.view.RxTitle;
-import com.veni.rxtools.view.RxToast;
+import com.veni.tools.ACache;
+import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.StatusBarUtil;
+import com.veni.tools.view.LabelsView;
+import com.veni.tools.view.RxTitle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +50,7 @@ public class ACacheActivity extends BaseActivity {
      * 启动入口
      */
     public static void startAction(Context context) {
-        new RxActivityOptionsTool().setContext(context)
+        new ActivityJumpOptionsTool().setContext(context)
                 .setClass(ACacheActivity.class)
                 .customAnim()
                 .start();
@@ -72,6 +72,8 @@ public class ACacheActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toastTitle);
         toastTitle.setLeftFinish(context);
         toastTitle.setTitle("时效存储");
         setSwipeBackLayout(0);
@@ -135,14 +137,14 @@ public class ACacheActivity extends BaseActivity {
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
             case "插入数据": {
-                RxACache.get(context).put("数据", "-----", RxACache.TIME_MINUTE);
-                long time = RxACache.get(context).getAsTime("数据");
+                ACache.get(context).put("数据", "-----", ACache.TIME_MINUTE);
+                long time = ACache.get(context).getAsTime("数据");
                 replaceadapter("插入数据\nkey:数据\nvalue:-----\n剩余时间:" + time);
                 break;
             }
             case "读取插入数据": {
-                String value = RxACache.get(context).getAsString("数据");
-                long time = RxACache.get(context).getAsTime("数据");
+                String value = ACache.get(context).getAsString("数据");
+                long time = ACache.get(context).getAsTime("数据");
                 replaceadapter("读取数据\nkey:数据\nvalue:" + value + "\n剩余时间:" + time);
                 break;
             }

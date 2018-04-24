@@ -30,11 +30,12 @@ import com.bumptech.glide.request.target.Target;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
-import com.veni.rxtools.RxJsonTools;
-import com.veni.rxtools.RxTabLayoutTool;
-import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.interfaces.OnNoFastClickListener;
-import com.veni.rxtools.view.RxViewPagerFixed;
+import com.veni.tools.RxJsonTools;
+import com.veni.tools.RxTabLayoutTool;
+import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.interfaces.OnNoFastClickListener;
+import com.veni.tools.StatusBarUtil;
+import com.veni.tools.view.RxViewPagerFixed;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -70,7 +71,7 @@ public class BigImagePagerActivity extends BaseActivity {
     }
 
     public static void startAction(Context context, String imgUrls, int position, boolean needtitle) {
-        new RxActivityOptionsTool().setContext(context)
+        new ActivityJumpOptionsTool().setContext(context)
                 .setClass(BigImagePagerActivity.class)
                 .setBundle(INTENT_IMGLISTJSON, imgUrls)
                 .setBundle(INTENT_POSITION, position)
@@ -92,7 +93,8 @@ public class BigImagePagerActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setSwipeBackLayout(2);
         //设置透明状态栏
-        SetTranslanteBar(toolbar);
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toolbar);
         toolBarFadeIn();
         initToolbar();
         initBackground();

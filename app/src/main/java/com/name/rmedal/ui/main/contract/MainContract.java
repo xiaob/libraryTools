@@ -1,9 +1,9 @@
 package com.name.rmedal.ui.main.contract;
 
 
-import com.veni.rxtools.base.BaseModel;
-import com.veni.rxtools.base.BasePresenter;
-import com.veni.rxtools.base.BaseView;
+import com.veni.tools.base.BaseModel;
+import com.veni.tools.base.BasePresenter;
+import com.veni.tools.base.BaseView;
 
 import rx.Observable;
 

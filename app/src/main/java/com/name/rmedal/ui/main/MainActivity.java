@@ -16,9 +16,10 @@ import com.name.rmedal.ui.main.model.MainModel;
 import com.name.rmedal.ui.main.presenter.MainPresenter;
 import com.name.rmedal.ui.personal.PersonalFragment;
 import com.name.rmedal.ui.trade.TradeFragment;
-import com.veni.rxtools.RxActivityTool;
-import com.veni.rxtools.base.RxActivityOptionsTool;
-import com.veni.rxtools.view.RxToast;
+import com.veni.tools.RxActivityTool;
+import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.StatusBarUtil;
+import com.veni.tools.view.RxToast;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,10 +33,10 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
      * 启动入口
      */
     public static void startAction(Context context) {
-        new RxActivityOptionsTool().setContext(context)
+        new ActivityJumpOptionsTool().setContext(context)
                 .setClass(MainActivity.class)
                 .setEnterResId(0)
-                .setActionTag(RxActivityOptionsTool.Type.CLEAR_TASK)
+                .setActionTag(ActivityJumpOptionsTool.Type.CLEAR_TASK)
                 .customAnim()
                 .start();
     }
@@ -56,6 +57,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     @Override
     public void initView(Bundle savedInstanceState) {
 
+        StatusBarUtil.immersive(this);
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);
 //        mPresenter.checkVersion("1");

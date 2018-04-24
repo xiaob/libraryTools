@@ -2,8 +2,8 @@ package com.name.rmedal.modelbean;
 
 import android.support.annotation.DrawableRes;
 
-import com.veni.rxtools.interfaces.OnNoFastClickListener;
-import com.veni.rxtools.view.progressing.sprite.Sprite;
+import com.veni.tools.interfaces.OnNoFastClickListener;
+import com.veni.tools.view.progressing.sprite.Sprite;
 
 import java.io.Serializable;
 

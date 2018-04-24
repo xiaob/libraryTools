@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.veni.rxtools.view.LabelsView
+    <com.veni.tools.view.LabelsView
         android:id="@+id/toast_labels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
