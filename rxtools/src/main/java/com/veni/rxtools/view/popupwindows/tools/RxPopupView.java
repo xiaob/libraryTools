@@ -218,8 +218,8 @@ public class RxPopupView {
             mOffsetX = 0;
             mOffsetY = 0;
             mArrow = true;
-            mBackgroundColor = context.getResources().getColor(R.color.colorBackground);
-            mTextColor = context.getResources().getColor(R.color.colorText);
+            mBackgroundColor = context.getResources().getColor(R.color.pink);
+            mTextColor = context.getResources().getColor(R.color.white);
             mTextGravity = GRAVITY_LEFT;
             mTextSize = 14;
         }
@@ -242,8 +242,8 @@ public class RxPopupView {
             mOffsetX = 0;
             mOffsetY = 0;
             mArrow = true;
-            mBackgroundColor = context.getResources().getColor(R.color.colorBackground);
-            mTextColor = context.getResources().getColor(R.color.colorText);
+            mBackgroundColor = context.getResources().getColor(R.color.pink);
+            mTextColor = context.getResources().getColor(R.color.white);
             mTextGravity = GRAVITY_LEFT;
             mTextSize = 14;
         }

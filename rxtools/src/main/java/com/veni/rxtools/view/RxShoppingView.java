@@ -85,7 +85,7 @@ public class RxShoppingView extends View {
         //展示文案大小
         int textSize = (int) typeArray.getDimension(R.styleable.ShoppingView_sv_text_size, sp2px(16));
         //背景色
-        int bgColor = typeArray.getColor(R.styleable.ShoppingView_sv_bg_color, ContextCompat.getColor(getContext(), R.color.slateblue));
+        int bgColor = typeArray.getColor(R.styleable.ShoppingView_sv_bg_color, ContextCompat.getColor(getContext(), R.color.mediumpurple));
         typeArray.recycle();
 
         mPaintBg = new Paint();
