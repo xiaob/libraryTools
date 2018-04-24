@@ -47,6 +47,6 @@
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:navigationIcon="@drawable/icon_previous"
-        app:title="图片"
+        app:title="图片详情"
         tools:alpha="1.0" />
 </RelativeLayout>

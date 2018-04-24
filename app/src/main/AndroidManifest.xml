@@ -59,8 +59,10 @@
         <activity
             android:name=".test.Dialog_ProgressActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
-        <activity android:name=".bigimage.PhotosDetailActivity"
+        <activity
+            android:name=".test.ACacheActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
+
         <activity android:name=".bigimage.BigImagePagerActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 

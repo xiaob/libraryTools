@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -30,9 +29,10 @@ import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.name.rmedal.R;
-import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
+import com.name.rmedal.modelbean.BigImageBean;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
+import com.veni.rxtools.RxJsonTools;
 import com.veni.rxtools.RxTabLayoutTool;
 import com.veni.rxtools.base.RxActivityOptionsTool;
 import com.veni.rxtools.interfaces.OnNoFastClickListener;
@@ -56,36 +56,29 @@ public class BigImagePagerActivity extends BaseActivity {
     @BindView(R.id.bigimage_pager)
     RxViewPagerFixed bigimagViewPager;
     @BindView(R.id.bigimage_guideGroup)
-    TextView bigimageGuideGroup;
+    TextView bigimageGuideGroup;//第几章图片 1/5
     @BindView(R.id.bigimage_title_tv)
-    TextView bigimageTitleTv;
+    TextView bigimageTitleTv;//图片标题
 
     private boolean mIsToolBarHidden;
     private boolean mIsStatusBarHidden;
-    private ColorDrawable mBackground;
 
-    public static final String INTENT_IMGURLS = "imgurls";
+    public static final String INTENT_IMGLISTJSON = "img_list_json";
     public static final String INTENT_POSITION = "position";
     public static final String INTENT_TITLE = "needtitle";
-    private List<View> guideViewList = new ArrayList<>();
-    private ArrayList<String> imgUrls = new ArrayList<>();
 
-    public static void startAction(Activity activity, View view, List<String> imgUrls, int position) {
-        startAction(activity, view, imgUrls, position, false);
+    public static void startAction(Context context, String imgUrls, int position) {
+        startAction(context, imgUrls, position, false);
     }
 
-    public static void startAction(Activity activity, View view, List<String> imgUrls, int position, boolean needtitle) {
-        new RxActivityOptionsTool().setContext(activity)
+    public static void startAction(Context context, String imgUrls, int position, boolean needtitle) {
+        new RxActivityOptionsTool().setContext(context)
                 .setClass(BigImagePagerActivity.class)
-                .setBundle(INTENT_IMGURLS, new ArrayList<>(imgUrls))
+                .setBundle(INTENT_IMGLISTJSON, imgUrls)
                 .setBundle(INTENT_POSITION, position)
                 .setBundle(INTENT_TITLE, needtitle)
-                .setView(view)
-                .setActionString(AppConstant.TRANSITION_ANIMATION)
-                .thumbNailScaleAnim()
+                .customAnim()
                 .start();
-//        activity.startActivity(intent);
-//        activity.overridePendingTransition(R.anim.dock_right_enter, R.anim.dock_left_exit);
     }
 
     @Override
@@ -94,10 +87,12 @@ public class BigImagePagerActivity extends BaseActivity {
     }
 
 
+    private List<BigImageBean> img_list = new ArrayList<>();
+    private boolean needtitle;
+
     @Override
     public void initView(Bundle savedInstanceState) {
         setSwipeBackLayout(2);
-        ViewCompat.setTransitionName(bigimagViewPager, AppConstant.TRANSITION_ANIMATION);
         //设置透明状态栏
         SetTranslanteBar(toolbar);
         toolBarFadeIn();
@@ -105,21 +100,14 @@ public class BigImagePagerActivity extends BaseActivity {
         initBackground();
 
         int startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
-        boolean needtitle = getIntent().getBooleanExtra(INTENT_TITLE, false);
-        imgUrls = getIntent().getStringArrayListExtra(INTENT_IMGURLS);
-
-        bigimageTitleTv.setVisibility(needtitle ? View.VISIBLE : View.GONE);
-        if (needtitle) {
-            bigimageTitleTv.setVisibility(View.VISIBLE);
-            bigimageGuideGroup.setVisibility(View.GONE);
-        } else {
-            bigimageTitleTv.setVisibility(View.GONE);
-            bigimageGuideGroup.setVisibility(View.VISIBLE);
-        }
+        needtitle = getIntent().getBooleanExtra(INTENT_POSITION, false);
+        String imgUrls = getIntent().getStringExtra(INTENT_IMGLISTJSON);
+        img_list = RxJsonTools.parseArray(imgUrls, BigImageBean.class);
 
         setPhotoDetailTitle(startPos);
+
         ImageAdapter mAdapter = new ImageAdapter(this);
-        mAdapter.setDatas(imgUrls);
+        mAdapter.setDatas(img_list);
         bigimagViewPager.setAdapter(mAdapter);
         bigimagViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
@@ -130,9 +118,6 @@ public class BigImagePagerActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                for (int i = 0; i < guideViewList.size(); i++) {
-                    guideViewList.get(i).setSelected(i == position ? true : false);
-                }
                 setPhotoDetailTitle(position);
             }
 
@@ -150,24 +135,42 @@ public class BigImagePagerActivity extends BaseActivity {
     }
 
     private void initToolbar() {
-        toolbar.setTitle("图片浏览");
-        onCreateCustomToolBar(context,toolbar,true);
+        toolbar.setTitle("图片详情");
+        onCreateCustomToolBar(context, toolbar, true);
     }
 
     public void setPhotoDetailTitle(int position) {
-        String phototitle = "";
-        bigimageTitleTv.setText(phototitle);
-        bigimageGuideGroup.setText(getString(R.string.photo_detail_num, position + 1,
-                imgUrls.size()));
+        if (img_list.size() > position) {
+            if (img_list.size() == 1) {
+                bigimageGuideGroup.setVisibility(View.GONE);
+                bigimageTitleTv.setVisibility(View.GONE);
+            } else {
+                bigimageGuideGroup.setVisibility(View.VISIBLE);
+                bigimageTitleTv.setVisibility(View.VISIBLE);
+                String phototitle = img_list.get(position).getImage_describe();
+                String view_title = img_list.get(position).getImage_view_title();
+                if (needtitle && !view_title.equals("")) {
+                    toolbar.setTitle(view_title);
+                } else {
+                    toolbar.setTitle("图片详情");
+                }
+                bigimageTitleTv.setText(phototitle);
+                bigimageGuideGroup.setText(getString(R.string.photo_detail_num, position + 1,
+                        img_list.size()));
+            }
+        } else {
+            bigimageTitleTv.setVisibility(View.GONE);
+            bigimageGuideGroup.setVisibility(View.GONE);
+        }
     }
 
     private class ImageAdapter extends PagerAdapter {
 
-        private List<String> datas = new ArrayList<String>();
+        private List<BigImageBean> datas = new ArrayList<>();
         private LayoutInflater inflater;
         private Context context;
 
-        public void setDatas(List<String> datas) {
+        public void setDatas(List<BigImageBean> datas) {
             if (datas != null)
                 this.datas = datas;
         }
@@ -188,9 +191,9 @@ public class BigImagePagerActivity extends BaseActivity {
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             View view = inflater.inflate(R.layout.item_pager_image, container, false);
-            ImageView imageView = (ImageView) view.findViewById(R.id.image);
+            ImageView imageView = view.findViewById(R.id.image);
 
-            String path = this.datas.get(position);
+            String path = this.datas.get(position).getImage_url();
             Uri uri;
             if (path.startsWith("http")) {
                 uri = Uri.parse(path);
@@ -200,9 +203,8 @@ public class BigImagePagerActivity extends BaseActivity {
             imageView.setOnClickListener(new OnNoFastClickListener() {
                 @Override
                 protected void onNoDoubleClick(View view) {
-                    if (context instanceof Activity && !((Activity) context).isFinishing()) {
-                        ((Activity) context).onBackPressed();
-                    }
+                    hideOrShowToolbar();
+                    hideOrShowStatusBar();
                 }
             });
 
@@ -263,7 +265,7 @@ public class BigImagePagerActivity extends BaseActivity {
 
 
     private void initBackground() {
-        mBackground = new ColorDrawable(Color.BLACK);
+        ColorDrawable mBackground = new ColorDrawable(Color.BLACK);
         RxTabLayoutTool.getRootView(this).setBackgroundDrawable(mBackground);
     }
 

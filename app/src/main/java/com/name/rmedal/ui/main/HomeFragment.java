@@ -12,13 +12,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
+import com.name.rmedal.bigimage.BigImagePagerActivity;
+import com.name.rmedal.modelbean.BigImageBean;
 import com.name.rmedal.modelbean.FunctionBean;
+import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.veni.rxtools.RxJsonTools;
 import com.veni.rxtools.RxTool;
 import com.veni.rxtools.interfaces.OnNoFastClickListener;
 import com.veni.rxtools.view.RxTitle;
@@ -70,6 +74,7 @@ public class HomeFragment extends BaseFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 clooserefreshlayout();
             }
+
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 clooserefreshlayout();
@@ -84,7 +89,7 @@ public class HomeFragment extends BaseFragment {
                 ImageView function_item_iv = viewHolder.getView(R.id.function_item_iv);
 
                 viewHolder.setText(R.id.function_item_tv, item.getFunctionName());
-                viewHolder.setOnClickListener(R.id.function_item_ll,item.getNoFastClickListener());
+                viewHolder.setOnClickListener(R.id.function_item_ll, item.getNoFastClickListener());
                 int image = item.getFunctionImage();
                 if (image != 0) {
                     function_item_iv.setVisibility(View.VISIBLE);
@@ -110,6 +115,26 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 ToastActivity.startAction(context);
+            }
+        }));
+        functionlist.add(new FunctionBean("查看大图", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                List<BigImageBean> img_list = new ArrayList<>();
+                img_list.add(new BigImageBean("http://a0.att.hudong.com/31/35/300533991095135084358827466.jpg"
+                        ,"美女111"));
+                img_list.add(new BigImageBean("http://www.zhlzw.com/UploadFiles/Article_UploadFiles/201210/2012102917591370.jpg"
+                        ,"美女222"));
+                img_list.add(new BigImageBean("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg"
+                        ,"美女333"));
+                String imglistjson = RxJsonTools.toJson(img_list);
+                BigImagePagerActivity.startAction(context, imglistjson, 0);
+            }
+        }));
+        functionlist.add(new FunctionBean("数据时效存储", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                ACacheActivity.startAction(context);
             }
         }));
         functionadapter.replaceData(functionlist);

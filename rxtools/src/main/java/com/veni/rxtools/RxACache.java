@@ -200,12 +200,12 @@ public class RxACache {
     }
 
     /**
-     * 读取 String数据
+     * 读取 缓存数据到期时间
      *
      * @param key
      * @return String 数据
      */
-    public long getAsStringTime(String key) {
+    public long getAsTime(String key) {
         File file = mCache.get(key);
         if (!file.exists())
             return 0;
