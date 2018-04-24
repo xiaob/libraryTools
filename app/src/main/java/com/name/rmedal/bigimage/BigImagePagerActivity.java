@@ -35,7 +35,7 @@ import com.veni.tools.RxTabLayoutTool;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.StatusBarUtil;
-import com.veni.tools.view.RxViewPagerFixed;
+import com.veni.tools.view.ViewPagerFixed;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -53,7 +53,7 @@ public class BigImagePagerActivity extends BaseActivity {
     @BindView(R.id.photo_det_toolbar)
     Toolbar toolbar;
     @BindView(R.id.bigimage_pager)
-    RxViewPagerFixed bigimagViewPager;
+    ViewPagerFixed bigimagViewPager;
     @BindView(R.id.bigimage_guideGroup)
     TextView bigimageGuideGroup;//第几章图片 1/5
     @BindView(R.id.bigimage_title_tv)

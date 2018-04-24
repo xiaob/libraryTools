@@ -19,7 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.veni.tools.model.Gps;
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.ToastTool;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -110,7 +110,7 @@ public class RxLocationTool {
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         mListener = listener;
         if (!isLocationEnabled(context)) {
-            RxToast.showToast(context, "无法定位，请打开定位服务", 500);
+            ToastTool.showToast(context, "无法定位，请打开定位服务", 500);
             return false;
         }
         String provider = mLocationManager.getBestProvider(getCriteria(), true);

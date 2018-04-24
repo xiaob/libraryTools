@@ -6,8 +6,8 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.veni.tools.view.RxTitle
-        android:id="@+id/toast_rxtitle"
+    <com.veni.tools.view.TitleView
+        android:id="@+id/toast_title_view"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/bg_toolbar_primary"

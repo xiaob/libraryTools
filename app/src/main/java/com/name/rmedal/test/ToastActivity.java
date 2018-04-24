@@ -16,10 +16,11 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.veni.tools.StatusBarUtil;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.LabelsView;
-import com.veni.tools.view.RxTitle;
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.TitleView;
+import com.veni.tools.view.ToastTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,8 @@ import rx.schedulers.Schedulers;
 
 public class ToastActivity extends BaseActivity {
 
-    @BindView(R.id.toast_rxtitle)
-    RxTitle toastTitle;
+    @BindView(R.id.toast_title_view)
+    TitleView toastTitleView;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -70,8 +71,10 @@ public class ToastActivity extends BaseActivity {
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
-        toastTitle.setLeftFinish(context);
-        toastTitle.setTitle("Toast_LabelsView");
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, toastTitleView);
+        toastTitleView.setLeftFinish(context);
+        toastTitleView.setTitle("Toast_LabelsView");
         setSwipeBackLayout(0);
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -124,22 +127,22 @@ public class ToastActivity extends BaseActivity {
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
             case "系统提示":
-                RxToast.showToast("showToast");
+                ToastTool.showToast("showToast");
                 break;
             case "普通提示":
-                RxToast.normal("这是一个普通提示的Toast");
+                ToastTool.normal("这是一个普通提示的Toast");
                 break;
             case "信息提示":
-                RxToast.info("这是一个信息提示的Toast");
+                ToastTool.info("这是一个信息提示的Toast");
                 break;
             case "错误提示":
-                RxToast.error("这是一个错误提示的Toast");
+                ToastTool.error("这是一个错误提示的Toast");
                 break;
             case "警告提示":
-                RxToast.warning("这是一个警告提示的Toast");
+                ToastTool.warning("这是一个警告提示的Toast");
                 break;
             case "成功提示":
-                RxToast.success("这是一个成功提示的Toast");
+                ToastTool.success("这是一个成功提示的Toast");
                 break;
         }
 

@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarUtil;
 import com.veni.tools.view.LabelsView;
-import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.TitleView;
 import com.veni.tools.view.progressing.SpinKitView;
 import com.veni.tools.view.progressing.SpriteFactory;
 import com.veni.tools.view.progressing.Style;
@@ -38,8 +38,8 @@ import rx.schedulers.Schedulers;
 
 public class Dialog_ProgressActivity extends BaseActivity {
 
-    @BindView(R.id.toast_rxtitle)
-    RxTitle toastTitle;
+    @BindView(R.id.toast_title_view)
+    TitleView toastTitleView;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -72,9 +72,9 @@ public class Dialog_ProgressActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
 
         StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, toastTitle);
-        toastTitle.setLeftFinish(context);
-        toastTitle.setTitle("Dialog_Progress");
+        StatusBarUtil.setPaddingSmart(this, toastTitleView);
+        toastTitleView.setLeftFinish(context);
+        toastTitleView.setTitle("Dialog_Progress");
         setSwipeBackLayout(0);
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

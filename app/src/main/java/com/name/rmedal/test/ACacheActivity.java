@@ -20,7 +20,7 @@ import com.veni.tools.ACache;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarUtil;
 import com.veni.tools.view.LabelsView;
-import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +39,8 @@ import rx.schedulers.Schedulers;
 
 public class ACacheActivity extends BaseActivity {
 
-    @BindView(R.id.toast_rxtitle)
-    RxTitle toastTitle;
+    @BindView(R.id.toast_title_view)
+    TitleView toastTitleView;
     @BindView(R.id.toast_refreshlayout)
     SmartRefreshLayout toastRefreshlayout;
     @BindView(R.id.toast_recyclerview)
@@ -73,9 +73,9 @@ public class ACacheActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, toastTitle);
-        toastTitle.setLeftFinish(context);
-        toastTitle.setTitle("时效存储");
+        StatusBarUtil.setPaddingSmart(this, toastTitleView);
+        toastTitleView.setLeftFinish(context);
+        toastTitleView.setTitle("时效存储");
         setSwipeBackLayout(0);
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override

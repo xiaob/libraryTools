@@ -19,7 +19,7 @@ import com.name.rmedal.ui.trade.TradeFragment;
 import com.veni.tools.RxActivityTool;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarUtil;
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.ToastTool;
 
 import java.util.concurrent.TimeUnit;
 
@@ -157,7 +157,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     public void onBackPressed() {
         if (!isExit) {
             isExit = true;
-            RxToast.normal("再按一次退出程序");
+            ToastTool.normal("再按一次退出程序");
             Observable.timer(2000, TimeUnit.MILLISECONDS)
                     .subscribe(new Action1<Long>() {
                         @Override

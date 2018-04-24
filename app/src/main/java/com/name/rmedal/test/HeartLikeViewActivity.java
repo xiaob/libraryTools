@@ -1,35 +1,24 @@
 package com.name.rmedal.test;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
-import com.name.rmedal.modelbean.FunctionBean;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.tools.ACache;
+import com.veni.tools.StatusBarUtil;
 import com.veni.tools.base.ActivityJumpOptionsTool;
-import com.veni.tools.view.LabelsView;
-import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.TitleView;
+import com.veni.tools.view.heart.HeartLayout;
+import com.veni.tools.view.likeview.ShineButton;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import butterknife.OnClick;
 
 /**
  * 作者：kkan on 2018/04/20
@@ -39,12 +28,25 @@ import rx.schedulers.Schedulers;
 
 public class HeartLikeViewActivity extends BaseActivity {
 
-    @BindView(R.id.toast_rxtitle)
-    RxTitle toastTitle;
-    @BindView(R.id.toast_refreshlayout)
-    SmartRefreshLayout toastRefreshlayout;
-    @BindView(R.id.toast_recyclerview)
-    RecyclerView toastRecyclerview;
+    @BindView(R.id.heartlike_title_view)
+    TitleView heartlikeTitleView;
+
+    @BindView(R.id.po_image0)
+    ShineButton mShineButton;
+    @BindView(R.id.po_image1)
+    ShineButton porterShapeImageView1;
+    @BindView(R.id.po_image2)
+    ShineButton porterShapeImageView2;
+    @BindView(R.id.po_image3)
+    ShineButton porterShapeImageView3;
+    @BindView(R.id.wrapper)
+    LinearLayout mWrapper;
+    @BindView(R.id.po_image8)
+    ShineButton mPoImage8;
+    @BindView(R.id.heart_layout)
+    HeartLayout mHeartLayout;
+    @BindView(R.id.tv_hv)
+    TextView mTvHv;
 
     /**
      * 启动入口
@@ -58,7 +60,7 @@ public class HeartLikeViewActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_toast;
+        return R.layout.activity_heartlike;
     }
 
     @Override
@@ -66,101 +68,60 @@ public class HeartLikeViewActivity extends BaseActivity {
 
     }
 
-    private List<String> labellist;
-
-    private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
-
     @Override
     public void initView(Bundle savedInstanceState) {
-        toastTitle.setLeftFinish(context);
-        toastTitle.setTitle("时效存储");
+        StatusBarUtil.immersive(this);
+        StatusBarUtil.setPaddingSmart(this, heartlikeTitleView);
+        heartlikeTitleView.setLeftFinish(context);
+        heartlikeTitleView.setTitle("点赞");
         setSwipeBackLayout(0);
-        toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                clooserefreshlayout();
-            }
 
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                clooserefreshlayout();
-            }
-        });
 
-        toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
+        mShineButton.init(this);
 
-        functionadapter = new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.activity_toast_spink) {
-            @Override
-            protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
-                viewHolder.setVisible(R.id.spink_item, false)
-                        .setText(R.id.spink_tv, item.getFunctionName());
-            }
-        };
+        ShineButton shinebuttonjava = new ShineButton(this);
 
-        functionadapter.addHeaderView(upHeaderView());
-        functionadapter.openLoadAnimation();
-        toastRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        toastRecyclerview.setAdapter(functionadapter);
-
-        replaceadapter("请插入或读取数据");
-    }
-
-    private void replaceadapter(String tipstr) {
-        List<FunctionBean> functionlist = new ArrayList<>();
-        functionlist.add(new FunctionBean(tipstr, 0, null));
-        functionadapter.replaceData(functionlist);
-    }
-
-    private View upHeaderView() {
-
-        //添加Header
-        View header = LayoutInflater.from(this).inflate(R.layout.activity_toast_lables, null, false);
-
-        LabelsView toastLabels = header.findViewById(R.id.toast_labels);
-        labellist = new ArrayList<>();
-        labellist.add("插入数据");
-        labellist.add("读取插入数据");
-        toastLabels.setLabels(labellist); //直接设置一个字符串数组就可以了。
-
-        toastLabels.setOnLabelClickListener(new LabelsView.OnLabelClickListener() {
-            public void onLabelClick(View label, String labelText, int position) {
-                //label是被点击的标签，labelText是标签的文字，position是标签的位置。
-                String labelstr = labellist.get(position);
-                setfuctionview(labelstr);
-            }
-        });
-        return header;
-    }
-
-    private void setfuctionview(String labelstr) {
-        switch (labelstr) {
-            case "插入数据": {
-                ACache.get(context).put("数据", "-----", ACache.TIME_MINUTE);
-                long time = ACache.get(context).getAsTime("数据");
-                replaceadapter("插入数据\nkey:数据\nvalue:-----\n剩余时间:" + time);
-                break;
-            }
-            case "读取插入数据": {
-                String value = ACache.get(context).getAsString("数据");
-                long time = ACache.get(context).getAsTime("数据");
-                replaceadapter("读取数据\nkey:数据\nvalue:" + value + "\n剩余时间:" + time);
-                break;
-            }
+        shinebuttonjava.setBtnColor(Color.GRAY);
+        shinebuttonjava.setBtnFillColor(Color.RED);
+        shinebuttonjava.setShapeResource(R.mipmap.heart);
+        shinebuttonjava.setAllowRandomColor(true);
+        shinebuttonjava.setShineSize(100);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+        shinebuttonjava.setLayoutParams(layoutParams);
+        if (mWrapper != null) {
+            mWrapper.addView(shinebuttonjava);
         }
 
+
+
     }
 
-    private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
+    private Random random = new Random();
+
+    @OnClick({R.id.po_image1, R.id.po_image2, R.id.po_image3, R.id.po_image0, R.id.po_image8, R.id.love, R.id.heart_layout})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.po_image1:
+                break;
+            case R.id.po_image2:
+                break;
+            case R.id.po_image3:
+                break;
+            case R.id.po_image0:
+                break;
+            case R.id.po_image8:
+                break;
+            case R.id.love:
+                mHeartLayout.post(new Runnable() {
                     @Override
-                    public void call(Long aLong) {
-                        toastRefreshlayout.finishRefresh();
-                        toastRefreshlayout.finishLoadMore();
-                        replaceadapter("请插入或读取数据");
+                    public void run() {
+                        int rgb = Color.rgb(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+                        mHeartLayout.addHeart(rgb);
                     }
                 });
+                break;
+            case R.id.heart_layout:
+                break;
+        }
     }
 }

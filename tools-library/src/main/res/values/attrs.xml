@@ -58,7 +58,7 @@
         </attr>
     </declare-styleable>
     <!--点赞爆炸按钮-->
-    <declare-styleable name="RxShineButton">
+    <declare-styleable name="ShineButton">
         <attr name="btn_color" format="color" />
         <attr name="btn_fill_color" format="color" />
         <attr name="shine_count" format="integer" />
@@ -74,7 +74,7 @@
         <attr name="shine_size" format="dimension" />
     </declare-styleable>
     <!--爱心点赞-->
-    <declare-styleable name="RxHeartLayout">
+    <declare-styleable name="HeartLayout">
         <attr name="initX" format="dimension" />
         <attr name="initY" format="dimension" />
         <attr name="xRand" format="dimension" />
@@ -87,12 +87,12 @@
         <attr name="anim_duration" format="integer" />
     </declare-styleable>
     <!--爱心点赞-->
-    <declare-styleable name="RxPorterImageView">
+    <declare-styleable name="PorterImageView">
         <attr name="siShape" format="integer|reference" />
     </declare-styleable>
 
     <!--自定义标题-->
-    <declare-styleable name="RxTitle">
+    <declare-styleable name="TitleView">
         <attr name="title" format="string" />
         <attr name="titleColor" format="color" />
         <attr name="titleSize" format="dimension" />
@@ -156,7 +156,7 @@
     </declare-styleable>
 
     <!--弧形进度条-->
-    <declare-styleable name="RxRoundProgress">
+    <declare-styleable name="RoundProgress">
         <attr name="roundColor" format="color" />
         <attr name="roundProgressColor" format="color" />
         <attr name="roundWidth" format="dimension" />

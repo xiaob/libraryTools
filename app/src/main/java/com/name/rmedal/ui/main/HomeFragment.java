@@ -17,6 +17,7 @@ import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
+import com.name.rmedal.test.HeartLikeViewActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -26,7 +27,7 @@ import com.veni.tools.RxJsonTools;
 import com.veni.tools.RxTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.StatusBarUtil;
-import com.veni.tools.view.RxTitle;
+import com.veni.tools.view.TitleView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +50,7 @@ public class HomeFragment extends BaseFragment {
 
 
     @BindView(R.id.home_rxtitle)
-    RxTitle homeRxtitle;
+    TitleView homeRxtitle;
     @BindView(R.id.home_functions)
     RecyclerView homeFunctions;
     @BindView(R.id.home_refreshlayout)
@@ -137,6 +138,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 ACacheActivity.startAction(context);
+            }
+        }));
+        functionlist.add(new FunctionBean("爱心点赞-爆炸", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                HeartLikeViewActivity.startAction(context);
             }
         }));
         functionadapter.replaceData(functionlist);

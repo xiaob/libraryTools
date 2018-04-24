@@ -13,7 +13,7 @@ import com.veni.tools.base.BaseModel;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.TUtil;
 import com.veni.tools.baserx.RxManager;
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.ToastTool;
 
 import butterknife.ButterKnife;
 
@@ -125,7 +125,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
         if (errtipmsg.equals("")) {
             errtipmsg = getString(com.veni.tools.R.string.net_error);
         }
-        RxToast.error(errtipmsg);
+        ToastTool.error(errtipmsg);
     }
 
     @Override

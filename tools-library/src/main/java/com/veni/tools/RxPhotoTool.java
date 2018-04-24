@@ -22,7 +22,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.ToastTool;
 
 import java.io.File;
 import java.io.IOException;
@@ -176,7 +176,7 @@ public class RxPhotoTool {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             imageFilePath[0] = Uri.parse("");
-            RxToast.error("请先获取写入SDCard权限");
+            ToastTool.error("请先获取写入SDCard权限");
         } else {
             String status = Environment.getExternalStorageState();
             SimpleDateFormat timeFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);

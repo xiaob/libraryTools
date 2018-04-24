@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 
-import com.veni.tools.view.RxToast;
+import com.veni.tools.view.ToastTool;
 
 /**
  * Created by xiyn on 2017/3/15.
@@ -40,22 +40,22 @@ public class RxBroadcastTool {
 
             switch (netType) {//获取当前网络的状态
                 case RxNetTool.NETWORK_WIFI:// wifi的情况下
-                    RxToast.success("切换到wifi环境下");
+                    ToastTool.success("切换到wifi环境下");
                     break;
                 case RxNetTool.NETWORK_2G:
-                    RxToast.info("切换到2G环境下");
+                    ToastTool.info("切换到2G环境下");
                     break;
                 case RxNetTool.NETWORK_3G:
-                    RxToast.info("切换到3G环境下");
+                    ToastTool.info("切换到3G环境下");
                     break;
                 case RxNetTool.NETWORK_4G:
-                    RxToast.info("切换到4G环境下");
+                    ToastTool.info("切换到4G环境下");
                     break;
                 case RxNetTool.NETWORK_NO:
-                    RxToast.error(context, "当前无网络连接").show();
+                    ToastTool.error(context, "当前无网络连接").show();
                     break;
                 case RxNetTool.NETWORK_UNKNOWN:
-                    RxToast.normal("未知网络");
+                    ToastTool.normal("未知网络");
                     break;
             }
 
