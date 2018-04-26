@@ -1900,7 +1900,7 @@ public class FileTools {
      * @return
      */
     public static File getFilePhotoFromUri(Activity context, Uri uri) {
-        return new File(PhotoTools.getImageAbsolutePath(context, uri));
+        return new File(ImageTools.getImageAbsolutePath(context, uri));
     }
 
     @TargetApi(19)

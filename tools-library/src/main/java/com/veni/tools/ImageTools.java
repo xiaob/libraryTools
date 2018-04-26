@@ -1,6 +1,7 @@
 package com.veni.tools;
 
 import android.annotation.TargetApi;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -27,7 +28,11 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
@@ -45,6 +50,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 
 import static com.veni.tools.FutileTool.getContext;
 
@@ -61,6 +67,8 @@ import static com.veni.tools.FutileTool.getContext;
  * px2sp                       : px转sp
  *
  * 图片处理相关
+ * compressandsaveimage         : 压缩图片并保存
+ * getImageAbsolutePath         : 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
  * bitmap2Bytes                : bitmap转byteArr
  * bytes2Bitmap                : byteArr转bitmap
  * drawable2Bitmap             : drawable转bitmap
@@ -90,13 +98,11 @@ import static com.veni.tools.FutileTool.getContext;
  * getImageType                : 获取图片类型
  *
  * 图片压缩有关
- * compressByScale             : 按缩放压缩
  * compressByQuality           : 按质量压缩
  * compressBySampleSize        : 按采样大小压缩
  *
  * GetLocalOrNetBitmap         : 得到本地或者网络上的bitmap
  * getColorByInt               : 将16进制的颜色转化成10进制
- * FilpAnimation               : 界面翻转动画
  */
 
 public class ImageTools {
@@ -209,6 +215,155 @@ public class ImageTools {
         Bitmap bm = BitmapFactory.decodeFile(imagePath, options); // 解码文件
         LogTools.e("TAG", "size: " + bm.getByteCount() + " width: " + bm.getWidth() + " heigth:" + bm.getHeight()); // 输出图像数据
         return bm;
+    }
+
+    /**
+     * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
+     *
+     * @param context
+     * @param imageUri
+     * @author yaoxing
+     * @date 2014-10-12
+     */
+    @TargetApi(19)
+    public static String getImageAbsolutePath(Context context, Uri imageUri) {
+        if (context == null || imageUri == null)
+            return null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
+            if (FileTools.isExternalStorageDocument(imageUri)) {
+                String docId = DocumentsContract.getDocumentId(imageUri);
+                String[] split = docId.split(":");
+                String type = split[0];
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+            } else if (FileTools.isDownloadsDocument(imageUri)) {
+                String id = DocumentsContract.getDocumentId(imageUri);
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                return FileTools.getDataColumn(context, contentUri, null, null);
+            } else if (FileTools.isMediaDocument(imageUri)) {
+                String docId = DocumentsContract.getDocumentId(imageUri);
+                String[] split = docId.split(":");
+                String type = split[0];
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+                String selection = MediaStore.Images.Media._ID + "=?";
+                String[] selectionArgs = new String[]{split[1]};
+                return FileTools.getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        } // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
+            // Return the remote address
+            if (FileTools.isGooglePhotosUri(imageUri))
+                return imageUri.getLastPathSegment();
+            return FileTools.getDataColumn(context, imageUri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(imageUri.getScheme())) {
+            return imageUri.getPath();
+        }
+        return null;
+    }
+
+    /**
+     * 得到本地或者网络上的bitmap
+     *
+     * @param url - 网络或者本地图片的绝对路径,比如:
+     * <p/>
+     * A.网络路径: url="http://blog.foreverlove.us/girl2.png" ;
+     * <p/>
+     * B.本地路径:url="file://mnt/sdcard/photo/rx_bigimage_layout.png";
+     * <p/>
+     * C.支持的图片格式 ,png, jpg,bmp,gif等等
+     * @return
+     */
+    public static Bitmap GetLocalOrNetBitmap(String url) {
+        Bitmap bitmap = null;
+        InputStream in = null;
+        BufferedOutputStream out = null;
+        try {
+            in = new BufferedInputStream(new URL(url).openStream(), 1024);
+            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
+            out = new BufferedOutputStream(dataStream, 1024);
+            copy(in, out);
+            out.flush();
+            byte[] data = dataStream.toByteArray();
+            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            data = null;
+            return bitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static void copy(InputStream in, OutputStream out) throws IOException {
+        byte[] b = new byte[1024];
+        int read;
+        while ((read = in.read(b)) != -1) {
+            out.write(b, 0, read);
+        }
+    }
+
+    /**
+     * getColorByInt               : 将16进制的颜色转化成10进制
+     * @param colorInt 16进制的颜色
+     * @return 10进制 颜色
+     */
+    public static int getColorByInt(int colorInt) {
+        return colorInt | -16777216;
+    }
+
+    /**
+     * 修改颜色透明度
+     *
+     * @param color
+     * @param alpha
+     * @return
+     */
+    public static int changeColorAlpha(int color, int alpha) {
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+
+        return Color.argb(alpha, red, green, blue);
+    }
+
+    public static float getAlphaPercent(int argb) {
+        return Color.alpha(argb) / 255f;
+    }
+
+    public static int alphaValueAsInt(float alpha) {
+        return Math.round(alpha * 255);
+    }
+
+    public static int adjustAlpha(float alpha, int color) {
+        return alphaValueAsInt(alpha) << 24 | (0x00ffffff & color);
+    }
+
+    public static int colorAtLightness(int color, float lightness) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        hsv[2] = lightness;
+        return Color.HSVToColor(hsv);
+    }
+
+    public static float lightnessOfColor(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return hsv[2];
+    }
+
+    public static String getHexString(int color, boolean showAlpha) {
+        int base = showAlpha ? 0xFFFFFFFF : 0xFFFFFF;
+        String format = showAlpha ? "#%08X" : "#%06X";
+        return String.format(format, (base & color)).toUpperCase();
     }
 
     /**
@@ -529,64 +684,6 @@ public class ImageTools {
         options.inSampleSize = calculateInSampleSize(options, maxWidth, maxHeight);
         options.inJustDecodeBounds = false;
         return BitmapFactory.decodeFileDescriptor(fd, null, options);
-    }
-
-    /**
-     * 缩放图片
-     *
-     * @param src       源图片
-     * @param newWidth  新宽度
-     * @param newHeight 新高度
-     * @return 缩放后的图片
-     */
-    public static Bitmap scale(Bitmap src, int newWidth, int newHeight) {
-        return scale(src, newWidth, newHeight, false);
-    }
-
-    /**
-     * 缩放图片
-     *
-     * @param src       源图片
-     * @param newWidth  新宽度
-     * @param newHeight 新高度
-     * @param recycle   是否回收
-     * @return 缩放后的图片
-     */
-    public static Bitmap scale(Bitmap src, int newWidth, int newHeight, boolean recycle) {
-        if (isEmptyBitmap(src)) return null;
-        Bitmap ret = Bitmap.createScaledBitmap(src, newWidth, newHeight, true);
-        if (recycle && !src.isRecycled()) src.recycle();
-        return ret;
-    }
-
-    /**
-     * 缩放图片
-     *
-     * @param src         源图片
-     * @param scaleWidth  缩放宽度倍数
-     * @param scaleHeight 缩放高度倍数
-     * @return 缩放后的图片
-     */
-    public static Bitmap scale(Bitmap src, float scaleWidth, float scaleHeight) {
-        return scale(src, scaleWidth, scaleHeight, false);
-    }
-
-    /**
-     * 缩放图片
-     *
-     * @param src         源图片
-     * @param scaleWidth  缩放宽度倍数
-     * @param scaleHeight 缩放高度倍数
-     * @param recycle     是否回收
-     * @return 缩放后的图片
-     */
-    public static Bitmap scale(Bitmap src, float scaleWidth, float scaleHeight, boolean recycle) {
-        if (isEmptyBitmap(src)) return null;
-        Matrix matrix = new Matrix();
-        matrix.setScale(scaleWidth, scaleHeight);
-        Bitmap ret = Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
-        if (recycle && !src.isRecycled()) src.recycle();
-        return ret;
     }
 
     /**
@@ -1553,57 +1650,7 @@ public class ImageTools {
         return src == null || src.getWidth() == 0 || src.getHeight() == 0;
     }
 
-    /**
-     * 按缩放压缩
-     *
-     * @param src       源图片
-     * @param newWidth  新宽度
-     * @param newHeight 新高度
-     * @return 缩放压缩后的图片
-     */
-    public static Bitmap compressByScale(Bitmap src, int newWidth, int newHeight) {
-        return scale(src, newWidth, newHeight, false);
-    }
-
-    /**
-     * 按缩放压缩
-     *
-     * @param src       源图片
-     * @param newWidth  新宽度
-     * @param newHeight 新高度
-     * @param recycle   是否回收
-     * @return 缩放压缩后的图片
-     */
-    public static Bitmap compressByScale(Bitmap src, int newWidth, int newHeight, boolean recycle) {
-        return scale(src, newWidth, newHeight, recycle);
-    }
-
     /******************************~~~~~~~~~ 下方和压缩有关 ~~~~~~~~~******************************/
-
-    /**
-     * 按缩放压缩
-     *
-     * @param src         源图片
-     * @param scaleWidth  缩放宽度倍数
-     * @param scaleHeight 缩放高度倍数
-     * @return 缩放压缩后的图片
-     */
-    public static Bitmap compressByScale(Bitmap src, float scaleWidth, float scaleHeight) {
-        return scale(src, scaleWidth, scaleHeight, false);
-    }
-
-    /**
-     * 按缩放压缩
-     *
-     * @param src         源图片
-     * @param scaleWidth  缩放宽度倍数
-     * @param scaleHeight 缩放高度倍数
-     * @param recycle     是否回收
-     * @return 缩放压缩后的图片
-     */
-    public static Bitmap compressByScale(Bitmap src, float scaleWidth, float scaleHeight, boolean recycle) {
-        return scale(src, scaleWidth, scaleHeight, recycle);
-    }
 
     /**
      * 按质量压缩

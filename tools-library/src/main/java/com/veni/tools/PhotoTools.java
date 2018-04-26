@@ -1,261 +1,448 @@
 package com.veni.tools;
 
-import android.Manifest;
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ContentResolver;
+import android.content.ActivityNotFoundException;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.hardware.Camera;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.widget.Toast;
 
-import com.veni.tools.view.ToastTool;
-
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 
 /**
- * Created by xiyn on 2016/1/24.
- * 图片获取相关
- * openCameraImage             : 调用系统相机
- * openLocalImage              : 调用系统相册
- * cropImage                   : 裁剪图片
- * createImagePathUri          : 创建一条图片地址uri,用于保存拍照后的照片
- * getRealFilePath             : 获取图片uri的真实文件地址
- * 
- * getOpenCameraIntent         : 获取打开照程序界面的Intent
- * getImagePickerIntent        : 获取[跳转至相册选择界面,并跳转至裁剪界面，可以指定是否缩放裁剪区域]的Intent
- * getCameraIntent             : 获取[跳转至相册选择界面,并跳转至裁剪界面，默认可缩放裁剪区域]的Intent
- * getCropImageIntent          : 获取[跳转至裁剪界面]的Intent
- * getChoosedImage             : 获得选中相册的图片
- * getChoosedImagePath         : 获得选中相册的图片路径
- * getTakePictureFile          : 获取拍照之后的照片文件（JPG格式）
- *
- * openFlashLight              : 打开闪光灯
- * closeFlashLight             : 关闭闪光灯
+ * 相册 相机 图片工具类
+ * Created by xiyn on 2017/8/9.
  */
 
 public class PhotoTools {
 
-    public static final int GET_IMAGE_BY_CAMERA = 5001;
-    public static final int GET_IMAGE_FROM_PHONE = 5002;
-    public static final int CROP_IMAGE = 5003;
-    public static Uri imageUriFromCamera;
-    public static Uri cropImageUri;
 
-    public static void openCameraImage(final Activity activity) {
-        imageUriFromCamera = createImagePathUri(activity);
+    /**
+     * 使用方式:
+     *
+     * 1.获取拍照原图Bitmap:  PhotoTools.onInitPhoneResult(this,requestCode,resultCode,data,"init.jpg")
+     *   参数列表：上下文环境，请求码，响应码，返回的数据，图片名称
+     *   注：请求码，响应码，返回的数据是onActivityResult（）方法的参数
+     * 2.获取一定压缩比例的原图
+     *   （1）方式一：拍照保存：PhotoTools.onInitPhoneResult(this,requestCode,resultCode,data,"init.jpg")
+     *                将拍照保存路径下的照片进行处理  PhotoTools.getBitmapOption(Environment.getExternalStorageDirectory() + "/phone/init.jpg", 20))
+     *                参数：拍照保存的全路径，缩放比列（20表示缩放比为原图的1/20）
+     *   （2）方式二：将现有的bitmap进行压缩处理：
+     *                将bitmap保存：PhotoTools.saveBitmapFile(bitmap,filePath);
+     *                   参数：有效的bitmap，保存的全路径
+     *                将保存路径下的bitmap进行压缩：PhotoTools.getBitmapOption(filePath, 20))
+     *                   参数：保存的全路径，缩放比列
+     * 3.保存一个bitmap:PhotoTools.saveBitmapFile(bitmap,filePath);
+     *                   参数：有效的bitmap，保存的全路径
+     * 4.缩放一个一个路径下的bitmap：PhotoTools.getBitmapOption(filePath, 20))
+     *                   参数：保存的全路径，缩放比列
+     * 5.获取一个拍照缩略图：
+     *                拍照：PhotoTools.getAbbreviationsPhone(this);
+     *                在onActivityResult（）中PhoneUtils.onAbbreviationsPhoneResult(this,requestCode,resultCode,data)
+     *                   参数：上下文，请求码，响应码，返回数据
+     * 6.获取相册选择的单个图片：
+     *   （1）：得到一个图片的bitmap：
+     *          调用相册：PhotoTools.getAlbumPhone(上下文环境);
+     *          在onActivityResult（）中PhoneUtils.onmyPhoneResult(this,requestCode,resultCode,data);得到bitmap
+     *   （2）：得到一个图片的file:
+     *          调用相册：PhotoTools.getAlbumPhone(上下文环境);
+     *          在onActivityResult（）中PhoneUtils.onmyPhoneFileResult(this,requestCode,resultCode,data);得到file
+     * 7.获取拍照剪切图片：
+     *      调用PhoneUtils.getSheraPack(this,"cut.jpg");
+     *      在在onActivityResult（）中监听PHONE_CODE_SHEAR_PACK响应码调用Uri packUri =PhotoTools.onInitCutPhoneResult(this,requestCode,resultCode,data,"cut.jpg");获得拍照的原图
+     *      在调用PhoneUtils.crop(this,packUri)进去截图
+     *      在在onActivityResult（）中监听PHONE_CODE__CUT截图完毕响应码  Bitmap photo=data.getParcelableExtra("data");
+     *      获得phone这个截图后的bitmap
+     * 8.获取相册剪切图片：
+     *      调用PhoneUtils.getSheraMyPhone(this);进入相册请求图片
+     *      在在onActivityResult（）中监听PHONE_CODE__SHEAR_MYPHONE响应码调用Uri myUri=PhotoTools.onCutmyPhoneResult(this,requestCode,resultCode,data);;获得相册图片uri
+     *      在调用PhoneUtils.crop(this,myUri)进去截图
+     *      在在onActivityResult（）中监听PHONE_CODE__CUT截图完毕响应码  Bitmap photo=data.getParcelableExtra("data");
+     *      获得phone这个截图后的bitmap
+     * 9.选择相册多张图片：
+     *
+     */
 
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // MediaStore.EXTRA_OUTPUT参数不设置时,系统会自动生成一个uri,但是只会返回一个缩略图
-        // 返回图片在onActivityResult中通过以下代码获取
-        // Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriFromCamera);
-        activity.startActivityForResult(intent, GET_IMAGE_BY_CAMERA);
-    }
+    //拍照获取缩略图的请求码
+    public final static int PHONE_CODE_ABBPHONE=0;
+    //拍照获取相册图片的请求码
+    public final static int PHONE_CODE_ALBUNMPHONE=1;
+    //拍照获原图图的请求码
+    public final static int PHONE_CODE_INITPACKPHONE=2;
+    //拍照剪切图片请求码
+    public final static int PHONE_CODE_SHEAR_PACK=3;
+    //相册剪切图片请求码
+    public final static int PHONE_CODE__SHEAR_MYPHONE=4;
+    //剪切请求码
+    public final static int PHONE_CODE__CUT=5;
 
-    public static void openCameraImage(final Fragment fragment) {
-        imageUriFromCamera = createImagePathUri(fragment.getContext());
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // MediaStore.EXTRA_OUTPUT参数不设置时,系统会自动生成一个uri,但是只会返回一个缩略图
-        // 返回图片在onActivityResult中通过以下代码获取
-        // Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUriFromCamera);
-        fragment.startActivityForResult(intent, GET_IMAGE_BY_CAMERA);
-    }
-
-    public static void openLocalImage(final Activity activity) {
-        Intent intent = new Intent();
-        intent.setType("rx_bigimage_layout/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        activity.startActivityForResult(intent, GET_IMAGE_FROM_PHONE);
-    }
-
-    public static void openLocalImage(final Fragment fragment) {
-        Intent intent = new Intent();
-        intent.setType("rx_bigimage_layout/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        fragment.startActivityForResult(intent, GET_IMAGE_FROM_PHONE);
-    }
-
-    public static void cropImage(Activity activity, Uri srcUri) {
-        cropImageUri = createImagePathUri(activity);
-
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(srcUri, "rx_bigimage_layout/*");
-        intent.putExtra("crop", "true");
-
-        ////////////////////////////////////////////////////////////////
-        // 1.宽高和比例都不设置时,裁剪框可以自行调整(比例和大小都可以随意调整)
-        ////////////////////////////////////////////////////////////////
-        // 2.只设置裁剪框宽高比(aspect)后,裁剪框比例固定不可调整,只能调整大小
-        ////////////////////////////////////////////////////////////////
-        // 3.裁剪后生成图片宽高(output)的设置和裁剪框无关,只决定最终生成图片大小
-        ////////////////////////////////////////////////////////////////
-        // 4.裁剪框宽高比例(aspect)可以和裁剪后生成图片比例(output)不同,此时,
-        //	会以裁剪框的宽为准,按照裁剪宽高比例生成一个图片,该图和框选部分可能不同,
-        //  不同的情况可能是截取框选的一部分,也可能超出框选部分,向下延伸补足
-        ////////////////////////////////////////////////////////////////
-
-        // aspectX aspectY 是裁剪框宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪后生成图片的宽高
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-
-        // return-data为true时,会直接返回bitmap数据,但是大图裁剪时会出现问题,推荐下面为false时的方式
-        // return-data为false时,不会返回bitmap,但需要指定一个MediaStore.EXTRA_OUTPUT保存图片uri
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);
-        intent.putExtra("return-data", true);
-
-        activity.startActivityForResult(intent, CROP_IMAGE);
-    }
-
-    public static void cropImage(Fragment fragment, Uri srcUri) {
-        cropImageUri = createImagePathUri(fragment.getContext());
-
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(srcUri, "rx_bigimage_layout/*");
-        intent.putExtra("crop", "true");
-
-        ////////////////////////////////////////////////////////////////
-        // 1.宽高和比例都不设置时,裁剪框可以自行调整(比例和大小都可以随意调整)
-        ////////////////////////////////////////////////////////////////
-        // 2.只设置裁剪框宽高比(aspect)后,裁剪框比例固定不可调整,只能调整大小
-        ////////////////////////////////////////////////////////////////
-        // 3.裁剪后生成图片宽高(output)的设置和裁剪框无关,只决定最终生成图片大小
-        ////////////////////////////////////////////////////////////////
-        // 4.裁剪框宽高比例(aspect)可以和裁剪后生成图片比例(output)不同,此时,
-        //	会以裁剪框的宽为准,按照裁剪宽高比例生成一个图片,该图和框选部分可能不同,
-        //  不同的情况可能是截取框选的一部分,也可能超出框选部分,向下延伸补足
-        ////////////////////////////////////////////////////////////////
-
-        // aspectX aspectY 是裁剪框宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        // outputX outputY 是裁剪后生成图片的宽高
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-
-        // return-data为true时,会直接返回bitmap数据,但是大图裁剪时会出现问题,推荐下面为false时的方式
-        // return-data为false时,不会返回bitmap,但需要指定一个MediaStore.EXTRA_OUTPUT保存图片uri
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, cropImageUri);
-        intent.putExtra("return-data", true);
-
-        fragment.startActivityForResult(intent, CROP_IMAGE);
+    /**
+     * 调用系统相机获取拍照缩略图
+     */
+    public static void getAbbreviationsPhone(Activity activity){
+        //为安全起见，拿到sdcard是否可用的状态码
+        String state = Environment.getExternalStorageState();
+        //如果sd卡可用
+        if (state.equals(Environment.MEDIA_MOUNTED)){ //如果可用
+            Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+            activity.startActivityForResult(intent,PHONE_CODE_ABBPHONE);
+        }else {
+            Toast.makeText(activity,"sdcard状态异常", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
-     * 创建一条图片地址uri,用于保存拍照后的照片
-     *
-     * @param context
-     * @return 图片的uri
+     * 调用系统相册获取获取单张图片uri
      */
-    public static Uri createImagePathUri(final Context context) {
-        final Uri[] imageFilePath = {null};
+    public static void getAlbumPhone(Activity activity){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");//相片类型
+        activity.startActivityForResult(intent,PHONE_CODE_ALBUNMPHONE);
+    }
 
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            imageFilePath[0] = Uri.parse("");
-            ToastTool.error("请先获取写入SDCard权限");
+    /**
+     * 调用相机获取剪切图
+     */
+    public static void getSheraPack(Activity activity, String fileName){
+        //先验证手机是否有sdcard
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            try {
+                //将拍摄的照片保存在一个指定好的文件下
+                File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/Cut");
+                if (!dir.exists()) dir.mkdirs();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = new File(dir, fileName);
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                activity.startActivityForResult(intent, PHONE_CODE_SHEAR_PACK);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(activity, "没有找到储存目录", Toast.LENGTH_LONG).show();
+            }
         } else {
-            String status = Environment.getExternalStorageState();
-            SimpleDateFormat timeFormatter = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.CHINA);
-            long time = System.currentTimeMillis();
-            String imageName = timeFormatter.format(new Date(time));
-            // ContentValues是我们希望这条记录被创建时包含的数据信息
-            ContentValues values = new ContentValues(3);
-            values.put(MediaStore.Images.Media.DISPLAY_NAME, imageName);
-            values.put(MediaStore.Images.Media.DATE_TAKEN, time);
-            values.put(MediaStore.Images.Media.MIME_TYPE, "rx_bigimage_layout/jpeg");
-
-            if (status.equals(Environment.MEDIA_MOUNTED)) {// 判断是否有SD卡,优先使用SD卡存储,当没有SD卡时使用手机存储
-                imageFilePath[0] = context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-            } else {
-                imageFilePath[0] = context.getContentResolver().insert(MediaStore.Images.Media.INTERNAL_CONTENT_URI, values);
-            }
+            Toast.makeText(activity, "sdcard状态异常", Toast.LENGTH_LONG).show();
         }
-
-        Log.i("", "生成的照片输出路径：" + imageFilePath[0].toString());
-        return imageFilePath[0];
     }
-
-
-    //此方法 只能用于4.4以下的版本
-    public static String getRealFilePath(final Context context, final Uri uri) {
-        if (null == uri) return null;
-        final String scheme = uri.getScheme();
-        String data = null;
-        if (scheme == null)
-            data = uri.getPath();
-        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-            data = uri.getPath();
-        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            String[] projection = {MediaStore.Images.ImageColumns.DATA};
-            Cursor cursor = context.getContentResolver().query(uri, projection, null, null, null);
-
-//            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
-            if (null != cursor) {
-                if (cursor.moveToFirst()) {
-                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-                    if (index > -1) {
-                        data = cursor.getString(index);
-                    }
-                }
-                cursor.close();
-            }
-        }
-        return data;
-    }
-
 
     /**
-     * 根据Uri获取图片绝对路径，解决Android4.4以上版本Uri转换
-     *
-     * @param context
-     * @param imageUri
-     * @author yaoxing
-     * @date 2014-10-12
+     * 调用相册获取剪切图
      */
-    @TargetApi(19)
-    public static String getImageAbsolutePath(Context context, Uri imageUri) {
-        if (context == null || imageUri == null)
-            return null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
-            if (FileTools.isExternalStorageDocument(imageUri)) {
-                String docId = DocumentsContract.getDocumentId(imageUri);
-                String[] split = docId.split(":");
-                String type = split[0];
+    public static void getSheraMyPhone(Activity activity){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");//相片类型
+        activity.startActivityForResult(intent,PHONE_CODE__SHEAR_MYPHONE);
+    }
+
+    /**
+     * 调用本地相机获取拍照原图
+     * filename 图片文件名 xxx.jpg
+     * 返回值 图片的路径
+     * 如果失败返回空
+     */
+    public static void getInitPhone(Activity activity, String fileName) {
+        //先验证手机是否有sdcard
+        String status = Environment.getExternalStorageState();
+        if (status.equals(Environment.MEDIA_MOUNTED)) {
+            try {
+                //将拍摄的照片保存在一个指定好的文件下
+                File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera/");
+                if (!dir.exists()) dir.mkdirs();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = new File(dir, fileName);
+                Uri u = Uri.fromFile(f);
+                intent.putExtra(MediaStore.Images.Media.ORIENTATION, 0);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, u);
+                activity.startActivityForResult(intent, PHONE_CODE_INITPACKPHONE);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(activity, "没有找到储存目录", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(activity, "sdcard状态异常", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     *  onActivityResult拍照后返回原图
+     */
+    public static Bitmap onInitPhoneResult(Activity activity, int requestCode, int resultCode, Intent data, String fileName){
+        try {
+
+            File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera");//将要保存图片的路径
+            if (!dir.exists()) dir.mkdirs();
+            File f=new File(dir,fileName);
+            Uri u = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), f.getAbsolutePath(), null, null));
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), u);
+            return bitmap;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取 保存的文件路径
+     */
+    public static String getPhotoPath(String fileName, int type){
+        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/"+(type==0?"Camera":"Cut")+"/"+fileName);
+        if (file.exists() && file.isFile()) {
+            return file.getPath();
+        }
+        return "";
+    }
+
+    /**
+     * 删除单个文件
+     *
+     */
+    public static boolean deleteFile(String fileName, int type) {
+        File file = new File(Environment.getExternalStorageDirectory() + "/DCIM/"+(type==0?"Camera":"Cut")+"/"+fileName);
+        if (file.exists() && file.isFile()) {
+            return file.delete();
+        }
+        return false;
+    }
+    /**
+     *  onActivityResult拍照后返回原图Uri, 剪切常用
+     */
+    public static Uri onInitCutPhoneResult(Activity activity, int requestCode, int resultCode, Intent data, String fileName){
+
+        File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/Cut");//将要保存图片的路径
+        if (!dir.exists()) dir.mkdirs();
+        Uri u = null;
+        try {
+            u = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), dir.getAbsolutePath()+"/"+fileName, null, null));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return u;
+    }
+
+    /**
+     *  onActivityResult拍照后返回缩略图的bitmap
+     */
+    public static Bitmap onAbbreviationsPhoneResult(Activity activity, int requestCode, int resultCode, Intent data){
+        Bitmap phone = null;
+        if (data.getData() != null|| data.getExtras() != null){
+            Uri uri =data.getData();
+            if (uri != null) {
+                phone = BitmapFactory.decodeFile(uri.getPath());
+                if (phone!=null){
+                    return phone;
+                }
+            }
+        }
+        if (phone == null) {
+            Bundle bundle =data.getExtras();
+            if (bundle != null){
+                phone =(Bitmap) bundle.get("data");
+                if (phone!=null){
+                    return phone;
+                }
+            } else {
+                Toast.makeText(activity.getApplicationContext(), "找不到图片", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return null;
+    }
+
+    /**
+     *  onActivityResult相册返回的bitmap
+     */
+    public static Bitmap onmyPhoneResult(Activity activity, int requestCode, int resultCode, Intent data){
+        Bitmap phone = null;
+        Uri uri = data.getData();
+        if (uri!=null){
+            try {
+                phone = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), uri);
+                if (phone!=null){
+                    return phone;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            Toast.makeText(activity.getApplicationContext(), "找不到该图片", Toast.LENGTH_SHORT).show();
+        }
+        return null;
+    }
+
+    /**
+     *  onActivityResult相册返回的uri  截图多用
+     */
+    public static Uri onCutmyPhoneResult(Activity activity, int requestCode, int resultCode, Intent data){
+        Bitmap phone = null;
+        Uri uri = data.getData();
+        if (uri!=null){
+            return uri;
+        }else {
+            Toast.makeText(activity.getApplicationContext(), "找不到该图片", Toast.LENGTH_SHORT).show();
+        }
+        return null;
+    }
+
+    /**
+     *  onActivityResult相册返回的file
+     */
+    public static File onmyPhoneFileResult(Activity activity, int requestCode, int resultCode, Intent data){
+        Bitmap phone = null;
+        Uri uri = data.getData();
+        if (uri!=null){
+            return uriToFile(activity,uri);
+        }else {
+            Toast.makeText(activity.getApplicationContext(), "找不到该图片", Toast.LENGTH_SHORT).show();
+        }
+        return null;
+    }
+
+    /**
+     * 将bitmap保存到指定的文件路径下
+     * filepath:"/mnt/sdcard/pic/01.jpg"
+     */
+    public static String saveBitmapFile(Bitmap bitmap, String filename, int type){
+        File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/"+(type==0?"Camera":"Cut"));//将要保存图片的路径
+        if (!dir.exists()) dir.mkdirs();
+        File file = new File(dir, filename);
+
+        try {
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            bos.flush();
+            bos.close();
+            return file.getPath();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     *  将指定路径下的图片缩小到原来的几分之一 返回bitmap.当inSampleSize=2时，表示缩小1/2
+     */
+    public static Bitmap getBitmapOption(String filePath, int inSampleSize){
+        System.gc();
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inPurgeable = true;
+        options.inSampleSize = inSampleSize;
+        return BitmapFactory.decodeFile(filePath,options);
+    }
+
+    /**
+     * uri转file
+     */
+    public static File uriToFile(Activity activity, Uri uri){
+
+        String[] proj = { MediaStore.Images.Media.DATA };
+
+        Cursor actualimagecursor = activity.managedQuery(uri, proj, null, null, null);
+
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+        actualimagecursor.moveToFirst();
+
+        String img_path = actualimagecursor.getString(actual_image_column_index);
+
+        File file = new File(img_path);
+        return file;
+    }
+
+    /**
+     * bitmap转uri
+     */
+    public static Uri bitmapToUri(Activity activity, Bitmap bitmap){
+        return  Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), bitmap, null,null));
+    }
+
+    /**
+     * uri转bitmap
+     */
+    public static Bitmap uriToBitmap(Activity activity, Uri uri){
+        Bitmap bitmap=null;
+        try {
+            bitmap= MediaStore.Images.Media.getBitmap(activity.getContentResolver(), uri);
+        } catch (IOException e) {
+
+        }
+        return bitmap;
+    }
+
+    /**
+     * 剪切图片,比列和尺寸可根据情况自行更改
+     */
+    public static void crop(Activity activity, Uri uri, int outputX, int outputY) {
+
+        // 裁剪图片意图
+        Intent intent = new Intent("com.android.camera.action.CROP");
+//        intent.setDataAndType(uri, "image/*");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            String url=getPath(activity,uri);
+            intent.setDataAndType(Uri.fromFile(new File(url)), "image/*");
+        }else{
+            intent.setDataAndType(uri, "image/*");
+        }
+        intent.putExtra("crop", "true");
+        // 裁剪框的比例，1：1
+        intent.putExtra("aspectX", outputX);
+        intent.putExtra("aspectY", outputY);
+        // 裁剪后输出图片的尺寸大小
+        intent.putExtra("outputX", outputX);
+        intent.putExtra("outputY", outputY);
+        // 图片格式
+        intent.putExtra("outputFormat", "JPEG");
+        intent.putExtra("noFaceDetection", true);// 取消人脸识别
+        intent.putExtra("return-data", true);// true:不返回uri，false：返回uri
+        activity.startActivityForResult(intent, PHONE_CODE__CUT);
+    }
+
+    //以下是关键，原本uri返回的是file:///...来着的，android4.4返回的是content:///...
+    @SuppressLint("NewApi")
+    public static String getPath(final Context context, final Uri uri) {
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-            } else if (FileTools.isDownloadsDocument(imageUri)) {
-                String id = DocumentsContract.getDocumentId(imageUri);
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-                return FileTools.getDataColumn(context, contentUri, null, null);
-            } else if (FileTools.isMediaDocument(imageUri)) {
-                String docId = DocumentsContract.getDocumentId(imageUri);
-                String[] split = docId.split(":");
-                String type = split[0];
+
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
                 Uri contentUri = null;
                 if ("image".equals(type)) {
                     contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
@@ -264,251 +451,93 @@ public class PhotoTools {
                 } else if ("audio".equals(type)) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 }
-                String selection = MediaStore.Images.Media._ID + "=?";
-                String[] selectionArgs = new String[]{split[1]};
-                return FileTools.getDataColumn(context, contentUri, selection, selectionArgs);
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[] {
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
             }
-        } // MediaStore (and general)
-        else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
             // Return the remote address
-            if (FileTools.isGooglePhotosUri(imageUri))
-                return imageUri.getLastPathSegment();
-            return FileTools.getDataColumn(context, imageUri, null, null);
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
         }
         // File
-        else if ("file".equalsIgnoreCase(imageUri.getScheme())) {
-            return imageUri.getPath();
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param context The context.
+     * @param uri The Uri to query.
+     * @param selection (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
         }
         return null;
     }
 
 
     /**
-     * 获取打开照程序界面的Intent
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
      */
-    public static Intent getOpenCameraIntent() {
-        return new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
     }
 
     /**
-     * 获取跳转至相册选择界面的Intent
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
      */
-    public static Intent getImagePickerIntent() {
-        Intent intent = new Intent(Intent.ACTION_PICK, null);
-        return intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "rx_bigimage_layout/*");
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
     }
 
     /**
-     * 获取[跳转至相册选择界面,并跳转至裁剪界面，默认可缩放裁剪区域]的Intent
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
      */
-    public static Intent getImagePickerIntent(int outputX, int outputY, Uri fromFileURI,
-                                              Uri saveFileURI) {
-        return getImagePickerIntent(1, 1, outputX, outputY, true, fromFileURI, saveFileURI);
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
     }
 
     /**
-     * 获取[跳转至相册选择界面,并跳转至裁剪界面，默认可缩放裁剪区域]的Intent
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
      */
-    public static Intent getImagePickerIntent(int aspectX, int aspectY, int outputX, int outputY, Uri fromFileURI,
-                                              Uri saveFileURI) {
-        return getImagePickerIntent(aspectX, aspectY, outputX, outputY, true, fromFileURI, saveFileURI);
-    }
-
-    /**
-     * 获取[跳转至相册选择界面,并跳转至裁剪界面，可以指定是否缩放裁剪区域]的Intent
-     *
-     * @param aspectX     裁剪框尺寸比例X
-     * @param aspectY     裁剪框尺寸比例Y
-     * @param outputX     输出尺寸宽度
-     * @param outputY     输出尺寸高度
-     * @param canScale    是否可缩放
-     * @param fromFileURI 文件来源路径URI
-     * @param saveFileURI 输出文件路径URI
-     */
-    public static Intent getImagePickerIntent(int aspectX, int aspectY, int outputX, int outputY, boolean canScale,
-                                              Uri fromFileURI, Uri saveFileURI) {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(fromFileURI, "rx_bigimage_layout/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", aspectX <= 0 ? 1 : aspectX);
-        intent.putExtra("aspectY", aspectY <= 0 ? 1 : aspectY);
-        intent.putExtra("outputX", outputX);
-        intent.putExtra("outputY", outputY);
-        intent.putExtra("scale", canScale);
-        // 图片剪裁不足黑边解决
-        intent.putExtra("scaleUpIfNeeded", true);
-        intent.putExtra("return-data", false);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, saveFileURI);
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        // 去除人脸识别
-        return intent.putExtra("noFaceDetection", true);
-    }
-
-    /**
-     * 获取[跳转至相册选择界面,并跳转至裁剪界面，默认可缩放裁剪区域]的Intent
-     */
-    public static Intent getCameraIntent(Uri saveFileURI) {
-        Intent mIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        return mIntent.putExtra(MediaStore.EXTRA_OUTPUT, saveFileURI);
-    }
-
-    /**
-     * 获取[跳转至裁剪界面,默认可缩放]的Intent
-     */
-    public static Intent getCropImageIntent(int outputX, int outputY, Uri fromFileURI,
-                                            Uri saveFileURI) {
-        return getCropImageIntent(1, 1, outputX, outputY, true, fromFileURI, saveFileURI);
-    }
-
-    /**
-     * 获取[跳转至裁剪界面,默认可缩放]的Intent
-     */
-    public static Intent getCropImageIntent(int aspectX, int aspectY, int outputX, int outputY, Uri fromFileURI,
-                                            Uri saveFileURI) {
-        return getCropImageIntent(aspectX, aspectY, outputX, outputY, true, fromFileURI, saveFileURI);
-    }
-
-
-    /**
-     * 获取[跳转至裁剪界面]的Intent
-     */
-    public static Intent getCropImageIntent(int aspectX, int aspectY, int outputX, int outputY, boolean canScale,
-                                            Uri fromFileURI, Uri saveFileURI) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(fromFileURI, "rx_bigimage_layout/*");
-        intent.putExtra("crop", "true");
-        // X方向上的比例
-        intent.putExtra("aspectX", aspectX <= 0 ? 1 : aspectX);
-        // Y方向上的比例
-        intent.putExtra("aspectY", aspectY <= 0 ? 1 : aspectY);
-        intent.putExtra("outputX", outputX);
-        intent.putExtra("outputY", outputY);
-        intent.putExtra("scale", canScale);
-        // 图片剪裁不足黑边解决
-        intent.putExtra("scaleUpIfNeeded", true);
-        intent.putExtra("return-data", false);
-        // 需要将读取的文件路径和裁剪写入的路径区分，否则会造成文件0byte
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, saveFileURI);
-        // true-->返回数据类型可以设置为Bitmap，但是不能传输太大，截大图用URI，小图用Bitmap或者全部使用URI
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        // 取消人脸识别功能
-        intent.putExtra("noFaceDetection", true);
-        return intent;
-    }
-
-    /**
-     * 获得选中相册的图片
-     *
-     * @param context 上下文
-     * @param data    onActivityResult返回的Intent
-     * @return bitmap
-     */
-    public static Bitmap getChoosedImage(Activity context, Intent data) {
-        if (data == null) return null;
-        Bitmap bm = null;
-        ContentResolver cr = context.getContentResolver();
-        Uri originalUri = data.getData();
-        try {
-            bm = MediaStore.Images.Media.getBitmap(cr, originalUri);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return bm;
-    }
-
-    /**
-     * 获得选中相册的图片路径
-     *
-     * @param context 上下文
-     * @param data    onActivityResult返回的Intent
-     * @return
-     */
-    public static String getChoosedImagePath(Activity context, Intent data) {
-        if (data == null) return null;
-        String path = "";
-        ContentResolver resolver = context.getContentResolver();
-        Uri originalUri = data.getData();
-        if (null == originalUri) return null;
-        String[] projection = {MediaStore.Images.Media.DATA};
-        Cursor cursor = resolver.query(originalUri, projection, null, null, null);
-        if (null != cursor) {
-            try {
-                int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                cursor.moveToFirst();
-                path = cursor.getString(column_index);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (!cursor.isClosed()) {
-                        cursor.close();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return DataTools.isNullString(path) ? originalUri.getPath() : null;
-    }
-
-    /**
-     * 获取拍照之后的照片文件（JPG格式）
-     *
-     * @param data     onActivityResult回调返回的数据
-     * @param filePath 文件路径
-     * @return 文件
-     */
-    public static File getTakePictureFile(Intent data, String filePath) {
-        if (data == null) return null;
-        Bundle extras = data.getExtras();
-        if (extras == null) return null;
-        Bitmap photo = extras.getParcelable("data");
-        File file = new File(filePath);
-        if (ImageTools.save(photo, file, Bitmap.CompressFormat.JPEG)) return file;
-        return null;
-    }
-
-
-
-    private static Camera camera;
-
-    /**
-     * 打开闪光灯
-     *
-     * @return
-     */
-    public static void openFlashLight() {
-        try {
-            if (camera == null) {
-                camera = Camera.open();
-                camera.startPreview();
-            }
-            Camera.Parameters parameters = camera.getParameters();
-            parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            camera.setParameters(parameters);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * 关闭闪光灯
-     *
-     * @return
-     */
-    public static void closeFlashLight() {
-        try {
-            if (camera == null) {
-
-            } else {
-                Camera.Parameters parameters = camera.getParameters();
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters(parameters);
-                camera.release();
-                camera = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 }

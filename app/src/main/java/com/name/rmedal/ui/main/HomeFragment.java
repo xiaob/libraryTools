@@ -18,6 +18,7 @@ import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.HeartLikeViewActivity;
+import com.name.rmedal.test.PhoneInfoActivity;
 import com.name.rmedal.test.PopWinActivity;
 import com.name.rmedal.test.RichTextActivity;
 import com.name.rmedal.test.RunTextActivity;
@@ -171,6 +172,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 RunTextActivity.startAction(context,view);
+            }
+        }));
+        functionlist.add(new FunctionBean("设备信息", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                PhoneInfoActivity.startAction(context,view);
             }
         }));
         functionadapter.replaceData(functionlist);
