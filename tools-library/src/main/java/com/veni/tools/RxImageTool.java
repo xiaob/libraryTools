@@ -55,9 +55,9 @@ import static com.veni.tools.RxTool.getContext;
  * 图像工具类
  *
  * 单位转换
- * dp2px                       : dp转px
+ * dpToPx                       : dp转px
  * dip2px                      : dip转px
- * px2dp                       : px转dp
+ * pxTODp                       : px转dp
  * px2dip                      : px转dip
  * sp2px                       : sp转px
  * px2sp                       : px转sp

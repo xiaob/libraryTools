@@ -1,19 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">RxTools</string>
 
-    <string name="net_error">网络访问错误，请稍后再试</string>
-    <string name="empty">还没有数据哦</string>
-    <string name="reload">重新尝试</string>
-    <string name="no_net">网络不可用,请检查你的网络</string>
-    <string name="zone_img_position">circle_img_position</string>
-    <string name="expand">全文</string>
-    <string name="shink">收起</string>
-    <!-- COMPLETE-->
     <string name="loading" tools:ignore="TypographyEllipsis">请稍后...</string>
-    <string name="swipe_to_refresh">下拉刷新</string>
-    <string name="release_to_refresh">释放立即刷新</string>
-    <string name="refreshing" tools:ignore="TypographyEllipsis">正在刷新...</string>
-    <string name="complete">刷新完成</string>
-    <string name="load_err">加载失败, 请重试</string>
-    <string name="load_end">到底了!</string>
+    <string name="no_net">网络不可用,请检查你的网络</string>
+    <string name="net_error">网络访问错误，请稍后再试</string>
 </resources>

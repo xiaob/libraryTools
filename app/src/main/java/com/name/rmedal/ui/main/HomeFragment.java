@@ -20,6 +20,8 @@ import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.HeartLikeViewActivity;
 import com.name.rmedal.test.PopWinActivity;
 import com.name.rmedal.test.RichTextActivity;
+import com.name.rmedal.test.RunTextActivity;
+import com.name.rmedal.test.TickerActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -158,6 +160,18 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 PopWinActivity.startAction(context,view);
+            }
+        }));
+        functionlist.add(new FunctionBean("字符滚动控件", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                TickerActivity.startAction(context,view);
+            }
+        }));
+        functionlist.add(new FunctionBean("RunTextView", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                RunTextActivity.startAction(context,view);
             }
         }));
         functionadapter.replaceData(functionlist);

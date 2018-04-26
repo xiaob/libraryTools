@@ -19,19 +19,16 @@
         <attr name="wordMargin" format="dimension" />
         <attr name="labelBackground" format="reference" />
     </declare-styleable>
+    <!--动态生成验证码-->
+    <declare-styleable name="VerificationCodeView">
+        <attr name="isNetCode" format="boolean"/>
+        <attr name="codeNumber" format="integer"/>
+    </declare-styleable>
     <!--仿ios侧滑删除-->
     <declare-styleable name="SwipeMenuLayout">
         <attr name="swipeEnable" format="boolean" />
         <attr name="ios" format="boolean" />
         <attr name="leftSwipe" format="boolean" />
-    </declare-styleable>
-    <!--下拉刷新上拉加载-->
-    <declare-styleable name="IRecyclerView">
-        <attr name="refreshHeaderLayout" format="reference" />
-        <attr name="loadMoreFooterLayout" format="reference" />
-        <attr name="refreshEnabled" format="boolean" />
-        <attr name="loadMoreEnabled" format="boolean" />
-        <attr name="refreshFinalMoveOffset" format="dimension" />
     </declare-styleable>
     <!--波浪侧边栏(字母快速导航)-->
     <declare-styleable name="WaveSideBarView">
@@ -44,19 +41,6 @@
         <attr name="sidebarBallRadius" format="dimension" />
     </declare-styleable>
 
-    <!--银行卡组叠加效果-->
-    <declare-styleable name="RxCardStackView">
-        <attr name="stackOverlapGaps" format="dimension" />
-        <attr name="stackOverlapGapsCollapse" format="dimension" />
-        <attr name="stackHeaderHeight" format="dimension" />
-        <attr name="stackDuration" format="integer" />
-        <attr name="stackNumBottomShow" format="integer" />
-        <attr name="stackAnimationType">
-            <flag name="allDown" value="0" />
-            <flag name="upDown" value="1" />
-            <flag name="upDownStack" value="2" />
-        </attr>
-    </declare-styleable>
     <!--点赞爆炸按钮-->
     <declare-styleable name="ShineButton">
         <attr name="btn_color" format="color" />
@@ -170,21 +154,15 @@
         </attr>
     </declare-styleable>
 
-    <!--颜色选择器-->
-    <declare-styleable name="ColorPickerPreference">
-        <attr name="alphaSlider" format="boolean" />
-        <attr name="lightnessSlider" format="boolean" />
-        <attr name="density" format="integer" />
-        <attr name="initialColor" format="integer" />
-        <attr name="wheelType" format="enum">
-            <enum name="FLOWER" value="0" />
-            <enum name="CIRCLE" value="1" />
-        </attr>
-        <attr name="lightnessSliderView" format="reference" />
-        <attr name="alphaSliderView" format="reference" />
-        <attr name="pickerColorEditTextColor" format="integer" />
-        <attr name="pickerTitle" format="reference|string" />
-        <attr name="pickerButtonOk" format="reference|string" />
-        <attr name="pickerButtonCancel" format="reference|string" />
+    <!--字符滚动控件-->
+    <declare-styleable name="ticker_TickerView">
+        <attr name="ticker_animationDuration" format="reference|integer"/>
+        <attr name="ticker_animateMeasurementChange" format="reference|boolean"/>
+
+        <!-- Custom implementations of common android text attributes -->
+        <attr name="android:gravity" tools:ignore="ResourceName"/>
+        <attr name="android:textAppearance" tools:ignore="ResourceName"/>
+        <attr name="android:textColor" tools:ignore="ResourceName"/>
+        <attr name="android:textSize" tools:ignore="ResourceName"/>
     </declare-styleable>
 </resources>
