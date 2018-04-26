@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+ * 多条目布局
  */
 public abstract class BaseMultiItemQuickAdapter<T extends MultiItemEntity, K extends BaseViewHolder> extends BaseQuickAdapter<T, K> {
 

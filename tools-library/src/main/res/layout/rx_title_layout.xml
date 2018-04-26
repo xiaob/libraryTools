@@ -16,7 +16,7 @@
         android:inputType="textMultiLine|textNoSuggestions"
         android:isScrollContainer="false"
         android:maxLength="240"
-        android:text="个人资料"
+        android:text="标题"
         android:textColor="@color/white"
         android:textColorHint="@android:color/white"
         android:textSize="20sp"/>

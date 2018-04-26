@@ -29,6 +29,22 @@ import java.io.File;
  * <p>
  * Glide.get(this).clearDiskCache();//清理磁盘缓存 需要在子线程中执行
  * Glide.get(this).clearMemory();//清理内存缓存  可以在UI主线程中进行
+ * 
+ * Glide.with(context)
+ * .load(url)// 加载图片资源
+ * //                .skipMemoryCache(false)//是否将图片放到内存中
+ * //                .diskCacheStrategy(DiskCacheStrategy.ALL)//磁盘图片缓存策略
+ * //                .dontAnimate()//不执行淡入淡出动画
+ * .crossFade(100)// 默认淡入淡出动画300ms
+ * //                .override(300,300)//图片大小
+ * .placeholder(R.drawable.shouye_haibao)// 占位图片
+ * //                .error(R.drawable.shouye_haibao)//图片加载错误显示
+ * .centerCrop()//  fitCenter()
+ * //                .animate()// 执行的动画
+ * //                .bitmapTransform(null)// bitmap操作
+ * //                .priority(Priority.HIGH)// 当前线程的优先级
+ * //                .signature(new StringSignature("ssss"))
+ * .into(iv);
  */
 public class ImageLoaderTool {
 
@@ -46,7 +62,7 @@ public class ImageLoaderTool {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(context).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .error(R.drawable.ic_empty_picture)
                 .into(imageView);
@@ -57,7 +73,7 @@ public class ImageLoaderTool {
             throw new IllegalArgumentException("argument error");
         }
         Glide.with(context).load(url)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
                 .placeholder(R.drawable.ic_image_loading)
                 .error(R.drawable.ic_empty_picture)

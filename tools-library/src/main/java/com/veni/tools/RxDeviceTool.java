@@ -154,7 +154,7 @@ public class RxDeviceTool {
     public static String getUniqueSerialNumber() {
         String phoneName = Build.MODEL;// Galaxy nexus 品牌类型
         String manuFacturer = Build.MANUFACTURER;//samsung 品牌
-        RxLogTool.d("详细序列号", manuFacturer + "-" + phoneName + "-" + getSerialNumber());
+        LogTool.d("详细序列号", manuFacturer + "-" + phoneName + "-" + getSerialNumber());
         return manuFacturer + "-" + phoneName + "-" + getSerialNumber();
     }
 
@@ -483,7 +483,7 @@ public class RxDeviceTool {
             Map.Entry entry = (Map.Entry) ite.next();
             Object key = entry.getKey();
             Object value = entry.getValue();
-            RxLogTool.d("MSG_AUTH_COMPLETE", (key + "： " + value));
+            LogTool.d("MSG_AUTH_COMPLETE", (key + "： " + value));
         }
     }
 
@@ -702,7 +702,7 @@ public class RxDeviceTool {
      * <p>参照以下注释代码</p>
      */
     public static void getContantNum() {
-        RxLogTool.i("tips", "U should copy the following code.");
+        LogTool.i("tips", "U should copy the following code.");
         /*
         Intent intent = new Intent();
         intent.setAction("android.intent.action.PICK");

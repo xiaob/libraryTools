@@ -66,6 +66,13 @@
             android:name=".test.HeartLikeViewActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 
+        <activity
+            android:name=".test.RichTextActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
+        <activity
+            android:name=".test.PopWinActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
+
         <activity android:name=".bigimage.BigImagePagerActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 

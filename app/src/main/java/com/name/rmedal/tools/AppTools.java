@@ -6,8 +6,8 @@ import android.content.Context;
 import com.name.rmedal.modelbean.UserBean;
 import com.veni.tools.RxDataTool;
 import com.veni.tools.RxEncryptTool;
-import com.veni.tools.RxJsonTools;
-import com.veni.tools.RxLogTool;
+import com.veni.tools.JsonTools;
+import com.veni.tools.LogTool;
 import com.veni.tools.RxSPTool;
 
 import java.io.UnsupportedEncodingException;
@@ -39,30 +39,30 @@ public class AppTools {
 
     public static UserBean getUserBean(Context context) {
         String value = (String) RxSPTool.get(context, USERDATA, "");
-        UserBean userBean = RxJsonTools.parseObject(AppTools.desAESCode(value), UserBean.class);
+        UserBean userBean = JsonTools.parseObject(AppTools.desAESCode(value), UserBean.class);
         return userBean == null ? new UserBean() : userBean;
     }
 
 
     public static String encAESCode(HashMap<String, Object> param) {
-        String content = RxJsonTools.toJson(param);
-        RxLogTool.d(TAG, "加密前数据-->" + content);
+        String content = JsonTools.toJson(param);
+        LogTool.d(TAG, "加密前数据-->" + content);
         if (content == null) {
             return "";
         }
         byte[] conb = content.getBytes();
         byte[] secreb = SECRETKEY.getBytes();
         String encryptResultStr = RxEncryptTool.encryptAES2HexString(conb, secreb);
-        RxLogTool.d(TAG, "加密后-->" + encryptResultStr);
+        LogTool.d(TAG, "加密后-->" + encryptResultStr);
         return encryptResultStr;
     }
 
     public static String desAESCode(String content) {
         if (RxDataTool.isEmpty(content)) {
-            RxLogTool.d(TAG, "解密字符为空");
+            LogTool.d(TAG, "解密字符为空");
             return "";
         }
-        RxLogTool.d(TAG, "解密前json数据--->" + content);
+        LogTool.d(TAG, "解密前json数据--->" + content);
         byte[] secreb = SECRETKEY.getBytes();
         byte[] decryptResult = RxEncryptTool.decryptHexStringAES(content, secreb);
         String decryptString = null;
@@ -71,7 +71,7 @@ public class AppTools {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        RxLogTool.d(TAG, "解密后json数据--->" + decryptString);
+        LogTool.d(TAG, "解密后json数据--->" + decryptString);
         return decryptString;
     }
 }

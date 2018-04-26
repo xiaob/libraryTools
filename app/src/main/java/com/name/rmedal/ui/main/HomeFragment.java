@@ -18,12 +18,14 @@ import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.HeartLikeViewActivity;
+import com.name.rmedal.test.PopWinActivity;
+import com.name.rmedal.test.RichTextActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.tools.RxJsonTools;
+import com.veni.tools.JsonTools;
 import com.veni.tools.RxTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.StatusBarUtil;
@@ -130,7 +132,7 @@ public class HomeFragment extends BaseFragment {
                         ,"美女222"));
                 img_list.add(new BigImageBean("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg"
                         ,"美女333"));
-                String imglistjson = RxJsonTools.toJson(img_list);
+                String imglistjson = JsonTools.toJson(img_list);
                 BigImagePagerActivity.startAction(context, imglistjson, 0);
             }
         }));
@@ -144,6 +146,18 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 HeartLikeViewActivity.startAction(context);
+            }
+        }));
+        functionlist.add(new FunctionBean("图文混排", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                RichTextActivity.startAction(context,view);
+            }
+        }));
+        functionlist.add(new FunctionBean("popupwindows", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                PopWinActivity.startAction(context,view);
             }
         }));
         functionadapter.replaceData(functionlist);

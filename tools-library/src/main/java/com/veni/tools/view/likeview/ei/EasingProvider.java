@@ -1,4 +1,4 @@
-package com.veni.tools.view.likeview.tools.ei;
+package com.veni.tools.view.likeview.ei;
 
 import android.support.annotation.NonNull;
 

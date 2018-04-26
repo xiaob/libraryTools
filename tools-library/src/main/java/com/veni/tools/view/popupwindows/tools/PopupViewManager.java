@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.TextView;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

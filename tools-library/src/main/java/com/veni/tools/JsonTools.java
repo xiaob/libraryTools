@@ -21,7 +21,7 @@ import java.util.Map;
  * 当前类注释:
  * JSON解析二次封装
  */
-public class RxJsonTools {
+public class JsonTools {
 
     // 采取单例模式
     private static Gson gson =null;
@@ -30,7 +30,7 @@ public class RxJsonTools {
             gson = new Gson();
         }
     }
-    private RxJsonTools() {
+    private JsonTools() {
     }
 
     /**

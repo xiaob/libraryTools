@@ -59,7 +59,7 @@ public class RxProcessTool {
                         context.startActivity(intent);
                     }
                     if (aom.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, info.uid, info.packageName) != AppOpsManager.MODE_ALLOWED) {
-                        RxLogTool.d("getForegroundApp", "没有打开\"有权查看使用权限的应用\"选项");
+                        LogTool.d("getForegroundApp", "没有打开\"有权查看使用权限的应用\"选项");
                         return null;
                     }
                     UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
@@ -78,7 +78,7 @@ public class RxProcessTool {
                     e.printStackTrace();
                 }
             } else {
-                RxLogTool.d("getForegroundApp", "无\"有权查看使用权限的应用\"选项");
+                LogTool.d("getForegroundApp", "无\"有权查看使用权限的应用\"选项");
             }
         }
         return null;

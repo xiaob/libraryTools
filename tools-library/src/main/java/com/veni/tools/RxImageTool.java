@@ -1778,7 +1778,7 @@ public class RxImageTool {
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
                 (int) height, matrix, true);
-        RxLogTool.e("RxImagleTool", bitmap.getHeight() + bitmap.getWidth() + "d");
+        LogTool.e("RxImagleTool", bitmap.getHeight() + bitmap.getWidth() + "d");
         return bitmap;
     }
 
@@ -1846,7 +1846,7 @@ public class RxImageTool {
                 }
                 exif.saveAttributes();
 
-                RxLogTool.d("writeLatLonIntoJpeg",exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE) + "\n"
+                LogTool.d("writeLatLonIntoJpeg",exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_GPS_PROCESSING_METHOD) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH) + "\n"

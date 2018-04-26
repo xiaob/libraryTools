@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -21,24 +22,47 @@ import com.veni.tools.view.likeview.tools.PorterShapeImageView;
 import com.veni.tools.view.likeview.tools.ShineView;
 
 /**
- * 16/7/5 下午2:27
+ * @author Chad
+ * @description
  * 点赞爆炸按钮
+ * color	button 的默认颜色
+ * fillColor	button 的填充颜色
+ * allowRandomColor	允许 shine 的颜色随机
+ * animDuration	动画的时间
+ * bigShineColor	大太阳的颜色
+ * enableFlashing	是否需要 flash 的效果
+ * shineCount	太阳的个数
+ * shineTurnAngle	太阳的旋转角度
+ * shineDistanceMultiple	太阳的扩散范围
+ * smallShineOffsetAngle	小太阳和大太阳之前的偏移角度
+ * smallShineColor	小太阳的颜色
+ * shineSize	大太阳的半径
+ * colorRandom	太阳的颜色的数组
+ * image	button 的 image
+ * @since 16/7/5 下午2:27
  **/
 public class ShineButton extends PorterShapeImageView {
-    private static final String TAG = "RxShineButton";
-    int DEFAULT_WIDTH = 50;
-    int DEFAULT_HEIGHT = 50;
-    DisplayMetrics metrics = new DisplayMetrics();
-    Activity activity;
-    ShineView mRxShineView;
-    ValueAnimator shakeAnimator;
-    ShineView.ShineParams shineParams = new ShineView.ShineParams();
-    OnCheckedChangeListener listener;
-    OnButtonClickListener onButtonClickListener;
+    private static final String TAG = "ShineButton";
     private boolean isChecked = false;
+
     private int btnColor;
     private int btnFillColor;
+
+    int DEFAULT_WIDTH = 50;
+    int DEFAULT_HEIGHT = 50;
+
+    DisplayMetrics metrics = new DisplayMetrics();
+
+
+    public Activity activity;
+    private ShineView shineView;
+    private ValueAnimator shakeAnimator;
+    private ShineView.ShineParams shineParams = new ShineView.ShineParams();
+
+    private OnCheckedChangeListener listener;
+
     private int bottomHeight;
+    private int realBottomHeight;
 
     public ShineButton(Context context) {
         super(context);
@@ -47,11 +71,11 @@ public class ShineButton extends PorterShapeImageView {
         }
     }
 
-
     public ShineButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         initButton(context, attrs);
     }
+
 
     public ShineButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -81,7 +105,10 @@ public class ShineButton extends PorterShapeImageView {
         setSrcColor(btnColor);
     }
 
-    public int getBottomHeight() {
+    public int getBottomHeight(boolean real) {
+        if (real) {
+            return realBottomHeight;
+        }
         return bottomHeight;
     }
 
@@ -93,9 +120,6 @@ public class ShineButton extends PorterShapeImageView {
         return isChecked;
     }
 
-    public void setChecked(boolean checked) {
-        setChecked(checked, false);
-    }
 
     public void setBtnColor(int btnColor) {
         this.btnColor = btnColor;
@@ -107,6 +131,10 @@ public class ShineButton extends PorterShapeImageView {
     }
 
     public void setChecked(boolean checked, boolean anim) {
+        setChecked(checked, anim, true);
+    }
+
+    private void setChecked(boolean checked, boolean anim, boolean callBack) {
         isChecked = checked;
         if (checked) {
             setSrcColor(btnFillColor);
@@ -117,7 +145,13 @@ public class ShineButton extends PorterShapeImageView {
             isChecked = false;
             if (anim) setCancel();
         }
-        onListenerUpdate(checked);
+        if (callBack) {
+            onListenerUpdate(checked);
+        }
+    }
+
+    public void setChecked(boolean checked) {
+        setChecked(checked, false, false);
     }
 
     private void onListenerUpdate(boolean checked) {
@@ -179,7 +213,7 @@ public class ShineButton extends PorterShapeImageView {
     }
 
     @Override
-    public void setOnClickListener(View.OnClickListener l) {
+    public void setOnClickListener(OnClickListener l) {
         if (l instanceof OnButtonClickListener) {
             super.setOnClickListener(l);
         } else {
@@ -192,6 +226,9 @@ public class ShineButton extends PorterShapeImageView {
     public void setOnCheckStateChangeListener(OnCheckedChangeListener listener) {
         this.listener = listener;
     }
+
+
+    OnButtonClickListener onButtonClickListener;
 
     public void init(Activity activity) {
         this.activity = activity;
@@ -215,8 +252,8 @@ public class ShineButton extends PorterShapeImageView {
     public void showAnim() {
         if (activity != null) {
             final ViewGroup rootView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
-            mRxShineView = new ShineView(activity, this, shineParams);
-            rootView.addView(mRxShineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            shineView = new ShineView(activity, this, shineParams);
+            rootView.addView(shineView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
             doShareAnim();
         } else {
             Log.e(TAG, "Please init.");
@@ -287,26 +324,25 @@ public class ShineButton extends PorterShapeImageView {
             activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int[] location = new int[2];
             getLocationInWindow(location);
+            Rect visibleFrame = new Rect();
+            activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(visibleFrame);
+            realBottomHeight = visibleFrame.height() - location[1];
             bottomHeight = metrics.heightPixels - location[1];
         }
     }
 
-    public interface OnCheckedChangeListener {
-        void onCheckedChanged(View view, boolean checked);
-    }
+    public class OnButtonClickListener implements OnClickListener {
+        public void setListener(OnClickListener listener) {
+            this.listener = listener;
+        }
 
-    public class OnButtonClickListener implements View.OnClickListener {
-        View.OnClickListener listener;
+        OnClickListener listener;
 
         public OnButtonClickListener() {
         }
 
-        public OnButtonClickListener(View.OnClickListener l) {
+        public OnButtonClickListener(OnClickListener l) {
             listener = l;
-        }
-
-        public void setListener(View.OnClickListener listener) {
-            this.listener = listener;
         }
 
         @Override
@@ -323,6 +359,10 @@ public class ShineButton extends PorterShapeImageView {
                 listener.onClick(view);
             }
         }
+    }
+
+    public interface OnCheckedChangeListener {
+        void onCheckedChanged(View view, boolean checked);
     }
 
 }

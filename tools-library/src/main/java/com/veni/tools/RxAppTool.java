@@ -184,7 +184,7 @@ public class RxAppTool {
             return true;
         }
         if (result.errorMsg != null) {
-            RxLogTool.d("isAppRoot", result.errorMsg);
+            LogTool.d("isAppRoot", result.errorMsg);
         }
         return false;
     }

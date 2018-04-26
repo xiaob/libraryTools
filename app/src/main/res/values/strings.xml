@@ -4,6 +4,8 @@
     <string name="trade">购物</string>
     <string name="personal">我</string>
 
+    <string name="share">分享</string>
+    <string name="share_contents">来自「AndroidFire」的分享：%1$s %2$s</string>
     <string name="news_from">%1$s %2$s</string>
     <string name="photo_detail_num">%1$d/%2$d</string>
     <!-- 共享过度动画 -->

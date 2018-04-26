@@ -43,7 +43,7 @@
         android:layout_height="?attr/actionBarSize"
         app:layout_collapseMode="pin"
         android:alpha="0"
-        android:background="@drawable/bg_toolbar_balck"
+        android:background="@drawable/gradient_color_balck"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay"
         app:navigationIcon="@drawable/icon_previous"

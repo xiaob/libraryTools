@@ -17,13 +17,17 @@ public abstract class PorterImageView extends android.support.v7.widget.AppCompa
     private static final String TAG = PorterImageView.class.getSimpleName();
 
     private static final PorterDuffXfermode PORTER_DUFF_XFERMODE = new PorterDuffXfermode(PorterDuff.Mode.DST_IN);
-    int paintColor = Color.GRAY;
+
     private Canvas maskCanvas;
     private Bitmap maskBitmap;
     private Paint maskPaint;
+
     private Canvas drawableCanvas;
     private Bitmap drawableBitmap;
     private Paint drawablePaint;
+
+    int paintColor = Color.GRAY;
+
     private boolean invalidated = true;
 
     public PorterImageView(Context context) {

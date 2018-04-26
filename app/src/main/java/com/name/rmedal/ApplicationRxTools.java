@@ -2,7 +2,7 @@ package com.name.rmedal;
 
 import android.app.Application;
 
-import com.veni.tools.RxLogTool;
+import com.veni.tools.LogTool;
 import com.veni.tools.RxTool;
 
 /**
@@ -15,7 +15,7 @@ public class ApplicationRxTools extends Application {
     public void onCreate() {
         super.onCreate();
         RxTool.init(this);
-        RxLogTool.init(this,BuildConfig.LOG_DEBUG,false);
+        LogTool.init(this,BuildConfig.LOG_DEBUG,false);
     }
 
 }

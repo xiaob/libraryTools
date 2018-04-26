@@ -1,4 +1,4 @@
-package com.veni.tools.view.likeview.tools.ei;
+package com.veni.tools.view.likeview.ei;
 
 /**
  * The Easing class provides a collection of ease functions. It does not use the standard 4 param

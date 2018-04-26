@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+ * 分组
  */
 public abstract class BaseSectionQuickAdapter<T extends SectionEntity, K extends BaseViewHolder> extends BaseQuickAdapter<T, K> {
 

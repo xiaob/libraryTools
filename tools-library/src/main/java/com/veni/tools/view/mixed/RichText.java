@@ -1,4 +1,5 @@
 package com.veni.tools.view.mixed;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
@@ -18,13 +19,13 @@ import java.util.List;
  * 作者：kkan on 2017/12/08
  * 当前类注释:
  * 用法
- *  添加图文混排
- *  setRichText(newsBody);
- *  设置图片点击事件
- *  .setOnRichTextImageClickListener(new RichText.OnRichTextImageClickListener(){});
+ * 添加图文混排
+ * setRichText(newsBody);
+ * 设置图片点击事件
+ * .setOnRichTextImageClickListener(new RichText.OnRichTextImageClickListener(){});
  */
 
-public class RichText extends TextView implements Drawable.Callback , View.OnAttachStateChangeListener{
+public class RichText extends TextView implements Drawable.Callback, View.OnAttachStateChangeListener {
 
     private OnRichTextImageClickListener onRichTextImageClickListener;//图片点击回调
     private GlideImageGeter glideImageGeter;

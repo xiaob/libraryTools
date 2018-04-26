@@ -30,7 +30,7 @@ import com.bumptech.glide.request.target.Target;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
-import com.veni.tools.RxJsonTools;
+import com.veni.tools.JsonTools;
 import com.veni.tools.RxTabLayoutTool;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
@@ -102,7 +102,7 @@ public class BigImagePagerActivity extends BaseActivity {
         int startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
         needtitle = getIntent().getBooleanExtra(INTENT_POSITION, false);
         String imgUrls = getIntent().getStringExtra(INTENT_IMGLISTJSON);
-        img_list = RxJsonTools.parseArray(imgUrls, BigImageBean.class);
+        img_list = JsonTools.parseArray(imgUrls, BigImageBean.class);
 
         setPhotoDetailTitle(startPos);
 

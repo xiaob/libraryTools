@@ -3,8 +3,10 @@ package com.veni.tools.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import com.veni.tools.RxActivityTool;
+import com.veni.tools.ToolBarUtils;
 
 public class ActivityBase extends AppCompatActivity {
     public ActivityBase context;
@@ -28,6 +30,17 @@ public class ActivityBase extends AppCompatActivity {
         super.onDestroy();
         destroyDialogBuilder();
         RxActivityTool.getActivityTool().finishActivity(this);
+    }
+
+    protected void onCreateCustomToolBar(Toolbar toolbarBaseTb) {
+        onCreateCustomToolBar(toolbarBaseTb, true);
+    }
+
+    /**
+     * @param homeAsUpEnabled 是否可点击
+     */
+    protected void onCreateCustomToolBar(Toolbar toolbarBaseTb, boolean homeAsUpEnabled) {
+        ToolBarUtils.getToolBarUtils().onCreateCustomToolBar(context, toolbarBaseTb, homeAsUpEnabled);
     }
 
     /**

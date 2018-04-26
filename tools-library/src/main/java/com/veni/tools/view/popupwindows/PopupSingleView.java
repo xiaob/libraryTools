@@ -154,6 +154,7 @@ public class PopupSingleView extends PopupWindow {
 
     /**
      * 显示弹窗列表界面
+     * @param dex 距离view的距离
      */
     public void show(View view, int dex) {
         // 获得点击屏幕的位置坐标

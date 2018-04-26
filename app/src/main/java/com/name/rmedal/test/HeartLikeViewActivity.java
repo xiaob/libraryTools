@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
+import com.veni.tools.LogTool;
 import com.veni.tools.StatusBarUtil;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
@@ -79,6 +80,11 @@ public class HeartLikeViewActivity extends BaseActivity {
 
         mShineButton.init(this);
 
+        porterShapeImageView1.init(this);
+        porterShapeImageView2.init(this);
+        porterShapeImageView3.init(this);
+        porterShapeImageView3.setShineTurnAngle(1);
+
         ShineButton shinebuttonjava = new ShineButton(this);
 
         shinebuttonjava.setBtnColor(Color.GRAY);
@@ -91,7 +97,6 @@ public class HeartLikeViewActivity extends BaseActivity {
         if (mWrapper != null) {
             mWrapper.addView(shinebuttonjava);
         }
-
 
 
     }
@@ -112,6 +117,7 @@ public class HeartLikeViewActivity extends BaseActivity {
             case R.id.po_image8:
                 break;
             case R.id.love:
+                LogTool.e(TAG, "-----");
                 mHeartLayout.post(new Runnable() {
                     @Override
                     public void run() {
