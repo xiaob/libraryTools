@@ -29,7 +29,7 @@ package com.veni.tools;
  * REGEX_DATE                  : yyyy-MM-dd格式的日期校验，已考虑平闰年
  * REGEX_IP                    : IP地址
  */
-public class RxConstTool {
+public class ConstantTools {
 
     /******************** 存储相关常量 ********************/
     /**

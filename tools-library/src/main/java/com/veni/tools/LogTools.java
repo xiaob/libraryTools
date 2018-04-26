@@ -18,7 +18,7 @@ import java.util.Date;
  * Created by xiyn on 2016/1/24.
  * Log管理
  */
-public class LogTool {
+public class LogTools {
 
     private final static SimpleDateFormat LOG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
     private final static SimpleDateFormat FILE_SUFFIX = new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
@@ -188,20 +188,20 @@ public class LogTool {
     }
 
     public static void saveLogFile(String message) {
-        File fileDir = new File(RxFileTool.getRootPath() + File.separator + RxTool.getContext().getPackageName());
+        File fileDir = new File(FileTools.getRootPath() + File.separator + FutileTool.getContext().getPackageName());
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
 
-        File file = new File(fileDir, RxTimeTool.getCurrentDate(RxTimeTool.dateFormatYMD_f) + ".txt");
+        File file = new File(fileDir, TimeTools.getCurrentDate(TimeTools.dateFormatYMD_f) + ".txt");
         try {
             if (file.exists()) {
                 PrintStream ps = new PrintStream(new FileOutputStream(file, true));
-                ps.append("\n\n\n" + RxTimeTool.getCurrentDate(RxTimeTool.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
+                ps.append("\n\n\n" + TimeTools.getCurrentDate(TimeTools.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
             } else {
                 PrintStream ps = new PrintStream(new FileOutputStream(file));
                 file.createNewFile();
-                ps.println(RxTimeTool.getCurrentDate(RxTimeTool.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
+                ps.println(TimeTools.getCurrentDate(TimeTools.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
             }
         } catch (IOException e) {
             e.printStackTrace();

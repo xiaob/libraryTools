@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by xiyn on 2016/1/24.
  */
 
-public class RxSPTool {
+public class SPTools {
 
     /**
      * 保存在手机里面的文件名

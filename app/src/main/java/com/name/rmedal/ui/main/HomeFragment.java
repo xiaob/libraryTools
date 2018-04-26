@@ -28,9 +28,9 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.JsonTools;
-import com.veni.tools.RxTool;
+import com.veni.tools.FutileTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.TitleView;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        StatusBarUtil.setPaddingSmart(context, homeRxtitle);
+        StatusBarTools.setPaddingSmart(context, homeRxtitle);
         homeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -99,7 +99,7 @@ public class HomeFragment extends BaseFragment {
                 int image = item.getFunctionImage();
                 if (image != 0) {
                     function_item_iv.setVisibility(View.VISIBLE);
-                    function_item_iv.setImageDrawable(ContextCompat.getDrawable(RxTool.getContext(), image));
+                    function_item_iv.setImageDrawable(ContextCompat.getDrawable(FutileTool.getContext(), image));
                 }
             }
         };

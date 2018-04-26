@@ -2,11 +2,10 @@ package com.name.rmedal.ui.trade;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ShoppingView;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.ticker.TickerUtils;
@@ -43,7 +42,7 @@ public class TradeFragment extends BaseFragment{
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        StatusBarUtil.setPaddingSmart(context, tradeTitleView);
+        StatusBarTools.setPaddingSmart(context, tradeTitleView);
         tradeTitleView.setTitle("添加购物车");
 
         tradeMadeCount.setCharacterList(TickerUtils.getDefaultNumberList());

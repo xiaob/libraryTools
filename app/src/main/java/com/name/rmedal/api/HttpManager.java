@@ -6,8 +6,8 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.veni.tools.RxNetTool;
-import com.veni.tools.RxTool;
+import com.veni.tools.FutileTool;
+import com.veni.tools.NetWorkTools;
 
 import java.io.File;
 import java.io.IOException;
@@ -104,7 +104,7 @@ public class HttpManager {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         //缓存
-        File cacheFile = new File(RxTool.getContext().getCacheDir(), "cache");
+        File cacheFile = new File(FutileTool.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //增加头部信息
         Interceptor headerInterceptor =new Interceptor() {
@@ -156,7 +156,7 @@ public class HttpManager {
      */
     @NonNull
     private String getCacheControl() {
-        return RxNetTool.isAvailable(RxTool.getContext()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
+        return NetWorkTools.isAvailable(FutileTool.getContext()) ? CACHE_CONTROL_AGE : CACHE_CONTROL_CACHE;
     }
 
     /**
@@ -168,7 +168,7 @@ public class HttpManager {
         public Response intercept(Chain chain) throws IOException {
             Request request = chain.request();
             String cacheControl = request.cacheControl().toString();
-            if (!RxNetTool.isAvailable(RxTool.getContext())) {
+            if (!NetWorkTools.isAvailable(FutileTool.getContext())) {
                 request = request.newBuilder()
                         .cacheControl(TextUtils.isEmpty(cacheControl)?CacheControl.FORCE_NETWORK:CacheControl.FORCE_CACHE)
                         .build();

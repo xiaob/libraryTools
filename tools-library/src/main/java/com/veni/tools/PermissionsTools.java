@@ -15,9 +15,9 @@ import java.util.List;
  * initPermission              : 请求权限
  */
 
-public class RxPermissionsTool {
+public class PermissionsTools {
 
-    public static RxPermissionsTool.Builder with(Activity activity) {
+    public static PermissionsTools.Builder with(Activity activity) {
         return new Builder(activity);
     }
 

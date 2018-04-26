@@ -8,19 +8,19 @@ import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.veni.tools.RxConstTool.REGEX_CHZ;
-import static com.veni.tools.RxConstTool.REGEX_DATE;
-import static com.veni.tools.RxConstTool.REGEX_EMAIL;
-import static com.veni.tools.RxConstTool.REGEX_IDCARD;
-import static com.veni.tools.RxConstTool.REGEX_IDCARD15;
-import static com.veni.tools.RxConstTool.REGEX_IDCARD18;
-import static com.veni.tools.RxConstTool.REGEX_IP;
-import static com.veni.tools.RxConstTool.REGEX_MOBILE_EXACT;
-import static com.veni.tools.RxConstTool.REGEX_MOBILE_SIMPLE;
-import static com.veni.tools.RxConstTool.REGEX_TEL;
-import static com.veni.tools.RxConstTool.REGEX_URL;
-import static com.veni.tools.RxConstTool.REGEX_USERNAME;
-import static com.veni.tools.RxDataTool.isNullString;
+import static com.veni.tools.ConstantTools.REGEX_CHZ;
+import static com.veni.tools.ConstantTools.REGEX_DATE;
+import static com.veni.tools.ConstantTools.REGEX_EMAIL;
+import static com.veni.tools.ConstantTools.REGEX_IDCARD;
+import static com.veni.tools.ConstantTools.REGEX_IDCARD15;
+import static com.veni.tools.ConstantTools.REGEX_IDCARD18;
+import static com.veni.tools.ConstantTools.REGEX_IP;
+import static com.veni.tools.ConstantTools.REGEX_MOBILE_EXACT;
+import static com.veni.tools.ConstantTools.REGEX_MOBILE_SIMPLE;
+import static com.veni.tools.ConstantTools.REGEX_TEL;
+import static com.veni.tools.ConstantTools.REGEX_URL;
+import static com.veni.tools.ConstantTools.REGEX_USERNAME;
+import static com.veni.tools.DataTools.isNullString;
 
 /**
  * Created by Administrator on 2017/3/15.
@@ -48,7 +48,7 @@ import static com.veni.tools.RxDataTool.isNullString;
  *
  */
 
-public class RxRegTool {
+public class RegTools {
     //--------------------------------------------正则表达式-----------------------------------------
     /**
      * 原文链接：http://caibaojian.com/regexp-example.html

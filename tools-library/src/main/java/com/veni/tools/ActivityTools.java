@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
 import android.os.Bundle;
 
 import java.util.List;
@@ -34,22 +33,22 @@ import java.util.Stack;
  * launchActivity              : 打开指定的Activity
  * getLauncherActivity         : 获取launcher activity
  */
-public class RxActivityTool {
+public class ActivityTools {
     private  Stack<Activity> activityStack;
-    private volatile static RxActivityTool instance;
+    private volatile static ActivityTools instance;
 
-    private RxActivityTool() {
+    private ActivityTools() {
 
     }
 
     /**
      * 单一实例
      */
-    public static RxActivityTool getActivityTool() {
+    public static ActivityTools getActivityTool() {
         if (instance == null) {
-            synchronized (RxActivityTool.class) {
+            synchronized (ActivityTools.class) {
                 if (instance == null) {
-                    instance = new RxActivityTool();
+                    instance = new ActivityTools();
                     instance.activityStack = new Stack();
                 }
             }
@@ -240,7 +239,7 @@ public class RxActivityTool {
      * @param bundle      bundle
      */
     public  void launchActivity(Context context, String packageName, String className, Bundle bundle) {
-        context.startActivity(RxIntentTool.getComponentNameIntent(packageName, className, bundle));
+        context.startActivity(IntentTools.getComponentNameIntent(packageName, className, bundle));
     }
 
     /**
@@ -263,10 +262,4 @@ public class RxActivityTool {
         return "no " + packageName;
     }
 
-
-    public void call(Context context, String phone) {
-        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
 }

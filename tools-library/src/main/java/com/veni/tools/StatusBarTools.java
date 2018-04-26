@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
  */
 
 @SuppressWarnings("unused")
-public class StatusBarUtil {
+public class StatusBarTools {
 
     public static int DEFAULT_COLOR = 0;
     public static float DEFAULT_ALPHA = 0;//Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;

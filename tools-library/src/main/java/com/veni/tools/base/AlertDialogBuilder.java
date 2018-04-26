@@ -17,9 +17,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.veni.tools.DeviceTools;
+import com.veni.tools.FutileTool;
 import com.veni.tools.R;
-import com.veni.tools.RxDeviceTool;
-import com.veni.tools.RxTool;
 import com.veni.tools.interfaces.OnDelayListener;
 import com.veni.tools.view.progressing.sprite.SpriteContainer;
 import com.veni.tools.view.progressing.style.ChasingDots;
@@ -249,7 +249,7 @@ public class AlertDialogBuilder {
                 ((SpriteContainer) messageDrawable).start();
             }
             if (canceltime != 0) {
-                RxTool.delayToDo(canceltime, new OnDelayListener() {
+                FutileTool.delayToDo(canceltime, new OnDelayListener() {
                     @Override
                     public void doSomething() {
                         dismissDialog();
@@ -299,7 +299,7 @@ public class AlertDialogBuilder {
             mDialogView = getLoading_Dialog();
         } else {
             mDialogView = getDefault_Dialog();
-            int width = RxDeviceTool.getScreenWidth(context);
+            int width = DeviceTools.getScreenWidth(context);
             setDialogSeat_Width((int) (width * 0.80));
         }
         dialog.setContentView(mDialogView);
@@ -309,7 +309,7 @@ public class AlertDialogBuilder {
         if (baseviewisloading) {
             setDialogSeat_Gravity(Gravity.CENTER);
         } else {
-            int width = RxDeviceTool.getScreenWidth(context);
+            int width = DeviceTools.getScreenWidth(context);
             setDialogSeat_Width((int) (width * 0.80));
         }
         setDialog(dialog);
@@ -404,7 +404,7 @@ public class AlertDialogBuilder {
 
     /**
      * 设置dialog位置 ViewGroup.LayoutParams.MATCH_PARENT
-     * int width = RxDeviceTool.getScreenWidth(context);
+     * int width = DeviceTools.getScreenWidth(context);
      * (int) (width * 0.80)
      *
      * @param gravity Gravity.CENTER

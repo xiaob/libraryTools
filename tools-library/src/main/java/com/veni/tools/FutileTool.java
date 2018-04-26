@@ -1,6 +1,12 @@
 package com.veni.tools;
 
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.text.InputFilter;
@@ -13,25 +19,29 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.veni.tools.interfaces.OnDelayListener;
+import com.veni.tools.view.ToastTool;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by xiyn on 2016/1/24.
- * RxTools的常用工具类
+ * 常用工具类
  * hideKeyboard                : 点击隐藏软键盘
  * fixListViewHeight           : 手动计算出listView的高度，但是不再具有滚动效果
- * createQRImage               : 生成二维码
- * drawLinecode                : 生成条形码
  * Md5                         : 生成MD5加密32位字符串
  * delayToDo                   : 延时操作
  * isFastClick                 : 是否快速点击
  * setEdTwoDecimal             : EditText 首位小数点自动加零，最多两位小数
  * setEditNumberPrefix         : EditText 前缀自动补零
+ *
+ * isRunningService            : 获取服务是否开启
+ * BroadcastReceiverNetWork    : 监听网络状态改变的广播
+ * initRegisterReceiverNetWork : 注册监听网络状态的广播
  */
-public class RxTool {
+public class FutileTool {
 
     private static Context context;
     private static long lastClickTime;
@@ -42,8 +52,8 @@ public class RxTool {
      * @param context 上下文
      */
     public static void init(Context context) {
-        RxTool.context = context.getApplicationContext();
-        RxCrashTool.init(context);
+        FutileTool.context = context.getApplicationContext();
+        CrashLogTools.init(context);
     }
 
     /**
@@ -93,6 +103,77 @@ public class RxTool {
         // params.height设置ListView完全显示需要的高度
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
+    }
+
+    /**
+     * 获取服务是否开启
+     *
+     * @param context   上下文
+     * @param className 完整包名的服务类名
+     * @return {@code true}: 是<br>{@code false}: 否
+     */
+    public static boolean isRunningService(Context context, String className) {
+        // 进程的管理者,活动的管理者
+        ActivityManager activityManager = (ActivityManager)
+                context.getSystemService(Context.ACTIVITY_SERVICE);
+        // 获取正在运行的服务，最多获取1000个
+        List<ActivityManager.RunningServiceInfo> runningServices = activityManager.getRunningServices(1000);
+        // 遍历集合
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : runningServices) {
+            ComponentName service = runningServiceInfo.service;
+            if (className.equals(service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    /**
+     * 注册监听网络状态的广播
+     *
+     * @param context
+     * @return
+     */
+    public static BroadcastReceiverNetWork initRegisterReceiverNetWork(Context context) {
+        // 注册监听网络状态的服务
+        BroadcastReceiverNetWork mReceiverNetWork = new BroadcastReceiverNetWork();
+        IntentFilter mFilter = new IntentFilter();
+        mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        context.registerReceiver(mReceiverNetWork, mFilter);
+        return mReceiverNetWork;
+    }
+
+    /**
+     * 网络状态改变广播
+     */
+    public static class BroadcastReceiverNetWork extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int netType = NetWorkTools.getNetWorkType(context);
+
+            switch (netType) {//获取当前网络的状态
+                case NetWorkTools.NETWORK_WIFI:// wifi的情况下
+                    ToastTool.success("切换到wifi环境下");
+                    break;
+                case NetWorkTools.NETWORK_2G:
+                    ToastTool.info("切换到2G环境下");
+                    break;
+                case NetWorkTools.NETWORK_3G:
+                    ToastTool.info("切换到3G环境下");
+                    break;
+                case NetWorkTools.NETWORK_4G:
+                    ToastTool.info("切换到4G环境下");
+                    break;
+                case NetWorkTools.NETWORK_NO:
+                    ToastTool.error(context, "当前无网络连接").show();
+                    break;
+                case NetWorkTools.NETWORK_UNKNOWN:
+                    ToastTool.normal("未知网络");
+                    break;
+            }
+
+        }
     }
 
     //---------------------------------------------MD5加密-------------------------------------------

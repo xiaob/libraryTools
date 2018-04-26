@@ -16,9 +16,9 @@ import com.name.rmedal.ui.main.model.MainModel;
 import com.name.rmedal.ui.main.presenter.MainPresenter;
 import com.name.rmedal.ui.personal.PersonalFragment;
 import com.name.rmedal.ui.trade.TradeFragment;
-import com.veni.tools.RxActivityTool;
+import com.veni.tools.ActivityTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ToastTool;
 
 import java.util.concurrent.TimeUnit;
@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        StatusBarUtil.immersive(this);
+        StatusBarTools.immersive(this);
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);
 //        mPresenter.checkVersion("1");
@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
             return;
         }
-        RxActivityTool.getActivityTool().AppExit(this, false);
+        ActivityTools.getActivityTool().AppExit(this, false);
     }
 
     @Override

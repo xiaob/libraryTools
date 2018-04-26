@@ -134,10 +134,10 @@ import java.util.Vector;
  * cleanExternalCache          : 清除外部缓存
  * cleanCustomCache            : 清除自定义目录下的文件
  */
-public class RxFileTool {
+public class FileTools {
 
     public static final int BUFSIZE = 1024 * 8;
-    private static final String TAG = "RxFileTool";
+    private static final String TAG = "FileTools";
 
     /**
      * 得到SD卡根目录.
@@ -208,7 +208,7 @@ public class RxFileTool {
         long blockSize, availableBlocks;
         availableBlocks = stat.getAvailableBlocksLong();
         blockSize = stat.getBlockSizeLong();
-        return RxDataTool.byte2FitSize(availableBlocks * blockSize);
+        return DataTools.byte2FitSize(availableBlocks * blockSize);
     }
 
     /**
@@ -300,7 +300,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanInternalCache(Context context) {
-        return RxFileTool.deleteFilesInDir(context.getCacheDir());
+        return FileTools.deleteFilesInDir(context.getCacheDir());
     }
 
     /**
@@ -310,7 +310,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanInternalFiles(Context context) {
-        return RxFileTool.deleteFilesInDir(context.getFilesDir());
+        return FileTools.deleteFilesInDir(context.getFilesDir());
     }
 
     /**
@@ -320,7 +320,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanInternalDbs(Context context) {
-        return RxFileTool.deleteFilesInDir(context.getFilesDir().getParent() + File.separator + "databases");
+        return FileTools.deleteFilesInDir(context.getFilesDir().getParent() + File.separator + "databases");
     }
 
     /**
@@ -341,7 +341,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanInternalSP(Context context) {
-        return RxFileTool.deleteFilesInDir(context.getFilesDir().getParent() + File.separator + "shared_prefs");
+        return FileTools.deleteFilesInDir(context.getFilesDir().getParent() + File.separator + "shared_prefs");
     }
 
     /**
@@ -351,7 +351,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanExternalCache(Context context) {
-        return RxFileTool.isSDCardEnable() && RxFileTool.deleteFilesInDir(context.getExternalCacheDir());
+        return FileTools.isSDCardEnable() && FileTools.deleteFilesInDir(context.getExternalCacheDir());
     }
 
     /**
@@ -361,7 +361,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanCustomCache(String dirPath) {
-        return RxFileTool.deleteFilesInDir(dirPath);
+        return FileTools.deleteFilesInDir(dirPath);
     }
 
     /**
@@ -371,7 +371,7 @@ public class RxFileTool {
      * @return {@code true}: 清除成功<br>{@code false}: 清除失败
      */
     public static boolean cleanCustomCache(File dir) {
-        return RxFileTool.deleteFilesInDir(dir);
+        return FileTools.deleteFilesInDir(dir);
     }
 
     /**
@@ -801,7 +801,7 @@ public class RxFileTool {
      * @return 文件
      */
     public static File getFileByPath(String filePath) {
-        return RxDataTool.isNullString(filePath) ? null : new File(filePath);
+        return DataTools.isNullString(filePath) ? null : new File(filePath);
     }
     //==============================================================================================
 
@@ -1423,9 +1423,9 @@ public class RxFileTool {
         OutputStream os = null;
         try {
             os = new BufferedOutputStream(new FileOutputStream(file, append));
-            byte data[] = new byte[RxConstTool.KB];
+            byte data[] = new byte[ConstantTools.KB];
             int len;
-            while ((len = is.read(data, 0, RxConstTool.KB)) != -1) {
+            while ((len = is.read(data, 0, ConstantTools.KB)) != -1) {
                 os.write(data, 0, len);
             }
             return true;
@@ -1526,7 +1526,7 @@ public class RxFileTool {
             String line;
             int curLine = 1;
             List<String> list = new ArrayList<>();
-            if (RxDataTool.isNullString(charsetName)) {
+            if (DataTools.isNullString(charsetName)) {
                 reader = new BufferedReader(new FileReader(file));
             } else {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName));
@@ -1568,7 +1568,7 @@ public class RxFileTool {
         BufferedReader reader = null;
         try {
             StringBuilder sb = new StringBuilder();
-            if (RxDataTool.isNullString(charsetName)) {
+            if (DataTools.isNullString(charsetName)) {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
             } else {
                 reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), charsetName));
@@ -1606,7 +1606,7 @@ public class RxFileTool {
     public static byte[] readFile2Bytes(File file) {
         if (file == null) return null;
         try {
-            return RxDataTool.inputStream2Bytes(new FileInputStream(file));
+            return DataTools.inputStream2Bytes(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -1673,9 +1673,9 @@ public class RxFileTool {
         InputStream is = null;
         try {
             is = new BufferedInputStream(new FileInputStream(file));
-            byte[] buffer = new byte[RxConstTool.KB];
+            byte[] buffer = new byte[ConstantTools.KB];
             int readChars;
-            while ((readChars = is.read(buffer, 0, RxConstTool.KB)) != -1) {
+            while ((readChars = is.read(buffer, 0, ConstantTools.KB)) != -1) {
                 for (int i = 0; i < readChars; ++i) {
                     if (buffer[i] == '\n') ++count;
                 }
@@ -1700,14 +1700,14 @@ public class RxFileTool {
 
     /**
      * 获取文件大小
-     * <p>例如：getFileSize(file, RxConstTool.MB); 返回文件大小单位为MB</p>
+     * <p>例如：getFileSize(file, ConstantTools.MB); 返回文件大小单位为MB</p>
      *
      * @param file 文件
      * @return 文件大小
      */
     public static String getFileSize(File file) {
         if (!isFileExists(file)) return "";
-        return RxDataTool.byte2FitSize(file.length());
+        return DataTools.byte2FitSize(file.length());
     }
 
     /**
@@ -1727,7 +1727,7 @@ public class RxFileTool {
      * @return 文件的MD5校验码
      */
     public static String getFileMD5(File file) {
-        return RxEncryptTool.encryptMD5File2String(file);
+        return EncryptTools.encryptMD5File2String(file);
     }
 
     /**
@@ -1766,7 +1766,7 @@ public class RxFileTool {
      * @return filePath最长目录
      */
     public static String getDirName(String filePath) {
-        if (RxDataTool.isNullString(filePath)) return filePath;
+        if (DataTools.isNullString(filePath)) return filePath;
         int lastSep = filePath.lastIndexOf(File.separator);
         return lastSep == -1 ? "" : filePath.substring(0, lastSep + 1);
     }
@@ -1789,7 +1789,7 @@ public class RxFileTool {
      * @return 文件名
      */
     public static String getFileName(String filePath) {
-        if (RxDataTool.isNullString(filePath)) return filePath;
+        if (DataTools.isNullString(filePath)) return filePath;
         int lastSep = filePath.lastIndexOf(File.separator);
         return lastSep == -1 ? filePath : filePath.substring(lastSep + 1);
     }
@@ -1812,7 +1812,7 @@ public class RxFileTool {
      * @return 不带拓展名的文件名
      */
     public static String getFileNameNoExtension(String filePath) {
-        if (RxDataTool.isNullString(filePath)) return filePath;
+        if (DataTools.isNullString(filePath)) return filePath;
         int lastPoi = filePath.lastIndexOf('.');
         int lastSep = filePath.lastIndexOf(File.separator);
         if (lastSep == -1) {
@@ -1842,7 +1842,7 @@ public class RxFileTool {
      * @return 文件拓展名
      */
     public static String getFileExtension(String filePath) {
-        if (RxDataTool.isNullString(filePath)) return filePath;
+        if (DataTools.isNullString(filePath)) return filePath;
         int lastPoi = filePath.lastIndexOf('.');
         int lastSep = filePath.lastIndexOf(File.separator);
         if (lastPoi == -1 || lastSep >= lastPoi) return "";
@@ -1900,7 +1900,7 @@ public class RxFileTool {
      * @return
      */
     public static File getFilePhotoFromUri(Activity context, Uri uri) {
-        return new File(RxPhotoTool.getImageAbsolutePath(context, uri));
+        return new File(PhotoTools.getImageAbsolutePath(context, uri));
     }
 
     @TargetApi(19)
@@ -2146,7 +2146,7 @@ public class RxFileTool {
 //                        if (dataList.size() == fileList.size()) {
 //                            //FileUtil.mergeFiles(context, new File(FileUtil.getDiskFileDir(context) + File.separator + title, title + "_" + duration + ".mp4"), fileList);
 ////                            Log.d("ts下载", "下载完成");
-///*                            RxTool.ShowToast(context, "视频文件缓存成功，开始合并视频文件...", false);*/
+///*                            FutileTool.ShowToast(context, "视频文件缓存成功，开始合并视频文件...", false);*/
 //                            getNativeM3u(context, m3u8File, fileList);
 //                        } else {
 //                            getFile(context, dataList.get(i + 1).getUri(), title, i + 1, dataList, fileList, duration, m3u8File);
@@ -2216,13 +2216,13 @@ public class RxFileTool {
 //                .execute(new FileCallBack(FileUtil.getDiskFileDir(context), videoParse1.getTitle() + "%" + vid + "%" + duration + "%m3u8") {
 //                    @Override
 //                    public void onError(Call call, Exception e, int id) {
-//                        RxTool.ShowToast(context, "下载文件清单缓冲失败...", 500);
+//                        FutileTool.ShowToast(context, "下载文件清单缓冲失败...", 500);
 //                    }
 //
 //                    @Override
 //                    public void onBefore(Request request, int id) {
 //                        super.onBefore(request, id);
-//                        RxTool.ShowToast(context, "开始缓存...", 500);
+//                        FutileTool.ShowToast(context, "开始缓存...", 500);
 //                    }
 //
 //                    @Override
@@ -2238,7 +2238,7 @@ public class RxFileTool {
 ////                              float duration = dataList.get(j).getTrackInfo().duration;//时长
 //                                downList.add(dataList.get(0).getUri());
 //                            }
-//                            RxTool.ShowToast(context, "缓冲清单成功，开始缓存视频文件...", 500);
+//                            FutileTool.ShowToast(context, "缓冲清单成功，开始缓存视频文件...", 500);
 //                            FileUtil.getFile(context, dataList.get(0).getUri(), vid, 0, dataList, new ArrayList<File>(), duration, response);
 //                        } catch (FileNotFoundException e) {
 //                            e.printStackTrace();

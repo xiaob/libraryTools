@@ -48,6 +48,7 @@ import java.util.Map;
 /**
  * 设备工具类
  * Created by xiyn on 2016/1/24.
+ *
  * 屏幕相关
  * getScreenHeight             : 得到屏幕的高
  * getScreenWidth              : 得到屏幕的宽
@@ -106,7 +107,7 @@ import java.util.Map;
  * getAllSMS                   : 获取手机短信并保存到xml中
  */
 
-public class RxDeviceTool {
+public class DeviceTools {
 
     /**
      * 得到屏幕的高
@@ -154,7 +155,7 @@ public class RxDeviceTool {
     public static String getUniqueSerialNumber() {
         String phoneName = Build.MODEL;// Galaxy nexus 品牌类型
         String manuFacturer = Build.MANUFACTURER;//samsung 品牌
-        LogTool.d("详细序列号", manuFacturer + "-" + phoneName + "-" + getSerialNumber());
+        LogTools.d("详细序列号", manuFacturer + "-" + phoneName + "-" + getSerialNumber());
         return manuFacturer + "-" + phoneName + "-" + getSerialNumber();
     }
 
@@ -483,7 +484,7 @@ public class RxDeviceTool {
             Map.Entry entry = (Map.Entry) ite.next();
             Object key = entry.getKey();
             Object value = entry.getValue();
-            LogTool.d("MSG_AUTH_COMPLETE", (key + "： " + value));
+            LogTools.d("MSG_AUTH_COMPLETE", (key + "： " + value));
         }
     }
 
@@ -526,7 +527,7 @@ public class RxDeviceTool {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            RxFileTool.closeIO(lnr, isr);
+            FileTools.closeIO(lnr, isr);
         }
         return macAddress == null ? "" : macAddress;
     }
@@ -605,7 +606,7 @@ public class RxDeviceTool {
      * @param phoneNumber 电话号码
      */
     public static void callPhone(final Context context, String phoneNumber) {
-        if (!RxDataTool.isNullString(phoneNumber)) {
+        if (!DataTools.isNullString(phoneNumber)) {
             final String phoneNumber1 = phoneNumber.trim();// 删除字符串首部和尾部的空格
             // 调用系统的拨号服务实现电话拨打功能
             // 封装一个拨打电话的intent，并且将电话号码包装成一个Uri对象传入
@@ -626,9 +627,9 @@ public class RxDeviceTool {
      * @param content     内容
      */
     public static void sendSms(Context context, String phoneNumber, String content) {
-        Uri uri = Uri.parse("smsto:" + (RxDataTool.isNullString(phoneNumber) ? "" : phoneNumber));
+        Uri uri = Uri.parse("smsto:" + (DataTools.isNullString(phoneNumber) ? "" : phoneNumber));
         Intent intent = new Intent(Intent.ACTION_SENDTO, uri);
-        intent.putExtra("sms_body", RxDataTool.isNullString(content) ? "" : content);
+        intent.putExtra("sms_body", DataTools.isNullString(content) ? "" : content);
         context.startActivity(intent);
     }
 
@@ -662,7 +663,7 @@ public class RxDeviceTool {
             // cursor.getString(cursor.getColumnIndex("contact_id"));//getColumnIndex
             // : 查询字段在cursor中索引值,一般都是用在查询字段比较多的时候
             // 判断contact_id是否为空
-            if (!RxDataTool.isNullString(contact_id)) {//null   ""
+            if (!DataTools.isNullString(contact_id)) {//null   ""
                 // 7.根据contact_id查询view_data表中的数据
                 // selection : 查询条件
                 // selectionArgs :查询条件的参数
@@ -702,7 +703,7 @@ public class RxDeviceTool {
      * <p>参照以下注释代码</p>
      */
     public static void getContantNum() {
-        LogTool.i("tips", "U should copy the following code.");
+        LogTools.i("tips", "U should copy the following code.");
         /*
         Intent intent = new Intent();
         intent.setAction("android.intent.action.PICK");
@@ -893,7 +894,7 @@ public class RxDeviceTool {
         view.setDrawingCacheEnabled(true);
         view.buildDrawingCache();
         Bitmap bmp = view.getDrawingCache();
-        int statusBarHeight = StatusBarUtil.getStatusBarHeight(activity);
+        int statusBarHeight = StatusBarTools.getStatusBarHeight(activity);
         int width = getScreenWidth(activity);
         int height = getScreenHeight(activity);
         Bitmap ret = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height - statusBarHeight);

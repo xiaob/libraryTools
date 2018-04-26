@@ -20,7 +20,7 @@ import java.net.URLEncoder;
  * htmlEncode                  : Html编码
  * htmlDecode                  : Html解码
  */
-public class RxEncodeTool {
+public class EncodeTools {
 
     /**
      * URL编码

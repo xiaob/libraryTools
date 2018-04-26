@@ -71,7 +71,7 @@ import java.util.Map;
  * string2OutputStream         : string转outputStream按编码
  */
 
-public class RxDataTool {
+public class DataTools {
 
     static final char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
             'A', 'B', 'C', 'D', 'E', 'F'};
@@ -256,7 +256,7 @@ public class RxDataTool {
      */
     public static int[] stringToInts(String s) {
         int[] n = new int[s.length()];
-        if (RxDataTool.isNullString(s)) {
+        if (DataTools.isNullString(s)) {
 
         } else {
             for (int i = 0; i < s.length(); i++) {
@@ -628,25 +628,25 @@ public class RxDataTool {
      *
      * @param byteNum 字节数
      * @param unit    <ul>
-     *                <li>{@link RxConstTool.MemoryUnit#BYTE}: 字节</li>
-     *                <li>{@link RxConstTool.MemoryUnit#KB}  : 千字节</li>
-     *                <li>{@link RxConstTool.MemoryUnit#MB}  : 兆</li>
-     *                <li>{@link RxConstTool.MemoryUnit#GB}  : GB</li>
+     *                <li>{@link ConstantTools.MemoryUnit#BYTE}: 字节</li>
+     *                <li>{@link ConstantTools.MemoryUnit#KB}  : 千字节</li>
+     *                <li>{@link ConstantTools.MemoryUnit#MB}  : 兆</li>
+     *                <li>{@link ConstantTools.MemoryUnit#GB}  : GB</li>
      *                </ul>
      * @return 以unit为单位的size
      */
-    public static double byte2Size(long byteNum, RxConstTool.MemoryUnit unit) {
+    public static double byte2Size(long byteNum, ConstantTools.MemoryUnit unit) {
         if (byteNum < 0) return -1;
         switch (unit) {
             default:
             case BYTE:
-                return (double) byteNum / RxConstTool.BYTE;
+                return (double) byteNum / ConstantTools.BYTE;
             case KB:
-                return (double) byteNum / RxConstTool.KB;
+                return (double) byteNum / ConstantTools.KB;
             case MB:
-                return (double) byteNum / RxConstTool.MB;
+                return (double) byteNum / ConstantTools.MB;
             case GB:
-                return (double) byteNum / RxConstTool.GB;
+                return (double) byteNum / ConstantTools.GB;
         }
     }
 
@@ -655,25 +655,25 @@ public class RxDataTool {
      *
      * @param size 大小
      * @param unit <ul>
-     *             <li>{@link RxConstTool.MemoryUnit#BYTE}: 字节</li>
-     *             <li>{@link RxConstTool.MemoryUnit#KB}  : 千字节</li>
-     *             <li>{@link RxConstTool.MemoryUnit#MB}  : 兆</li>
-     *             <li>{@link RxConstTool.MemoryUnit#GB}  : GB</li>
+     *             <li>{@link ConstantTools.MemoryUnit#BYTE}: 字节</li>
+     *             <li>{@link ConstantTools.MemoryUnit#KB}  : 千字节</li>
+     *             <li>{@link ConstantTools.MemoryUnit#MB}  : 兆</li>
+     *             <li>{@link ConstantTools.MemoryUnit#GB}  : GB</li>
      *             </ul>
      * @return 字节数
      */
-    public static long size2Byte(long size, RxConstTool.MemoryUnit unit) {
+    public static long size2Byte(long size, ConstantTools.MemoryUnit unit) {
         if (size < 0) return -1;
         switch (unit) {
             default:
             case BYTE:
-                return size * RxConstTool.BYTE;
+                return size * ConstantTools.BYTE;
             case KB:
-                return size * RxConstTool.KB;
+                return size * ConstantTools.KB;
             case MB:
-                return size * RxConstTool.MB;
+                return size * ConstantTools.MB;
             case GB:
-                return size * RxConstTool.GB;
+                return size * ConstantTools.GB;
         }
     }
 
@@ -687,14 +687,14 @@ public class RxDataTool {
     public static String byte2FitSize(long byteNum) {
         if (byteNum < 0) {
             return "shouldn't be less than zero!";
-        } else if (byteNum < RxConstTool.KB) {
+        } else if (byteNum < ConstantTools.KB) {
             return String.format(Locale.getDefault(), "%.3fB", (double) byteNum);
-        } else if (byteNum < RxConstTool.MB) {
-            return String.format(Locale.getDefault(), "%.3fKB", (double) byteNum / RxConstTool.KB);
-        } else if (byteNum < RxConstTool.GB) {
-            return String.format(Locale.getDefault(), "%.3fMB", (double) byteNum / RxConstTool.MB);
+        } else if (byteNum < ConstantTools.MB) {
+            return String.format(Locale.getDefault(), "%.3fKB", (double) byteNum / ConstantTools.KB);
+        } else if (byteNum < ConstantTools.GB) {
+            return String.format(Locale.getDefault(), "%.3fMB", (double) byteNum / ConstantTools.MB);
         } else {
-            return String.format(Locale.getDefault(), "%.3fGB", (double) byteNum / RxConstTool.GB);
+            return String.format(Locale.getDefault(), "%.3fGB", (double) byteNum / ConstantTools.GB);
         }
     }
 
@@ -708,9 +708,9 @@ public class RxDataTool {
         if (is == null) return null;
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
-            byte[] b = new byte[RxConstTool.KB];
+            byte[] b = new byte[ConstantTools.KB];
             int len;
-            while ((len = is.read(b, 0, RxConstTool.KB)) != -1) {
+            while ((len = is.read(b, 0, ConstantTools.KB)) != -1) {
                 os.write(b, 0, len);
             }
             return os;
@@ -718,7 +718,7 @@ public class RxDataTool {
             e.printStackTrace();
             return null;
         } finally {
-            RxFileTool.closeIO(is);
+            FileTools.closeIO(is);
         }
     }
 
@@ -769,7 +769,7 @@ public class RxDataTool {
             e.printStackTrace();
             return null;
         } finally {
-            RxFileTool.closeIO(os);
+            FileTools.closeIO(os);
         }
     }
 

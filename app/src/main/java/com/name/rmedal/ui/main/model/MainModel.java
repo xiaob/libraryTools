@@ -4,8 +4,8 @@ import com.name.rmedal.api.HttpManager;
 import com.name.rmedal.tools.AppTools;
 import com.name.rmedal.tools.RxHelper;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.veni.tools.RxDeviceTool;
-import com.veni.tools.RxTool;
+import com.veni.tools.DeviceTools;
+import com.veni.tools.FutileTool;
 
 import java.util.HashMap;
 
@@ -22,8 +22,8 @@ public class MainModel implements MainContract.Model {
         HashMap<String, Object> param = new HashMap<>();
         param.put("type", type);
         String data = AppTools.encAESCode(param);
-        String deviceIdIMEI = RxDeviceTool.getDeviceIdIMEI(RxTool.getContext());
-        String versionName = RxDeviceTool.getAppVersionName(RxTool.getContext());
+        String deviceIdIMEI = DeviceTools.getDeviceIdIMEI(FutileTool.getContext());
+        String versionName = DeviceTools.getAppVersionName(FutileTool.getContext());
         return HttpManager.getInstance().getOkHttpUrlService().getLastVersion(data, deviceIdIMEI, versionName)
                 .compose(RxHelper.<String>handleResult());
     }

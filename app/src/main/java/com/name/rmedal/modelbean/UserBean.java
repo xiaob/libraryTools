@@ -1,6 +1,6 @@
 package com.name.rmedal.modelbean;
 
-import com.veni.tools.RxRegTool;
+import com.veni.tools.RegTools;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ public class UserBean  implements Serializable {
 
     public String getUserId() {
 
-        if (userId != null && RxRegTool.checkDecimals(userId)) {
+        if (userId != null && RegTools.checkDecimals(userId)) {
             double uid = Double.parseDouble(userId);
             String nuid = userId;
             if (userId.contains(".")) {

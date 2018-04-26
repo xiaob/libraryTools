@@ -10,7 +10,7 @@ import com.name.rmedal.modelbean.PersonalModelBean;
 import com.name.rmedal.modelbean.PersonalSection;
 import com.name.rmedal.test.adapter.SectionAdapter;
 import com.veni.tools.JsonTools;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.sidebar.PinnedHeaderDecoration;
 import com.veni.tools.view.sidebar.WaveSideBarView;
@@ -58,7 +58,7 @@ public class PersonalFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        StatusBarUtil.setPaddingSmart(context, personalRxtitle);
+        StatusBarTools.setPaddingSmart(context, personalRxtitle);
         personalRxtitle.setLeftIconVisibility(false);
 
 

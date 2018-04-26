@@ -59,7 +59,7 @@ import javax.crypto.spec.SecretKeySpec;
  * decryptHexStringAES         : AES解密16进制密文
  * decryptAES                  : AES解密
  */
-public class RxEncryptTool {
+public class EncryptTools {
 
     /*********************** 哈希加密相关 ***********************/
     private static final String DES_Algorithm = "DES";
@@ -104,7 +104,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptMD2ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptMD2(data));
+        return DataTools.bytes2HexString(encryptMD2(data));
     }
 
     /**
@@ -135,7 +135,7 @@ public class RxEncryptTool {
      * @return 16进制加盐密文
      */
     public static String encryptMD5ToString(String data, String salt) {
-        return RxDataTool.bytes2HexString(encryptMD5((data + salt).getBytes()));
+        return DataTools.bytes2HexString(encryptMD5((data + salt).getBytes()));
     }
 
     /**
@@ -145,7 +145,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptMD5ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptMD5(data));
+        return DataTools.bytes2HexString(encryptMD5(data));
     }
 
     /**
@@ -159,7 +159,7 @@ public class RxEncryptTool {
         byte[] dataSalt = new byte[data.length + salt.length];
         System.arraycopy(data, 0, dataSalt, 0, data.length);
         System.arraycopy(salt, 0, dataSalt, data.length, salt.length);
-        return RxDataTool.bytes2HexString(encryptMD5(dataSalt));
+        return DataTools.bytes2HexString(encryptMD5(dataSalt));
     }
 
     /**
@@ -199,7 +199,7 @@ public class RxEncryptTool {
      * @return 文件的16进制密文
      */
     public static String encryptMD5File2String(File file) {
-        return encryptMD5File(file) != null ? RxDataTool.bytes2HexString(encryptMD5File(file)) : "";
+        return encryptMD5File(file) != null ? DataTools.bytes2HexString(encryptMD5File(file)) : "";
     }
 
     /**
@@ -220,7 +220,7 @@ public class RxEncryptTool {
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         } finally {
-            RxFileTool.closeIO(fis);
+            FileTools.closeIO(fis);
         }
         return null;
     }
@@ -242,7 +242,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptSHA1ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptSHA1(data));
+        return DataTools.bytes2HexString(encryptSHA1(data));
     }
 
     /**
@@ -272,7 +272,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptSHA224ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptSHA224(data));
+        return DataTools.bytes2HexString(encryptSHA224(data));
     }
 
     /**
@@ -302,7 +302,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptSHA256ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptSHA256(data));
+        return DataTools.bytes2HexString(encryptSHA256(data));
     }
 
     /**
@@ -334,7 +334,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptSHA384ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptSHA384(data));
+        return DataTools.bytes2HexString(encryptSHA384(data));
     }
 
     /**
@@ -364,7 +364,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptSHA512ToString(byte[] data) {
-        return RxDataTool.bytes2HexString(encryptSHA512(data));
+        return DataTools.bytes2HexString(encryptSHA512(data));
     }
 
     /**
@@ -424,7 +424,7 @@ public class RxEncryptTool {
      * @return Base64密文
      */
     public static byte[] encryptDES2Base64(byte[] data, byte[] key) {
-        return RxEncodeTool.base64Encode(encryptDES(data, key));
+        return EncodeTools.base64Encode(encryptDES(data, key));
     }
 
     /**
@@ -435,7 +435,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptDES2HexString(byte[] data, byte[] key) {
-        return RxDataTool.bytes2HexString(encryptDES(data, key));
+        return DataTools.bytes2HexString(encryptDES(data, key));
     }
 
     /************************ 3DES加密相关 ***********************/
@@ -459,7 +459,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptBase64DES(byte[] data, byte[] key) {
-        return decryptDES(RxEncodeTool.base64Decode(data), key);
+        return decryptDES(EncodeTools.base64Decode(data), key);
     }
 
     /**
@@ -470,7 +470,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptHexStringDES(String data, byte[] key) {
-        return decryptDES(RxDataTool.hexString2Bytes(data), key);
+        return decryptDES(DataTools.hexString2Bytes(data), key);
     }
 
     /**
@@ -492,7 +492,7 @@ public class RxEncryptTool {
      * @return Base64密文
      */
     public static byte[] encrypt3DES2Base64(byte[] data, byte[] key) {
-        return RxEncodeTool.base64Encode(encrypt3DES(data, key));
+        return EncodeTools.base64Encode(encrypt3DES(data, key));
     }
 
     /**
@@ -503,7 +503,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encrypt3DES2HexString(byte[] data, byte[] key) {
-        return RxDataTool.bytes2HexString(encrypt3DES(data, key));
+        return DataTools.bytes2HexString(encrypt3DES(data, key));
     }
 
     /**
@@ -525,7 +525,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptBase64_3DES(byte[] data, byte[] key) {
-        return decrypt3DES(RxEncodeTool.base64Decode(data), key);
+        return decrypt3DES(EncodeTools.base64Decode(data), key);
     }
 
     /************************ AES加密相关 ***********************/
@@ -538,7 +538,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptHexString3DES(String data, byte[] key) {
-        return decrypt3DES(RxDataTool.hexString2Bytes(data), key);
+        return decrypt3DES(DataTools.hexString2Bytes(data), key);
     }
 
     /**
@@ -560,7 +560,7 @@ public class RxEncryptTool {
      * @return Base64密文
      */
     public static byte[] encryptAES2Base64(byte[] data, byte[] key) {
-        return RxEncodeTool.base64Encode(encryptAES(data, key));
+        return EncodeTools.base64Encode(encryptAES(data, key));
     }
 
     /**
@@ -571,7 +571,7 @@ public class RxEncryptTool {
      * @return 16进制密文
      */
     public static String encryptAES2HexString(byte[] data, byte[] key) {
-        return RxDataTool.bytes2HexString(encryptAES(data, key));
+        return DataTools.bytes2HexString(encryptAES(data, key));
     }
 
     /**
@@ -593,7 +593,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptBase64AES(byte[] data, byte[] key) {
-        return decryptAES(RxEncodeTool.base64Decode(data), key);
+        return decryptAES(EncodeTools.base64Decode(data), key);
     }
 
     /**
@@ -604,7 +604,7 @@ public class RxEncryptTool {
      * @return 明文
      */
     public static byte[] decryptHexStringAES(String data, byte[] key) {
-        return decryptAES(RxDataTool.hexString2Bytes(data), key);
+        return decryptAES(DataTools.hexString2Bytes(data), key);
     }
 
     /**

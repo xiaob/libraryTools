@@ -2,9 +2,9 @@ package com.veni.tools.baserx;
 
 import android.content.Context;
 
+import com.veni.tools.FutileTool;
 import com.veni.tools.R;
-import com.veni.tools.RxNetTool;
-import com.veni.tools.RxTool;
+import com.veni.tools.NetWorkTools;
 
 import rx.Subscriber;
 
@@ -36,7 +36,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
     }
 
     public RxSubscriber(Context context) {
-        this(context, RxTool.getContext().getString(R.string.loading));
+        this(context, FutileTool.getContext().getString(R.string.loading));
     }
 
     @Override
@@ -58,8 +58,8 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
     public void onError(Throwable e) {
         e.printStackTrace();
         //网络
-        if (!RxNetTool.isAvailable(RxTool.getContext())) {
-            _onError(RxTool.getContext().getString(R.string.no_net));
+        if (!NetWorkTools.isAvailable(FutileTool.getContext())) {
+            _onError(FutileTool.getContext().getString(R.string.no_net));
         }
         //服务器
         else if (e instanceof ServerException) {
@@ -67,7 +67,7 @@ public abstract class RxSubscriber<T> extends Subscriber<T> {
         }
         //其它
         else {
-            _onError(RxTool.getContext().getString(R.string.net_error));
+            _onError(FutileTool.getContext().getString(R.string.net_error));
         }
     }
 

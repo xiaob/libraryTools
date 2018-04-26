@@ -18,7 +18,6 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.veni.tools.R;
-import com.veni.tools.RxDeviceTool;
 
 import java.util.HashSet;
 

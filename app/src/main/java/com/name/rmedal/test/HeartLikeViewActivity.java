@@ -9,8 +9,8 @@ import android.widget.TextView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
-import com.veni.tools.LogTool;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.LogTools;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.heart.HeartLayout;
@@ -71,8 +71,8 @@ public class HeartLikeViewActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, heartlikeTitleView);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, heartlikeTitleView);
         heartlikeTitleView.setLeftFinish(context);
         heartlikeTitleView.setTitle("点赞");
         setSwipeBackLayout(0);
@@ -117,7 +117,7 @@ public class HeartLikeViewActivity extends BaseActivity {
             case R.id.po_image8:
                 break;
             case R.id.love:
-                LogTool.e(TAG, "-----");
+                LogTools.e(TAG, "-----");
                 mHeartLayout.post(new Runnable() {
                     @Override
                     public void run() {

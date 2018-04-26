@@ -16,7 +16,7 @@ import android.net.Uri;
  * getIntent                   : 获取剪贴板的意图
  */
 
-public class RxClipboardTool {
+public class ClipboardTools {
     /**
      * 复制文本到剪贴板
      *

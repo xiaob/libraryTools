@@ -20,12 +20,12 @@ import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
+import com.veni.tools.IntentTools;
 import com.veni.tools.JsonTools;
-import com.veni.tools.LogTool;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.LogTools;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.interfaces.AppBarStateChangeListener;
-import com.veni.tools.view.TitleView;
 import com.veni.tools.view.ToastTool;
 import com.veni.tools.view.imageload.ImageLoaderTool;
 import com.veni.tools.view.mixed.RichText;
@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -88,9 +87,9 @@ public class RichTextActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        ViewCompat.setTransitionName(richPhotoIv,AppConstant.TRANSITION_ANIMATION);
+        ViewCompat.setTransitionName(richPhotoIv, AppConstant.TRANSITION_ANIMATION);
 
-        StatusBarUtil.immersive(this);
+        StatusBarTools.immersive(this);
         onCreateCustomToolBar(richToolbarView);
         richToolbarView.setTitle("图文混排");
         setSwipeBackLayout(0);
@@ -106,11 +105,11 @@ public class RichTextActivity extends BaseActivity {
                 switch (state) {
                     case AppBarStateChangeListener.EXPANDED:
                         //展开状态
-                        LogTool.e(TAG,"展开----");
+                        LogTools.e(TAG, "展开----");
                         break;
                     case AppBarStateChangeListener.COLLAPSED:
                         //折叠状态
-                        LogTool.e(TAG,"折叠----");
+                        LogTools.e(TAG, "折叠----");
                         break;
                     default:
                         //中间状态
@@ -128,34 +127,33 @@ public class RichTextActivity extends BaseActivity {
                     }
                 });
     }
-    private void upviewdata(){
+
+    private void upviewdata() {
 
         richTextView.setRichText(body);
         richTextView.setMovementMethod(LinkMovementMethod.getInstance());//加这句才能让里面的超链接生效,实测经常卡机崩溃
 
-        richTextView.setOnRichTextImageClickListener(new RichText.OnRichTextImageClickListener(){
+        richTextView.setOnRichTextImageClickListener(new RichText.OnRichTextImageClickListener() {
             @Override
-            public void imageClicked(List<String> imageUrls, int position){
+            public void imageClicked(List<String> imageUrls, int position) {
                 ToastTool.normal(imageUrls.get(position));
 
                 //放大查看图片
                 List<BigImageBean> img_list = new ArrayList<>();
                 img_list.add(new BigImageBean(imageUrls.get(position)
-                        ,""));
+                        , ""));
                 String imglistjson = JsonTools.toJson(img_list);
                 BigImagePagerActivity.startAction(context, imglistjson, 0);
             }
         });
-        ImageLoaderTool.display(context,richPhotoIv,"http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg");
+        ImageLoaderTool.display(context, richPhotoIv, "http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg");
     }
+
     @OnClick({R.id.rich_fab})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rich_fab:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share));
-                intent.putExtra(Intent.EXTRA_TEXT, getString(R.string.share_contents, getString(R.string.app_name), ""));
+                Intent intent = IntentTools.getShareInfoIntent(getString(R.string.share_contents, getString(R.string.app_name), ""));
                 startActivity(Intent.createChooser(intent, ((Activity) context).getTitle()));
                 break;
         }

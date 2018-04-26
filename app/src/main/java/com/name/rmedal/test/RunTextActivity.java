@@ -12,7 +12,7 @@ import android.widget.Toast;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.RunTextView;
 import com.veni.tools.view.TextViewVertical;
@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * 作者：kkan on 2018/04/20
@@ -70,8 +69,8 @@ public class RunTextActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         View view = runtextTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, runtextTitleView);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, runtextTitleView);
         runtextTitleView.setLeftFinish(context);
         runtextTitleView.setTitle("RunTextView");
         setSwipeBackLayout(0);

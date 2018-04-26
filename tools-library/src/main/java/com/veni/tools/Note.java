@@ -4,7 +4,7 @@ package com.veni.tools;
  * Created by xiyn on 2017/1/13
  */
 
-public class RxNote {
+public class Note {
 
     //暂无实际作用
     //图片转字符可以上这个  传送门

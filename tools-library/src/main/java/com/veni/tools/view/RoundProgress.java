@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.veni.tools.R;
-import com.veni.tools.RxDataTool;
+import com.veni.tools.DataTools;
 
 
 /**
@@ -129,9 +129,9 @@ public class RoundProgress extends View {
 			double money = progress*1+(Math.floor(Math.random()*getMax()));
 			canvas.drawText(money+"", (centre+90) - moneyPaint.measureText(money+"")/2-15, centre+165, moneyPaint);//右边最大值
 		}else{*/
-        canvas.drawText(RxDataTool.format2Decimals(getProgress() + ""), (centre + 90) - moneyPaint.measureText(RxDataTool.format2Decimals(getProgress() + "")) / 2 - 15, centre + 105, moneyPaint);//右边最大值
+        canvas.drawText(DataTools.format2Decimals(getProgress() + ""), (centre + 90) - moneyPaint.measureText(DataTools.format2Decimals(getProgress() + "")) / 2 - 15, centre + 105, moneyPaint);//右边最大值
         //}
-        canvas.drawText("元", (centre + 90) + moneyPaint.measureText(RxDataTool.format2Decimals(getProgress() + "")) / 2 - 10, centre + 105, moneyDPaint);//右边最大值
+        canvas.drawText("元", (centre + 90) + moneyPaint.measureText(DataTools.format2Decimals(getProgress() + "")) / 2 - 10, centre + 105, moneyDPaint);//右边最大值
         canvas.drawArc(oval, 135, 270, false, paint);  //根据进度画圆弧
 
         /**

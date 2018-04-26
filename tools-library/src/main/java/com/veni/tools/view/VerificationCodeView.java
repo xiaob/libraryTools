@@ -14,7 +14,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.veni.tools.DisplayUtils;
+import com.veni.tools.ImageTools;
 import com.veni.tools.R;
 
 import java.util.ArrayList;
@@ -102,14 +102,14 @@ public class VerificationCodeView extends View {
             isWrapContent=false;
         } else {//没有设置宽度，先默认显示四个0的宽度
             isWrapContent=true;
-            mWidth=(int)(textPaint.measureText("0")*1.5*codeNum+20+ DisplayUtils.dpToPx(getContext(),8));
+            mWidth=(int)(textPaint.measureText("0")*1.5*codeNum+20+ ImageTools.dpToPx(getContext(),8));
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             // Parent has told us how big to be. So be it.
             mHeight = heightSize;
         }else {//没有设置高度，先默认显示40dp
-            mHeight= (int) DisplayUtils.dpToPx(getContext(),40);
+            mHeight= (int) ImageTools.dpToPx(getContext(),40);
         }
 
         setMeasuredDimension(mWidth, mHeight);
@@ -150,8 +150,8 @@ public class VerificationCodeView extends View {
         linePaint.setStrokeWidth(5);
         linePaint.setStrokeCap(Paint.Cap.ROUND);
 
-        maxTextSize=DisplayUtils.spToPx(getContext(),50);
-        defaultTextSize=DisplayUtils.spToPx(getContext(),30);
+        maxTextSize= ImageTools.spToPx(getContext(),50);
+        defaultTextSize= ImageTools.spToPx(getContext(),30);
         textPaint=new Paint();
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(defaultTextSize);
@@ -179,7 +179,7 @@ public class VerificationCodeView extends View {
         if (!isWrapContent){
             dynamicSetTextPaint(tempCode);
             float drawWidth=textPaint.measureText(tempCode)*3/2;
-            horizontalOffset= (int) ((mWidth-drawWidth-DisplayUtils.dpToPx(getContext(),8))/2);
+            horizontalOffset= (int) ((mWidth-drawWidth- ImageTools.dpToPx(getContext(),8))/2);
             if (horizontalOffset<0){
                 horizontalOffset=0;
             }
@@ -250,7 +250,7 @@ public class VerificationCodeView extends View {
      * 以显示完全
      */
     private void dynamicSetTextPaint(String text){
-        int avaiWidth = (int) (mWidth*2.0f/3 - getPaddingLeft() - getPaddingRight() - DisplayUtils.dpToPx(getContext(), 2));
+        int avaiWidth = (int) (mWidth*2.0f/3 - getPaddingLeft() - getPaddingRight() - ImageTools.dpToPx(getContext(), 2));
         if (avaiWidth <= 0) {
             return;
         }

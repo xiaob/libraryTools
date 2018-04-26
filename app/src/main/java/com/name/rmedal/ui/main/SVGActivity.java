@@ -10,7 +10,7 @@ import com.jaredrummler.android.widget.AnimatedSvgView;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.ModelSVG;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +45,7 @@ public class SVGActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        StatusBarUtil.immersive(this);
+        StatusBarTools.immersive(this);
         setSvg(ModelSVG.values()[0]);
         CheckUpdate();
 

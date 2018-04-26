@@ -4,11 +4,11 @@ package com.name.rmedal.tools;
 import android.content.Context;
 
 import com.name.rmedal.modelbean.UserBean;
-import com.veni.tools.RxDataTool;
-import com.veni.tools.RxEncryptTool;
+import com.veni.tools.DataTools;
+import com.veni.tools.EncryptTools;
 import com.veni.tools.JsonTools;
-import com.veni.tools.LogTool;
-import com.veni.tools.RxSPTool;
+import com.veni.tools.LogTools;
+import com.veni.tools.SPTools;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -34,11 +34,11 @@ public class AppTools {
 
 
     public static void saveUserBean(Context context, String userdata) {
-        RxSPTool.put(context, USERDATA, userdata);
+        SPTools.put(context, USERDATA, userdata);
     }
 
     public static UserBean getUserBean(Context context) {
-        String value = (String) RxSPTool.get(context, USERDATA, "");
+        String value = (String) SPTools.get(context, USERDATA, "");
         UserBean userBean = JsonTools.parseObject(AppTools.desAESCode(value), UserBean.class);
         return userBean == null ? new UserBean() : userBean;
     }
@@ -46,32 +46,32 @@ public class AppTools {
 
     public static String encAESCode(HashMap<String, Object> param) {
         String content = JsonTools.toJson(param);
-        LogTool.d(TAG, "加密前数据-->" + content);
+        LogTools.d(TAG, "加密前数据-->" + content);
         if (content == null) {
             return "";
         }
         byte[] conb = content.getBytes();
         byte[] secreb = SECRETKEY.getBytes();
-        String encryptResultStr = RxEncryptTool.encryptAES2HexString(conb, secreb);
-        LogTool.d(TAG, "加密后-->" + encryptResultStr);
+        String encryptResultStr = EncryptTools.encryptAES2HexString(conb, secreb);
+        LogTools.d(TAG, "加密后-->" + encryptResultStr);
         return encryptResultStr;
     }
 
     public static String desAESCode(String content) {
-        if (RxDataTool.isEmpty(content)) {
-            LogTool.d(TAG, "解密字符为空");
+        if (DataTools.isEmpty(content)) {
+            LogTools.d(TAG, "解密字符为空");
             return "";
         }
-        LogTool.d(TAG, "解密前json数据--->" + content);
+        LogTools.d(TAG, "解密前json数据--->" + content);
         byte[] secreb = SECRETKEY.getBytes();
-        byte[] decryptResult = RxEncryptTool.decryptHexStringAES(content, secreb);
+        byte[] decryptResult = EncryptTools.decryptHexStringAES(content, secreb);
         String decryptString = null;
         try {
             decryptString = new String(decryptResult, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogTool.d(TAG, "解密后json数据--->" + decryptString);
+        LogTools.d(TAG, "解密后json数据--->" + decryptString);
         return decryptString;
     }
 }

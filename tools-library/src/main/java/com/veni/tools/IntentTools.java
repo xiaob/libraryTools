@@ -12,22 +12,23 @@ import java.io.File;
 /**
  * Created by xiyn on 2016/1/24.
  * Intent相关
- * getInstallAppIntent         : 获取安装App(支持7.0)的意图
- * getUninstallAppIntent       : 获取卸载App的意图
- * getLaunchAppItent           : 获取打开App的意图
- * getAppInfoIntent            : 获取App信息的意图
- * getShareInfoIntent          : 获取App信息分享的意图
- * getIntentByPackageName      : 根据包名获取意图
+ * getInstallAppIntent         : 获取安装App(支持7.0)的Intent
+ * getUninstallAppIntent       : 获取卸载App的Intent
+ * getLaunchAppItent           : 获取打开App的Intent
+ * getAppInfoIntent            : 获取App信息的Intent
+ * getShareInfoIntent          : 获取App信息分享的Intent
+ * getCallIntent               : 获取拨号的Intent
+ * getIntentByPackageName      : 根据包名获取Intent
  * getComponentNameIntent      : 获取其他应用的Intent
  */
-public class RxIntentTool {
+public class IntentTools {
 
     /**
-     * 获取安装App(支持7.0)的意图
+     * 获取安装App(支持7.0)的Intent
      *
      * @param context
      * @param filePath
-     * @return
+     * @return Intent
      */
     public static Intent getInstallAppIntent(Context context, String filePath) {
         //apk文件的本地路径
@@ -36,7 +37,7 @@ public class RxIntentTool {
             return null;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri contentUri = RxFileTool.getUriForFile(context, apkfile);
+        Uri contentUri = FileTools.getUriForFile(context, apkfile);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -46,10 +47,10 @@ public class RxIntentTool {
     }
 
     /**
-     * 获取卸载App的意图
+     * 获取卸载App的Intent
      *
      * @param packageName 包名
-     * @return 意图
+     * @return Intent
      */
     public static Intent getUninstallAppIntent(String packageName) {
         Intent intent = new Intent(Intent.ACTION_DELETE);
@@ -58,32 +59,32 @@ public class RxIntentTool {
     }
 
     /**
-     * 获取打开App的意图
+     * 获取打开App的Intent
      *
      * @param context     上下文
      * @param packageName 包名
-     * @return 意图
+     * @return Intent
      */
     public static Intent getLaunchAppIntent(Context context, String packageName) {
         return getIntentByPackageName(context, packageName);
     }
 
     /**
-     * 根据包名获取意图
+     * 根据包名获取Intent
      *
      * @param context     上下文
      * @param packageName 包名
-     * @return 意图
+     * @return Intent
      */
     private static Intent getIntentByPackageName(Context context, String packageName) {
         return context.getPackageManager().getLaunchIntentForPackage(packageName);
     }
 
     /**
-     * 获取App信息的意图
+     * 获取App信息的Intent
      *
      * @param packageName 包名
-     * @return 意图
+     * @return Intent
      */
     public static Intent getAppInfoIntent(String packageName) {
         Intent intent = new Intent("android.settings.APPLICATION_DETAILS_SETTINGS");
@@ -91,10 +92,10 @@ public class RxIntentTool {
     }
 
     /**
-     * 获取App信息分享的意图
+     * 获取App信息分享的Intent
      *
      * @param info 分享信息
-     * @return 意图
+     * @return Intent
      */
     public static Intent getShareInfoIntent(String info) {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -103,11 +104,22 @@ public class RxIntentTool {
     }
 
     /**
+     * 获取拨号的Intent
+     *
+     * @param phone 电话号码
+     * @return Intent
+     */
+    public static Intent getCallIntent(String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
+    }
+    /**
      * 获取其他应用的Intent
      *
      * @param packageName 包名
      * @param className   全类名
-     * @return 意图
+     * @return Intent
      */
     public static Intent getComponentNameIntent(String packageName, String className) {
         return getComponentNameIntent(packageName, className, null);
@@ -118,7 +130,7 @@ public class RxIntentTool {
      *
      * @param packageName 包名
      * @param className   全类名
-     * @return 意图
+     * @return Intent
      */
     public static Intent getComponentNameIntent(String packageName, String className, Bundle bundle) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -131,7 +143,7 @@ public class RxIntentTool {
     /**
      * 获取应用详情页面具体设置 intent
      *
-     * @return
+     * @return Intent
      */
     public static Intent getAppDetailsSettingsIntent(Context mContext) {
         Intent localIntent = new Intent();

@@ -47,7 +47,7 @@ import java.util.Locale;
  * BD09ToGPS84                 : 百度坐标系 (BD-09) 转换成 国际 GPS84 坐标系
  * outOfChina                  : 判断经纬度是否在中国范围内
  */
-public class RxLocationTool {
+public class LocationTools {
 
     public static double pi = 3.1415926535897932384626;
     public static double a = 6378245.0;

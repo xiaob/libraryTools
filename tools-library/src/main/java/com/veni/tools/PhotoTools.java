@@ -52,7 +52,7 @@ import java.util.Locale;
  * closeFlashLight             : 关闭闪光灯
  */
 
-public class RxPhotoTool {
+public class PhotoTools {
 
     public static final int GET_IMAGE_BY_CAMERA = 5001;
     public static final int GET_IMAGE_FROM_PHONE = 5002;
@@ -241,18 +241,18 @@ public class RxPhotoTool {
         if (context == null || imageUri == null)
             return null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT && DocumentsContract.isDocumentUri(context, imageUri)) {
-            if (RxFileTool.isExternalStorageDocument(imageUri)) {
+            if (FileTools.isExternalStorageDocument(imageUri)) {
                 String docId = DocumentsContract.getDocumentId(imageUri);
                 String[] split = docId.split(":");
                 String type = split[0];
                 if ("primary".equalsIgnoreCase(type)) {
                     return Environment.getExternalStorageDirectory() + "/" + split[1];
                 }
-            } else if (RxFileTool.isDownloadsDocument(imageUri)) {
+            } else if (FileTools.isDownloadsDocument(imageUri)) {
                 String id = DocumentsContract.getDocumentId(imageUri);
                 Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
-                return RxFileTool.getDataColumn(context, contentUri, null, null);
-            } else if (RxFileTool.isMediaDocument(imageUri)) {
+                return FileTools.getDataColumn(context, contentUri, null, null);
+            } else if (FileTools.isMediaDocument(imageUri)) {
                 String docId = DocumentsContract.getDocumentId(imageUri);
                 String[] split = docId.split(":");
                 String type = split[0];
@@ -266,14 +266,14 @@ public class RxPhotoTool {
                 }
                 String selection = MediaStore.Images.Media._ID + "=?";
                 String[] selectionArgs = new String[]{split[1]};
-                return RxFileTool.getDataColumn(context, contentUri, selection, selectionArgs);
+                return FileTools.getDataColumn(context, contentUri, selection, selectionArgs);
             }
         } // MediaStore (and general)
         else if ("content".equalsIgnoreCase(imageUri.getScheme())) {
             // Return the remote address
-            if (RxFileTool.isGooglePhotosUri(imageUri))
+            if (FileTools.isGooglePhotosUri(imageUri))
                 return imageUri.getLastPathSegment();
-            return RxFileTool.getDataColumn(context, imageUri, null, null);
+            return FileTools.getDataColumn(context, imageUri, null, null);
         }
         // File
         else if ("file".equalsIgnoreCase(imageUri.getScheme())) {
@@ -448,7 +448,7 @@ public class RxPhotoTool {
                 }
             }
         }
-        return RxDataTool.isNullString(path) ? originalUri.getPath() : null;
+        return DataTools.isNullString(path) ? originalUri.getPath() : null;
     }
 
     /**
@@ -464,7 +464,7 @@ public class RxPhotoTool {
         if (extras == null) return null;
         Bitmap photo = extras.getParcelable("data");
         File file = new File(filePath);
-        if (RxImageTool.save(photo, file, Bitmap.CompressFormat.JPEG)) return file;
+        if (ImageTools.save(photo, file, Bitmap.CompressFormat.JPEG)) return file;
         return null;
     }
 

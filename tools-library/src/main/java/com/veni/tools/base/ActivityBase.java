@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.veni.tools.RxActivityTool;
+import com.veni.tools.ActivityTools;
 import com.veni.tools.ToolBarUtils;
 
 public class ActivityBase extends AppCompatActivity {
@@ -17,7 +17,7 @@ public class ActivityBase extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         // 把actvity放到application栈中管理
-        RxActivityTool.getActivityTool().addActivity(this);
+        ActivityTools.getActivityTool().addActivity(this);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class ActivityBase extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         destroyDialogBuilder();
-        RxActivityTool.getActivityTool().finishActivity(this);
+        ActivityTools.getActivityTool().finishActivity(this);
     }
 
     protected void onCreateCustomToolBar(Toolbar toolbarBaseTb) {

@@ -9,7 +9,7 @@ import android.view.inputmethod.InputMethodManager;
  * Created by xiyn on 2016/1/24.
  *
  *
- *键盘相关 -> RxKeyboardTool.java
+ *键盘相关 -> KeyboardTools.java
  *
  *popSoftKeyboard               : 显示和隐藏软键盘true = show , false = hide
  *showSoftKeyboard               : 动态显示软键盘
@@ -17,7 +17,7 @@ import android.view.inputmethod.InputMethodManager;
  *hideSoftInput               : 动态隐藏软键盘
  *
  */
-public class RxKeyboardTool {
+public class KeyboardTools {
 
     /**
      * 避免输入法面板遮挡

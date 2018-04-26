@@ -1,6 +1,5 @@
 package com.veni.tools;
 
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -46,9 +45,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 
-import static com.veni.tools.RxTool.getContext;
+import static com.veni.tools.FutileTool.getContext;
 
 /**
  * Created by xiyn on 2016/1/24.
@@ -101,11 +99,7 @@ import static com.veni.tools.RxTool.getContext;
  * FilpAnimation               : 界面翻转动画
  */
 
-public class RxImageTool {
-
-    static ObjectAnimator invisToVis;
-    static ObjectAnimator visToInvis;
-
+public class ImageTools {
 
     /**
      * dip转px
@@ -113,8 +107,8 @@ public class RxImageTool {
      * @param dpValue dp值
      * @return px值
      */
-    public static int dip2px(float dpValue) {
-        return dp2px(getContext(),dpValue);
+    public static int dipToPx(Context context,float dpValue) {
+        return dpToPx(context,dpValue);
     }
 
     /**
@@ -123,7 +117,7 @@ public class RxImageTool {
      * @param dpValue dp值
      * @return px值
      */
-    public static int dp2px(Context context,float dpValue) {
+    public static int dpToPx(Context context, float dpValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dpValue * scale + 0.5f);
     }
@@ -134,8 +128,8 @@ public class RxImageTool {
      * @param pxValue px值
      * @return dip值
      */
-    public static int px2dip(float pxValue) {
-        return px2dp(pxValue);
+    public static int pxToDip(Context context,float pxValue) {
+        return pxToDp(context,pxValue);
     }
 
     /**
@@ -144,8 +138,8 @@ public class RxImageTool {
      * @param pxValue px值
      * @return dp值
      */
-    public static int px2dp(float pxValue) {
-        final float scale = getContext().getResources().getDisplayMetrics().density;
+    public static int pxToDp(Context context,float pxValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (pxValue / scale + 0.5f);
     }
 
@@ -155,8 +149,8 @@ public class RxImageTool {
      * @param spValue sp值
      * @return px值
      */
-    public static int sp2px( float spValue) {
-        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
+    public static int spToPx(Context context, float spValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
 
@@ -166,99 +160,55 @@ public class RxImageTool {
      * @param pxValue px值
      * @return sp值
      */
-    public static int px2sp( float pxValue) {
-        final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
+    public static int pxToSp(Context context, float pxValue) {
+        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (pxValue / fontScale + 0.5f);
     }
 
     /**
-     * 得到本地或者网络上的bitmap url - 网络或者本地图片的绝对路径,比如:
-     * <p/>
-     * A.网络路径: url="http://blog.foreverlove.us/girl2.png" ;
-     * <p/>
-     * B.本地路径:url="file://mnt/sdcard/photo/rx_bigimage_layout.png";
-     * <p/>
-     * C.支持的图片格式 ,png, jpg,bmp,gif等等
-     *
-     * @param url
-     * @return
+     * 压缩图片并保存
+     * @param filepath
+     * @return 压缩File
      */
-    public static Bitmap GetLocalOrNetBitmap(String url) {
-        Bitmap bitmap = null;
-        InputStream in = null;
-        BufferedOutputStream out = null;
-        try {
-            in = new BufferedInputStream(new URL(url).openStream(), 1024);
-            final ByteArrayOutputStream dataStream = new ByteArrayOutputStream();
-            out = new BufferedOutputStream(dataStream, 1024);
-            copy(in, out);
-            out.flush();
-            byte[] data = dataStream.toByteArray();
-            bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-            data = null;
-            return bitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public static File compressandsaveimage(String filepath) {
+        Bitmap comptessfile = compressimg(filepath);
+
+        File file = new File(FileTools.getRootPath(), "/compress/" + System.currentTimeMillis() + ".jpg");
+        if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
+        boolean issuccess = ImageTools.save(comptessfile, file, Bitmap.CompressFormat.JPEG, false);
+        LogTools.e("ImageCompress>>", "issuccess>>" + issuccess);
+        LogTools.e("ImageCompress>>", "file>>" + file.getPath());
+        return issuccess ? file : null;
     }
 
-    private static void copy(InputStream in, OutputStream out) throws IOException {
-        byte[] b = new byte[1024];
-        int read;
-        while ((read = in.read(b)) != -1) {
-            out.write(b, 0, read);
-        }
-    }
-
-    public static int getColorByInt(int colorInt) {
-        return colorInt | -16777216;
+    public static void delAllcompressfile() {
+        FileTools.delAllFile(FileTools.getRootPath().getAbsolutePath()+"/compress/" );
     }
 
     /**
-     * 修改颜色透明度
+     * 压缩图片
      *
-     * @param color
-     * @param alpha
+     * @param imagePath
      * @return
      */
-    public static int changeColorAlpha(int color, int alpha) {
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-
-        return Color.argb(alpha, red, green, blue);
-    }
-
-    public static float getAlphaPercent(int argb) {
-        return Color.alpha(argb) / 255f;
-    }
-
-    public static int alphaValueAsInt(float alpha) {
-        return Math.round(alpha * 255);
-    }
-
-    public static int adjustAlpha(float alpha, int color) {
-        return alphaValueAsInt(alpha) << 24 | (0x00ffffff & color);
-    }
-
-    public static int colorAtLightness(int color, float lightness) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        hsv[2] = lightness;
-        return Color.HSVToColor(hsv);
-    }
-
-    public static float lightnessOfColor(int color) {
-        float[] hsv = new float[3];
-        Color.colorToHSV(color, hsv);
-        return hsv[2];
-    }
-
-    public static String getHexString(int color, boolean showAlpha) {
-        int base = showAlpha ? 0xFFFFFFFF : 0xFFFFFF;
-        String format = showAlpha ? "#%08X" : "#%06X";
-        return String.format(format, (base & color)).toUpperCase();
+    private static Bitmap compressimg(String imagePath) {
+// 设置参数
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true; // 只获取图片的大小信息，而不是将整张图片载入在内存中，避免内存溢出
+        BitmapFactory.decodeFile(imagePath, options);
+        int height = options.outHeight;
+        int width = options.outWidth;
+        int inSampleSize = 2; // 默认像素压缩比例，压缩为原图的1/2
+        int minLen = Math.min(height, width); // 原图的最小边长
+        if (minLen > 600) { // 如果原始图像的最小边长大于100dp（此处单位我认为是dp，而非px）
+            float ratio = (float) minLen / 600.0f; // 计算像素压缩比例
+            inSampleSize = (int) ratio;
+        }
+        options.inJustDecodeBounds = false; // 计算好压缩比例后，这次可以去加载原图了
+        options.inSampleSize = inSampleSize; // 设置为刚才计算的压缩比例
+        Bitmap bm = BitmapFactory.decodeFile(imagePath, options); // 解码文件
+        LogTools.e("TAG", "size: " + bm.getByteCount() + " width: " + bm.getWidth() + " heigth:" + bm.getHeight()); // 输出图像数据
+        return bm;
     }
 
     /**
@@ -393,7 +343,7 @@ public class RxImageTool {
             e.printStackTrace();
             return null;
         } finally {
-            RxFileTool.closeIO(is);
+            FileTools.closeIO(is);
         }
     }
 
@@ -420,7 +370,7 @@ public class RxImageTool {
             e.printStackTrace();
             return null;
         } finally {
-            RxFileTool.closeIO(is);
+            FileTools.closeIO(is);
         }
     }
 
@@ -431,7 +381,7 @@ public class RxImageTool {
      * @return bitmap
      */
     public static Bitmap getBitmap(String filePath) {
-        if (RxDataTool.isNullString(filePath)) return null;
+        if (DataTools.isNullString(filePath)) return null;
         return BitmapFactory.decodeFile(filePath);
     }
 
@@ -444,7 +394,7 @@ public class RxImageTool {
      * @return bitmap
      */
     public static Bitmap getBitmap(String filePath, int maxWidth, int maxHeight) {
-        if (RxDataTool.isNullString(filePath)) return null;
+        if (DataTools.isNullString(filePath)) return null;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
@@ -1430,7 +1380,7 @@ public class RxImageTool {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, String filePath, CompressFormat format) {
-        return save(src, RxFileTool.getFileByPath(filePath), format, false);
+        return save(src, FileTools.getFileByPath(filePath), format, false);
     }
 
     /**
@@ -1455,7 +1405,7 @@ public class RxImageTool {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, String filePath, CompressFormat format, boolean recycle) {
-        return save(src, RxFileTool.getFileByPath(filePath), format, recycle);
+        return save(src, FileTools.getFileByPath(filePath), format, recycle);
     }
 
     /**
@@ -1468,7 +1418,7 @@ public class RxImageTool {
      * @return {@code true}: 成功<br>{@code false}: 失败
      */
     public static boolean save(Bitmap src, File file, CompressFormat format, boolean recycle) {
-        if (isEmptyBitmap(src) || !RxFileTool.createOrExistsFile(file)) return false;
+        if (isEmptyBitmap(src) || !FileTools.createOrExistsFile(file)) return false;
         System.out.println(src.getWidth() + ", " + src.getHeight());
         OutputStream os = null;
         boolean ret = false;
@@ -1479,7 +1429,7 @@ public class RxImageTool {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            RxFileTool.closeIO(os);
+            FileTools.closeIO(os);
         }
         return ret;
     }
@@ -1514,7 +1464,7 @@ public class RxImageTool {
      * @return 图片类型
      */
     public static String getImageType(String filePath) {
-        return getImageType(RxFileTool.getFileByPath(filePath));
+        return getImageType(FileTools.getFileByPath(filePath));
     }
 
     /**
@@ -1533,7 +1483,7 @@ public class RxImageTool {
             e.printStackTrace();
             return null;
         } finally {
-            RxFileTool.closeIO(is);
+            FileTools.closeIO(is);
         }
     }
 
@@ -1778,7 +1728,7 @@ public class RxImageTool {
         matrix.postScale(scaleWidth, scaleHeight);
         Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
                 (int) height, matrix, true);
-        LogTool.e("RxImagleTool", bitmap.getHeight() + bitmap.getWidth() + "d");
+        LogTools.e("RxImagleTool", bitmap.getHeight() + bitmap.getWidth() + "d");
         return bitmap;
     }
 
@@ -1846,7 +1796,7 @@ public class RxImageTool {
                 }
                 exif.saveAttributes();
 
-                LogTool.d("writeLatLonIntoJpeg",exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE) + "\n"
+                LogTools.d("writeLatLonIntoJpeg",exif.getAttribute(ExifInterface.TAG_GPS_LATITUDE) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_GPS_LONGITUDE) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_GPS_PROCESSING_METHOD) + "\n"
                         + exif.getAttribute(ExifInterface.TAG_IMAGE_LENGTH) + "\n"

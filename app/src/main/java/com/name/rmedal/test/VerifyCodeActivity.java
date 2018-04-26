@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.ToastTool;
@@ -75,8 +75,8 @@ public class VerifyCodeActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         View view = tickerTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, tickerTitleView);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, tickerTitleView);
         tickerTitleView.setLeftFinish(context);
         tickerTitleView.setTitle("随机验证码");
         setSwipeBackLayout(0);

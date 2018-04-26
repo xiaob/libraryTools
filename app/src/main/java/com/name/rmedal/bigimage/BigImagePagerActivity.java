@@ -31,10 +31,10 @@ import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
 import com.veni.tools.JsonTools;
-import com.veni.tools.RxTabLayoutTool;
+import com.veni.tools.TabLayoutTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ViewPagerFixed;
 
 import java.io.File;
@@ -93,8 +93,8 @@ public class BigImagePagerActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         setSwipeBackLayout(2);
         //设置透明状态栏
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, toolbar);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, toolbar);
         toolBarFadeIn();
         initToolbar();
         initBackground();
@@ -266,7 +266,7 @@ public class BigImagePagerActivity extends BaseActivity {
 
     private void initBackground() {
         ColorDrawable mBackground = new ColorDrawable(Color.BLACK);
-        RxTabLayoutTool.getRootView(this).setBackgroundDrawable(mBackground);
+        TabLayoutTools.getRootView(this).setBackgroundDrawable(mBackground);
     }
 
 

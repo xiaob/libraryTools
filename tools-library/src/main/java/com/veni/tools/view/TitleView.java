@@ -14,9 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.veni.tools.R;
-import com.veni.tools.RxDataTool;
-import com.veni.tools.RxImageTool;
-import com.veni.tools.RxKeyboardTool;
+import com.veni.tools.DataTools;
+import com.veni.tools.ImageTools;
+import com.veni.tools.KeyboardTools;
 
 /**
  * @author by xiyn on 2017/1/2.
@@ -127,7 +127,7 @@ public class TitleView extends FrameLayout {
             //getColor(R.styleable.RxTitle_RxBackground, getResources().getColor(R.color.transparent))
             mTitle = a.getString(R.styleable.TitleView_title);//标题
             mTitleColor = a.getColor(R.styleable.TitleView_titleColor, getResources().getColor(R.color.white));//标题颜色
-            mTitleSize = a.getDimensionPixelSize(R.styleable.TitleView_titleSize, RxImageTool.dp2px(context,20));//标题字体大小
+            mTitleSize = a.getDimensionPixelSize(R.styleable.TitleView_titleSize, ImageTools.dpToPx(context,20));//标题字体大小
             //TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics())
             mTitleVisibility = a.getBoolean(R.styleable.TitleView_titleVisibility, true);
 
@@ -138,12 +138,12 @@ public class TitleView extends FrameLayout {
 
             mLeftText = a.getString(R.styleable.TitleView_leftText);
             mLeftTextColor = a.getColor(R.styleable.TitleView_leftTextColor, getResources().getColor(R.color.white));//左边字体颜色
-            mLeftTextSize = a.getDimensionPixelSize(R.styleable.TitleView_leftTextSize,  RxImageTool.dp2px(context,8));//标题字体大小
+            mLeftTextSize = a.getDimensionPixelSize(R.styleable.TitleView_leftTextSize,  ImageTools.dpToPx(context,8));//标题字体大小
             mLeftTextVisibility = a.getBoolean(R.styleable.TitleView_leftTextVisibility, false);
 
             mRightText = a.getString(R.styleable.TitleView_rightText);
             mRightTextColor = a.getColor(R.styleable.TitleView_rightTextColor, getResources().getColor(R.color.white));//右边字体颜色
-            mRightTextSize = a.getDimensionPixelSize(R.styleable.TitleView_rightTextSize,  RxImageTool.dp2px(context,8));//标题字体大小
+            mRightTextSize = a.getDimensionPixelSize(R.styleable.TitleView_rightTextSize,  ImageTools.dpToPx(context,8));//标题字体大小
             mRightTextVisibility = a.getBoolean(R.styleable.TitleView_rightTextVisibility, false);
 
         } finally {
@@ -152,7 +152,7 @@ public class TitleView extends FrameLayout {
         }
 
         //******************************************************************************************以下属性初始化
-        if (!RxDataTool.isNullString(mTitle)) {
+        if (!DataTools.isNullString(mTitle)) {
             setTitle(mTitle);
         }
 
@@ -207,12 +207,12 @@ public class TitleView extends FrameLayout {
         //might cause crash on some devices
         mTvTitle.setMovementMethod(null);
         // can be added after layout inflation;
-        mTvTitle.setMaxHeight( RxImageTool.dp2px(context,55f));
+        mTvTitle.setMaxHeight( ImageTools.dpToPx(context,55f));
         //don't forget to add min text size programmatically
         mTvTitle.setMinTextSize(37f);
         try {
             TextAutoZoom.setNormalization((Activity) getContext(), mRootLayout, mTvTitle);
-            RxKeyboardTool.hideSoftInput((Activity) getContext());
+            KeyboardTools.hideSoftInput((Activity) getContext());
         } catch (Exception e) {
 
         }

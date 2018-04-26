@@ -12,10 +12,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import static com.veni.tools.RxConstTool.DAY;
-import static com.veni.tools.RxConstTool.HOUR;
-import static com.veni.tools.RxConstTool.MIN;
-import static com.veni.tools.RxConstTool.SEC;
+import static com.veni.tools.ConstantTools.DAY;
+import static com.veni.tools.ConstantTools.HOUR;
+import static com.veni.tools.ConstantTools.MIN;
+import static com.veni.tools.ConstantTools.SEC;
 
 /**
  * Created by xiyn on 2016/1/24.
@@ -29,7 +29,7 @@ import static com.veni.tools.RxConstTool.SEC;
  * getCurrentDate(format);获取表示当前日期时间的字符串.
  * getDaysByYearMonth( year,  month) ;根据年 月 获取对应的月份 天数
  */
-public class RxTimeTool {
+public class TimeTools {
     //一天多少毫秒
     public static final long ONE_DAY_MILLISECONDS = 1000 * 3600 * 24;
     //一小时多少毫秒
@@ -1002,10 +1002,10 @@ public class RxTimeTool {
      * @return
      */
     public static  String getChatTimeForShow(long time){
-        if(RxTimeTool.isToday(time)){
-            return RxTimeTool.getStringByFormat(time, RxTimeTool.dateFormatHMofChinese);
+        if(TimeTools.isToday(time)){
+            return TimeTools.getStringByFormat(time, TimeTools.dateFormatHMofChinese);
         }else{
-            return RxTimeTool.getStringByFormat(time, RxTimeTool.dateFormatMDHMofChinese);
+            return TimeTools.getStringByFormat(time, TimeTools.dateFormatMDHMofChinese);
         }
     }
 

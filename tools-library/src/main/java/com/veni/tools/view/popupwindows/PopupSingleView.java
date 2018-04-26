@@ -16,9 +16,9 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.veni.tools.DeviceTools;
 import com.veni.tools.R;
-import com.veni.tools.RxDeviceTool;
-import com.veni.tools.RxImageTool;
+import com.veni.tools.ImageTools;
 import com.veni.tools.model.ActionItem;
 
 import java.util.ArrayList;
@@ -69,8 +69,8 @@ public class PopupSingleView extends PopupWindow {
         setOutsideTouchable(true);
 
         // 获得屏幕的宽度和高度
-        mScreenWidth = RxDeviceTool.getScreenWidth(mContext);
-        mScreenHeight = RxDeviceTool.getScreenHeight(mContext);
+        mScreenWidth = DeviceTools.getScreenWidth(mContext);
+        mScreenHeight = DeviceTools.getScreenHeight(mContext);
 
         // 设置弹窗的宽度和高度
         setWidth(width);
@@ -96,8 +96,8 @@ public class PopupSingleView extends PopupWindow {
         setOutsideTouchable(true);
 
         // 获得屏幕的宽度和高度
-        mScreenWidth = RxDeviceTool.getScreenWidth(mContext);
-        mScreenHeight = RxDeviceTool.getScreenHeight(mContext);
+        mScreenWidth = DeviceTools.getScreenWidth(mContext);
+        mScreenHeight = DeviceTools.getScreenHeight(mContext);
 
         // 设置弹窗的宽度和高度
         setWidth(width);
@@ -149,7 +149,7 @@ public class PopupSingleView extends PopupWindow {
         }
 
         // 显示弹窗的位置
-        showAtLocation(view, popupGravity, mScreenWidth - LIST_PADDING - (getWidth() / 2), mRect.bottom + RxImageTool.dp2px(mContext,7.5f));
+        showAtLocation(view, popupGravity, mScreenWidth - LIST_PADDING - (getWidth() / 2), mRect.bottom + ImageTools.dpToPx(mContext,7.5f));
     }
 
     /**

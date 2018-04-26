@@ -25,7 +25,7 @@ import android.view.ViewGroup;
  * @author 咖枯
  * @version 1.0 2016/5/31
  */
-public class RxTabLayoutTool {
+public class TabLayoutTools {
 
     public static void dynamicSetTabLayoutMode(TabLayout tabLayout) {
         int tabWidth = calculateTabWidth(tabLayout);
@@ -46,7 +46,7 @@ public class RxTabLayoutTool {
         return tabWidth;
     }
     public static int getScreenWith() {
-        return RxTool.getContext().getResources().getDisplayMetrics().widthPixels;
+        return FutileTool.getContext().getResources().getDisplayMetrics().widthPixels;
     }
     public static View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);

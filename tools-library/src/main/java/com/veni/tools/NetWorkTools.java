@@ -37,7 +37,7 @@ import java.util.List;
  * getNetWorkType              : 获取当前的网络类型
  * getNetWorkTypeName          : 获取当前的网络类型名称
  */
-public class RxNetTool {
+public class NetWorkTools {
 
     public static final int NETWORK_NO = -1;   // no network
     public static final int NETWORK_WIFI = 1;    // wifi network

@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.veni.tools.LogTool;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.LogTools;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.model.ActionItem;
 import com.veni.tools.view.TitleView;
@@ -110,8 +110,8 @@ public class PopWinActivity extends BaseActivity implements PopupViewManager.Tip
     public void initView(Bundle savedInstanceState) {
         View view = popwinTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, popwinTitleView);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, popwinTitleView);
         popwinTitleView.setLeftFinish(context);
         popwinTitleView.setTitle("popupwindows");
         setSwipeBackLayout(0);
@@ -204,7 +204,7 @@ public class PopWinActivity extends BaseActivity implements PopupViewManager.Tip
 
     @Override
     public void onTipDismissed(View view, int anchorViewId, boolean byUser) {
-        LogTool.d(TAG, "tip near anchor view " + anchorViewId + " dismissed");
+        LogTools.d(TAG, "tip near anchor view " + anchorViewId + " dismissed");
 
         if (anchorViewId == R.id.text_view) {
             // Do something when a tip near view with id "R.id.text_view" has been dismissed

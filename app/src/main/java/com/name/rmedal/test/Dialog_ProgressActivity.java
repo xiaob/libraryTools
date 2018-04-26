@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.base.ActivityJumpOptionsTool;
-import com.veni.tools.StatusBarUtil;
+import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.LabelsView;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.progressing.SpinKitView;
@@ -71,8 +71,8 @@ public class Dialog_ProgressActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
 
-        StatusBarUtil.immersive(this);
-        StatusBarUtil.setPaddingSmart(this, toastTitleView);
+        StatusBarTools.immersive(this);
+        StatusBarTools.setPaddingSmart(this, toastTitleView);
         toastTitleView.setLeftFinish(context);
         toastTitleView.setTitle("Dialog_Progress");
         setSwipeBackLayout(0);
