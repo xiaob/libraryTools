@@ -15,128 +15,22 @@
         app:leftIconVisibility="false"
         app:titleColor="@color/white" />
 
+
+    <com.veni.tools.view.ticker.TickerView
+        android:id="@+id/trade_made_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/darkgray"
+        android:textSize="50sp"
+        app:ticker_animationDuration="500" />
+
     <com.veni.tools.view.ShoppingView
-        android:id="@+id/shopping_sv_1"
+        android:id="@+id/trade_sv_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
         app:sv_bg_color="#CD5555"
         app:sv_text="点击购买"/>
-
-
-    <RelativeLayout
-        android:id="@+id/main_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/shopping_cart_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/hight_50"
-            android:layout_alignParentBottom="true"
-            android:background="@color/light_black"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/shopping_cart_total_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/hight_80"
-                android:text="120"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/font_20"
-                android:textStyle="bold"
-                android:visibility="gone"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/shopping_cart_bottom"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/left_menu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/gray">
-            </android.support.v7.widget.RecyclerView>
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/right_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white">
-                </android.support.v7.widget.RecyclerView>
-
-                <LinearLayout
-                    android:id="@+id/right_menu_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@color/light_gray"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:background="#e6e6e6">
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/right_menu_tv"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:background="#f6f6f6"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="20dp"
-                        android:text="菜单"
-                        android:textColor="#666666"
-                        android:textSize="16sp"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/shopping_cart_layout"
-            android:layout_width="@dimen/hight_60"
-            android:layout_height="@dimen/hight_60"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/hight_5"
-            android:layout_marginLeft="@dimen/hight_16"
-            android:background="@drawable/circle_blue"
-            android:clickable="true">
-
-            <ImageView
-                android:id="@+id/shopping_cart"
-                android:layout_width="@dimen/hight_35"
-                android:layout_height="@dimen/hight_35"
-                android:layout_gravity="center"
-                android:src="@mipmap/ic_main_trade"/>
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/shopping_cart_total_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/shopping_cart_bottom"
-            android:layout_alignRight="@id/shopping_cart_layout"
-            android:background="@drawable/small_red_circle"
-            android:text="1"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            android:visibility="gone"/>
-    </RelativeLayout>
-
 </LinearLayout>

@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.name.rmedal.R;
@@ -18,14 +16,11 @@ import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.ToastTool;
 import com.veni.tools.view.VerificationCodeView;
-import com.veni.tools.view.ticker.TickerUtils;
-import com.veni.tools.view.ticker.TickerView;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,12 +32,10 @@ import rx.schedulers.Schedulers;
  * 当前类注释:
  */
 
-public class TickerActivity extends BaseActivity {
+public class VerifyCodeActivity extends BaseActivity {
 
     @BindView(R.id.ticker_title_view)
     TitleView tickerTitleView;
-    @BindView(R.id.ticker_made_count)
-    TickerView tickerMadeCount;
     @BindView(R.id.verifycodeview)
     VerificationCodeView verifycodeview;
     @BindView(R.id.edit_input)
@@ -61,7 +54,7 @@ public class TickerActivity extends BaseActivity {
      */
     public static void startAction(Context context, View view) {
         new ActivityJumpOptionsTool().setContext(context)
-                .setClass(TickerActivity.class)
+                .setClass(VerifyCodeActivity.class)
                 .setView(view)
                 .setActionString(AppConstant.TRANSITION_ANIMATION)
                 .screenTransitAnim()
@@ -70,7 +63,7 @@ public class TickerActivity extends BaseActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_ticker;
+        return R.layout.activity_verifycode;
     }
 
     @Override
@@ -85,24 +78,18 @@ public class TickerActivity extends BaseActivity {
         StatusBarUtil.immersive(this);
         StatusBarUtil.setPaddingSmart(this, tickerTitleView);
         tickerTitleView.setLeftFinish(context);
-        tickerTitleView.setTitle("字符滚动控件");
+        tickerTitleView.setTitle("随机验证码");
         setSwipeBackLayout(0);
-
-        tickerMadeCount.setCharacterList(TickerUtils.getDefaultNumberList());
-        tickerMadeCount.setText("$0.0", true);
 
         verifycodeview.refreshCode();
         verifycodeview2.refreshCode();
         getnetverifycode();
     }
 
-    @OnClick({R.id.ticker_made_count,R.id.btn_submit, R.id.net_btn_submit,
+    @OnClick({R.id.btn_submit, R.id.net_btn_submit,
             R.id.verifycodeview, R.id.net_verifycodeview_layut, R.id.verifycodeview2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ticker_made_count:
-                tickerMadeCount.setText("$3546.8", true);
-                break;
             case R.id.btn_submit:
                 String input = editInput.getText().toString().trim().toLowerCase();
                 String code = verifycodeview.getvCode().toLowerCase();

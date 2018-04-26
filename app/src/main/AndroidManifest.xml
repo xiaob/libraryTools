@@ -72,7 +72,7 @@
             android:name=".test.PopWinActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
-            android:name=".test.TickerActivity"
+            android:name=".test.VerifyCodeActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
             android:name=".test.RunTextActivity"

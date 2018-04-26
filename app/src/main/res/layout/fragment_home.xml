@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/bg_toolbar_primary"
+        app:leftIconVisibility="false"
         app:title="首页"
         app:titleColor="@color/white"/>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout

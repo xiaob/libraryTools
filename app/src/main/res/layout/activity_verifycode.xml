@@ -14,15 +14,6 @@
         app:title="Toast_LabelsView"
         app:titleColor="@color/white" />
 
-    <com.veni.tools.view.ticker.TickerView
-        android:id="@+id/ticker_made_count"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/darkgray"
-        android:textSize="50sp"
-        app:ticker_animationDuration="500" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">

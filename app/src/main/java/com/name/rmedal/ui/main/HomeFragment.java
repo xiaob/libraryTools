@@ -21,7 +21,7 @@ import com.name.rmedal.test.HeartLikeViewActivity;
 import com.name.rmedal.test.PopWinActivity;
 import com.name.rmedal.test.RichTextActivity;
 import com.name.rmedal.test.RunTextActivity;
-import com.name.rmedal.test.TickerActivity;
+import com.name.rmedal.test.VerifyCodeActivity;
 import com.name.rmedal.test.ToastActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -75,7 +75,6 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView(Bundle savedInstanceState) {
         StatusBarUtil.setPaddingSmart(context, homeRxtitle);
-        homeRxtitle.setLeftIconVisibility(false);
         homeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -162,10 +161,10 @@ public class HomeFragment extends BaseFragment {
                 PopWinActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("字符滚动控件", 0, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("随机验证码", 0, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
-                TickerActivity.startAction(context,view);
+                VerifyCodeActivity.startAction(context,view);
             }
         }));
         functionlist.add(new FunctionBean("RunTextView", 0, new OnNoFastClickListener() {
