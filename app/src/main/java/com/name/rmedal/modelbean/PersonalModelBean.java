@@ -1,6 +1,6 @@
 package com.name.rmedal.modelbean;
 
-public class ModelContactCity {
+public class PersonalModelBean {
     private String name;
     private String pys;
     private int type;

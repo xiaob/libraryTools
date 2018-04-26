@@ -4,14 +4,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
-import com.name.rmedal.modelbean.ModelContactCity;
-import com.name.rmedal.modelbean.MySection;
+import com.name.rmedal.modelbean.PersonalModelBean;
+import com.name.rmedal.modelbean.PersonalSection;
 import com.name.rmedal.test.adapter.SectionAdapter;
 import com.veni.tools.JsonTools;
 import com.veni.tools.StatusBarUtil;
@@ -19,7 +15,6 @@ import com.veni.tools.view.TitleView;
 import com.veni.tools.view.sidebar.PinnedHeaderDecoration;
 import com.veni.tools.view.sidebar.WaveSideBarView;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -59,7 +54,7 @@ public class PersonalFragment extends BaseFragment {
     }
 
     private SectionAdapter sectionAdapter;
-    private List<MySection> list;
+    private List<PersonalSection> list;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -86,10 +81,10 @@ public class PersonalFragment extends BaseFragment {
                 .subscribe(new Action1<Long>() {
                     @Override
                     public void call(Long aLong) {
-                        List<ModelContactCity> modellist = JsonTools.parseArray(DATA, ModelContactCity.class);
-                        Collections.sort(modellist, new Comparator<ModelContactCity>() {
+                        List<PersonalModelBean> modellist = JsonTools.parseArray(DATA, PersonalModelBean.class);
+                        Collections.sort(modellist, new Comparator<PersonalModelBean>() {
                             @Override
-                            public int compare(ModelContactCity l, ModelContactCity r) {
+                            public int compare(PersonalModelBean l, PersonalModelBean r) {
                                 if (l == null || r == null) {
                                     return 0;
                                 }
@@ -103,13 +98,13 @@ public class PersonalFragment extends BaseFragment {
                             }
                         });
                         for (int i = 0; i < modellist.size(); i++) {
-                            ModelContactCity modelContactCity = modellist.get(i);
+                            PersonalModelBean modelContactCity = modellist.get(i);
                             int type = modelContactCity.getType();
                             if (type == 0) {
-                                list.add(new MySection(modelContactCity));
+                                list.add(new PersonalSection(modelContactCity));
                             } else {
                                 String letter = modelContactCity.getPys().substring(0, 1);
-                                list.add(new MySection(true, letter, true));
+                                list.add(new PersonalSection(true, letter, true));
                             }
                         }
                         sectionAdapter.replaceData(list);
