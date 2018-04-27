@@ -15,13 +15,13 @@ import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.DeviceBean;
+import com.name.rmedal.tools.TextViewTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.DeviceTools;
 import com.veni.tools.StatusBarTools;
-import com.veni.tools.TextViewUtils;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
 
@@ -102,7 +102,7 @@ public class PhoneInfoActivity extends BaseActivity {
             @Override
             protected void convert(BaseViewHolder viewHolder, DeviceBean item) {
                 TextView info_item_tv = viewHolder.getView(R.id.phone_info_item_tv);
-                TextViewUtils.upitemtvforhtml_onetv(info_item_tv,item.getUserName(),item.getNickName());
+                TextViewTools.upitemtvforhtml_onetv(info_item_tv,item.getUserName(),item.getNickName());
             }
         };
 

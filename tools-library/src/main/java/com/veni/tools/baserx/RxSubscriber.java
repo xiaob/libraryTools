@@ -28,15 +28,9 @@ import rx.Subscriber;
 public abstract class RxSubscriber<T> extends Subscriber<T> {
 
     private Context mContext;
-    private String msg;
-
-    public RxSubscriber(Context context, String msg) {
-        this.mContext = context;
-        this.msg = msg;
-    }
 
     public RxSubscriber(Context context) {
-        this(context, FutileTool.getContext().getString(R.string.loading));
+        this.mContext = context;
     }
 
     @Override

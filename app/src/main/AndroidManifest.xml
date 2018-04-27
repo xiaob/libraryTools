@@ -80,6 +80,9 @@
         <activity
             android:name=".test.PhoneInfoActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
+        <activity
+            android:name=".ui.main.LoginActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
 
         <activity android:name=".bigimage.BigImagePagerActivity"
             android:theme="@style/AppTheme.SwipeBack"/>

@@ -12,6 +12,7 @@
     <dimen name="hight_13">13dp</dimen>
     <dimen name="hight_15">15dp</dimen>
     <dimen name="hight_16">16dp</dimen>
+    <dimen name="hight_18">18dp</dimen>
     <dimen name="hight_20">20dp</dimen>
     <dimen name="hight_24">24dp</dimen>
     <dimen name="hight_25">25dp</dimen>

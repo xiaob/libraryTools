@@ -3,6 +3,8 @@
     <string name="homepage">首页</string>
     <string name="trade">购物</string>
     <string name="personal">我</string>
+    <string name="login">登录</string>
+
 
     <string name="share_contents">来自「AndroidFire」的分享：%1$s %2$s</string>
     <string name="news_from">%1$s %2$s</string>

@@ -1,12 +1,8 @@
 package com.veni.tools;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,12 +10,9 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.veni.tools.model.Gps;
-import com.veni.tools.view.ToastTool;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -33,8 +26,6 @@ import java.util.Locale;
  * isGpsEnabled                : 判断Gps是否可用
  * isLocationEnabled           : 判断定位是否可用
  * openGpsSettings             : 打开Gps设置界面
- * registerLocation            : 注册Location
- * unRegisterLocation          : 注销Location
  * getAddress                  : 根据经纬度获取地理位置
  * getCountryName              : 根据经纬度获取所在国家
  * getLocality                 : 根据经纬度获取所在地
@@ -83,78 +74,6 @@ public class LocationTools {
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
-    }
-
-    /**
-     * 注册
-     * <p>使用完记得调用{@link #unRegisterLocation()}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.INTERNET"/>}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>}</p>
-     * <p>需添加权限 {@code <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>}</p>
-     * <p>如果{@code minDistance}为0，则通过{@code minTime}来定时更新；</p>
-     * <p>{@code minDistance}不为0，则以{@code minDistance}为准；</p>
-     * <p>两者都为0，则随时刷新。</p>
-     *
-     * @param minTime     位置信息更新周期（单位：毫秒）
-     * @param minDistance 位置变化最小距离：当位置距离变化超过此值时，将更新位置信息（单位：米）
-     * @param listener    位置刷新的回调接口
-     * @return {@code true}: 初始化成功<br>{@code false}: 初始化失败
-     */
-    public static boolean registerLocation(Context context, long minTime, long minDistance, OnLocationChangeListener listener) {
-        if (listener == null) return false;
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            return false;
-        }
-        mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        mListener = listener;
-        if (!isLocationEnabled(context)) {
-            ToastTool.showToast(context, "无法定位，请打开定位服务", 500);
-            return false;
-        }
-        String provider = mLocationManager.getBestProvider(getCriteria(), true);
-
-        Location location = mLocationManager.getLastKnownLocation(provider);
-        if (location != null) listener.getLastKnownLocation(location);
-        if (myLocationListener == null) myLocationListener = new MyLocationListener();
-        mLocationManager.requestLocationUpdates(provider, minTime, minDistance, myLocationListener);
-        return true;
-    }
-
-    /**
-     * 注销
-     */
-    public static void unRegisterLocation() {
-        if (mLocationManager != null) {
-            if (myLocationListener != null) {
-                mLocationManager.removeUpdates(myLocationListener);
-                myLocationListener = null;
-            }
-            mLocationManager = null;
-        }
-    }
-
-    /**
-     * 设置定位参数
-     *
-     * @return {@link Criteria}
-     */
-    private static Criteria getCriteria() {
-        Criteria criteria = new Criteria();
-        //设置定位精确度 Criteria.ACCURACY_COARSE比较粗略，Criteria.ACCURACY_FINE则比较精细
-        criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        //设置是否要求速度
-        criteria.setSpeedRequired(false);
-        // 设置是否允许运营商收费
-        criteria.setCostAllowed(false);
-        //设置是否需要方位信息
-        criteria.setBearingRequired(false);
-        //设置是否需要海拔信息
-        criteria.setAltitudeRequired(false);
-        // 设置对电源的需求
-        criteria.setPowerRequirement(Criteria.POWER_LOW);
-        return criteria;
     }
 
     /**

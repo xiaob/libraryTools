@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class TextViewTools {
 
     public static TextView upitemtvforhtml_onetv(TextView tvcontent, String tip, String content) {
-        return upitemtvforhtml_onetv(tvcontent, tip, content, "#4a4a4a", "#b2b2b2");
+        return upitemtvforhtml_onetv(tvcontent, tip, content, "#b2b2b2", "#4a4a4a");
     }
 
     public static TextView upitemtvforhtml_onetv(TextView tvcontent, String tip, String content, String tipcolor, String contentcolor) {
