@@ -91,7 +91,7 @@ public class BigImagePagerActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-        setSwipeBackLayout(2);
+//        setSwipeBackLayout(2);
         //设置透明状态栏
         StatusBarTools.immersive(this);
         StatusBarTools.setPaddingSmart(this, toolbar);
