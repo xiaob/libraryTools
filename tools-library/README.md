@@ -2,7 +2,7 @@
 - base 基类
 -- ActivityBase
 -- ActivityJumpOptionsTool Activity跳转工具类
--- AlertDialogBuilder
+-- AlertDialogBuilder   Dialog工具类
 -- BaseModel
 -- BasePresenter
 -- BaseView
@@ -10,18 +10,12 @@
 -- TUtil 类转换
 - baserx rxjava 封装
 - interfaces
+-- AppBarStateChangeListener AppBarLayout 滚动状态监听
 -- OnDelayListener 延时任务封装回调
 -- OnNoFastClickListener 重复点击的监听器
--- OnUpdateListener 颜色渐变动画监听
--- TimeCount 验证码倒计时
-- irecyclerview  recyclerview封装
--- adapter
---- CommonRecycleViewAdapter 万能Adapter
---- MultiItemRecycleViewAdapter 多条目Adapter
+
 - model 实体类
 - view
--- cardstack 银行卡组叠加效果
--- colorpicker 颜色选择器
 -- heart 爱心点赞控件
 -- imageload 图片加载工具类 使用glide框架封装
 -- likeview 点赞爆炸按钮
@@ -30,52 +24,52 @@
 -- progressing 加载动画 SpriteFactory控制不同效果
 -- sidebar 波浪侧边栏(字母快速导航)
 -- swipemenu Item侧滑删除菜单
+-- ticker 数字增长动画
 -- InnerPagerAdapter  TabLayout 配套的Adapter
 -- LabelsView 自定义标签列表
--- RxCaptcha 随机生成验证码
--- RxRoundProgress 弧形进度条
--- RxRunTextView 跑马灯效果
--- RxSeatAirplane 飞机票选座控件
--- RxSeatMovie 电影院选座控件
--- RxShoppingView 商品数量加减控件
--- RxTextAutoZoom 文字根据布局大小自动缩放效果
--- RxTextViewVertical 单行文字上下滚动
--- RxTextViewVerticalMore 多行文字上下滚动
--- RxTitle 自定义标题控件
--- RxToast Toast的封装 normal warning info success
--- RxViewPagerFixed  修复v4 的ViewPager点击会崩溃
+-- RoundProgress 弧形进度条
+-- RunTextView 跑马灯效果
+-- SeatAirplane 飞机票选座控件
+-- SeatMovie 电影院选座控件
+-- ShoppingView 商品数量加减控件
+-- TextAutoZoom 文字根据布局大小自动缩放效果
+-- TextViewVertical 单行文字上下滚动
+-- TextViewVerticalMore 多行文字上下滚动
+-- TitleView 自定义标题控件
+-- ToastTool Toast的封装 normal warning info success
 -- TouchImageView 图片的缩放，双击放大缩小，多点触控的功能
-- RxACache 本地文件缓存工具类
-- RxActivityTool Activity操作相关工具类
-- RxAnimationTool 动画
-- RxAppTool 应用相关操作
-- RxBarTool 状态栏工具
-- RxBeepTool  提示音工具
-- RxBroadcastTool 网络状态改变广播工具
-- RxClipboardTool 剪贴板相关工具
-- RxConstTool 常量工具类
-- RxCrashTool 崩溃日志处理工具
-- RxDataTool 数据处理相关
-- RxDeviceTool 手机硬件信息设备工具类
-- RxEncodeTool 编码解码相关工具类
-- RxEncryptTool 加密解密相关的工具类
-- RxFileTool SD卡操作工具
-- RxImageTool 图像工具类
-- RxIntentTool Intent相关
-- RxJsonTools JSON解析二次封装
-- RxKeyboardTool 键盘相关
-- RxLocationTool 定位相关工具类
-- RxLogTool Log管理
-- RxNetTool 网络相关
-- RxNote
-- RxPermissionsTool 权限请求操作工具类
-- RxPhotoTool 相机相关工具
-- RxProcessTool 进程相关工具
-- RxRegTool 正则判断
-- RxServiceTool
-- RxShellTool Shell相关工具类
-- RxSPTool SharedPreferences工具类
-- RxTabLayoutTool
-- RxTimeTool 时间相关
-- RxTool 常用工具类
+-- VerificationCodeView 动态生成验证码
+-- ViewPagerFixed  修复v4 的ViewPager点击会崩溃
+
+- zxing zxing扫码
+
+- ACache 本地文件缓存工具类
+- ActivityTool Activity操作相关工具类
+- CaptchaTime 验证码倒计时
+- ClipboardTool 剪贴板相关工具
+- ConstantTools 常量工具类
+- CrashLogTools 崩溃日志处理工具
+- DataTools 数据处理相关
+- DeviceTools 手机硬件信息设备工具类
+- EncodeTools 编码解码相关工具类
+- EncryptTools 加密解密相关的工具类
+- FileTools SD卡操作工具
+- FutileTools 常用工具类
+- ImageTools 图像工具类
+- IntentTools Intent相关
+- JsonTools JSON解析二次封装
+- KeyboardTools 键盘相关
+- LocationTools 定位相关工具类
+- LogTools Log管理
+- NetWorkTools 网络相关
+- Note
+- PermissionsTools 权限请求操作工具类
+- PhotoTools 相机相关工具
+- RegTools 正则判断
 - RxVibrateTool 震动帮助类
+- SPTools SharedPreferences工具类
+- StatusBarTools 状态栏工具
+- TabLayoutTools
+- TimeTools 时间相关
+- ToolBarUtils 标题栏工具
+

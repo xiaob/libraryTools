@@ -19,10 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.name.rmedal.R;
+import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.AnimationTools;
+import com.veni.tools.ACache;
+import com.veni.tools.CaptchaTime;
+import com.veni.tools.DataTools;
 import com.veni.tools.KeyboardTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -50,6 +55,12 @@ public class LoginActivity extends BaseActivity {
     ImageView loginCleanPassword;
     @BindView(R.id.login_show_pwd)
     ImageView loginShowPwd;
+    @BindView(R.id.login_captcha_et)
+    EditText loginCaptchaEt;
+    @BindView(R.id.login_clean_captcha)
+    ImageView loginCleanCaptcha;
+    @BindView(R.id.login_get_captcha)
+    TextView loginGetCaptcha;
     @BindView(R.id.login_content_ll)
     LinearLayout loginContentLl;
     @BindView(R.id.login_scrollView)
@@ -58,9 +69,6 @@ public class LoginActivity extends BaseActivity {
     LinearLayout loginService;
     @BindView(R.id.login_root_iv)
     RelativeLayout loginRootRv;
-
-    private int screenHeight = 0;//屏幕高度
-    private int keyHeight = 0; //软件盘弹起后所占高度
 
     /**
      * 启动入口
@@ -82,6 +90,14 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    private int screenHeight = 0;//屏幕高度
+    private int keyHeight = 0; //软件盘弹起后所占高度
+
+    private String mobile = "";
+    private String password = "";
+    private String captcha = "";
+    private CaptchaTime timeCount;
+
     @Override
     public void initView(Bundle savedInstanceState) {
         StatusBarTools.immersive(this);
@@ -95,10 +111,15 @@ public class LoginActivity extends BaseActivity {
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
         keyHeight = screenHeight / 3;//弹起高度为屏幕高度的1/3
         initEvent();
+        long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
+        if (codetime / 1000 > 2) {
+            timeCount = new CaptchaTime(loginGetCaptcha, codetime / 1000);
+            loginMobileEt.setText(ACache.get(context).getAsString(AppConstant.LG_Code));
+        }
     }
 
     @OnClick({R.id.login_clean_phone, R.id.login_clean_password, R.id.login_show_pwd
-            , R.id.login_forget_password, R.id.login_regist, R.id.login_btn
+            , R.id.login_btn, R.id.login_clean_captcha, R.id.login_get_captcha
             , R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -108,18 +129,28 @@ public class LoginActivity extends BaseActivity {
             case R.id.login_clean_password:
                 loginPasswordEt.setText("");
                 break;
+            case R.id.login_clean_captcha:
+                loginCaptchaEt.setText("");
+                break;
             case R.id.login_about_us://关于我们
                 break;
             case R.id.login_contact_customer_service://联系客服
                 break;
-            case R.id.login_regist://注册新用户
-                ToastTool.error("注册新用户");
-                break;
-            case R.id.login_forget_password://忘记密码
-                ToastTool.error("忘记密码");
-                break;
             case R.id.login_btn://登录
                 KeyboardTools.hideSoftInput(context);
+                if (DataTools.isNullString(mobile)) {
+                    ToastTool.normal("请输入手机号");
+                    return;
+                }
+//                if (RegTools.isMobileExact(mobile)) {
+//                    ToastTool.normal("请输入正确手机号");
+//                      return;
+//                }
+                if (DataTools.isNullString(captcha)) {
+                    ToastTool.normal("请输入验证码");
+                    return;
+
+                }
                 break;
             case R.id.login_show_pwd:
                 if (loginPasswordEt.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
@@ -133,8 +164,22 @@ public class LoginActivity extends BaseActivity {
                 if (!TextUtils.isEmpty(pwd))
                     loginPasswordEt.setSelection(pwd.length());
                 break;
+            case R.id.login_get_captcha://获取验证码
+                if (DataTools.isNullString(mobile)) {
+                    ToastTool.normal("请输入手机号");
+                    return;
+                }
+//                if (RegTools.isMobileExact(mobile)) {
+//                    ToastTool.normal("请输入正确手机号");
+//                      return;
+//                }
+                timeCount = new CaptchaTime(loginGetCaptcha, 60);
+
+                ACache.get(context).put(AppConstant.LG_Code, mobile, ACache.TIME_MINUTE);
+                break;
         }
     }
+
     private void initEvent() {
         loginMobileEt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -149,6 +194,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                mobile = s.toString();
                 if (!TextUtils.isEmpty(s) && loginCleanPhone.getVisibility() == View.GONE) {
                     loginCleanPhone.setVisibility(View.VISIBLE);
                 } else if (TextUtils.isEmpty(s)) {
@@ -169,6 +215,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                password = s.toString();
                 if (!TextUtils.isEmpty(s) && loginCleanPassword.getVisibility() == View.GONE) {
                     loginCleanPassword.setVisibility(View.VISIBLE);
                 } else if (TextUtils.isEmpty(s)) {
@@ -181,6 +228,27 @@ public class LoginActivity extends BaseActivity {
                     ToastTool.error("请输入数字或字母");
                     s.delete(temp.length() - 1, temp.length());
                     loginPasswordEt.setSelection(s.length());
+                }
+            }
+        });
+        loginCaptchaEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                captcha = s.toString();
+                if (!TextUtils.isEmpty(s) && loginCleanCaptcha.getVisibility() == View.GONE) {
+                    loginCleanCaptcha.setVisibility(View.VISIBLE);
+                } else if (TextUtils.isEmpty(s)) {
+                    loginCleanCaptcha.setVisibility(View.GONE);
                 }
             }
         });

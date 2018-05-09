@@ -1,4 +1,4 @@
-package com.veni.tools.interfaces;
+package com.veni.tools;
 
 import android.os.CountDownTimer;
 import android.widget.TextView;
@@ -9,13 +9,18 @@ import android.widget.TextView;
  * 验证码倒计时
  */
 
-public class TimeCount extends CountDownTimer {
+public class CaptchaTime extends CountDownTimer {
     private TextView codeTv;
     private boolean countisfinish = true;
 
-    public TimeCount(TextView codeTv, long millisInFuture, long countDownInterval) {
-        super(millisInFuture, countDownInterval);
+    /**
+     * @param codeTv         验证码 TextView
+     * @param millisInFuture 倒计时 分钟
+     */
+    public CaptchaTime(TextView codeTv, long millisInFuture) {
+        super(millisInFuture * 1000, 1000);
         this.codeTv = codeTv;
+        start();
     }
 
     public boolean isfinish() {
