@@ -1,8 +1,6 @@
 package com.name.rmedal.api;
 
 
-import com.name.rmedal.modelbean.HttpRespose;
-
 import java.util.Map;
 
 import okhttp3.RequestBody;

@@ -1,6 +1,6 @@
 package com.name.rmedal.tools;
 
-import com.name.rmedal.modelbean.HttpRespose;
+import com.name.rmedal.api.HttpRespose;
 import com.veni.tools.baserx.ServerException;
 
 import rx.Observable;
