@@ -14,7 +14,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.name.rmedal.modelbean.DeviceBean;
 import com.name.rmedal.tools.TextViewTools;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -165,4 +164,31 @@ public class PhoneInfoActivity extends BaseActivity {
                     }
                 });
     }
+    public class DeviceBean {
+
+        private String userName;
+        private String nickName;
+
+        public DeviceBean(String userName, String nickName) {
+            this.userName = userName;
+            this.nickName = nickName;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+    }
+
 }
