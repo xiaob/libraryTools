@@ -105,9 +105,6 @@ public class LoginActivity extends BaseActivity {
         StatusBarTools.darkMode(this, true);
         setSwipeBackLayout(0);
 
-        if (isFullScreen(this)) {
-//            AndroidBug5497Workaround.assistActivity(this);
-        }
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
         keyHeight = screenHeight / 3;//弹起高度为屏幕高度的1/3
         initEvent();
@@ -293,11 +290,6 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
-    }
-
-    public boolean isFullScreen(Activity activity) {
-        return (activity.getWindow().getAttributes().flags &
-                WindowManager.LayoutParams.FLAG_FULLSCREEN) == WindowManager.LayoutParams.FLAG_FULLSCREEN;
     }
 
 }

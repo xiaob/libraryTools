@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.veni.tools.FutileTool;
 import com.veni.tools.NetWorkTools;
+import com.veni.tools.baserx.BasicParamsInterceptor;
 
 import java.io.File;
 import java.io.IOException;
@@ -117,6 +118,12 @@ public class HttpManager {
             }
         };
 
+        // 添加公共参数拦截器
+        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+//                .addHeaderParams("userName","")//添加公共参数
+//                .addHeaderParams("device","")
+                .build();
+
         okHttpClient = new OkHttpClient.Builder()
                 .readTimeout(READ_TIME_OUT, TimeUnit.MILLISECONDS)
                 .connectTimeout(CONNECT_TIME_OUT, TimeUnit.MILLISECONDS)
@@ -124,6 +131,7 @@ public class HttpManager {
                 .addNetworkInterceptor(mRewriteCacheControlInterceptor)
                 .addInterceptor(headerInterceptor)
                 .addInterceptor(logInterceptor)
+                .addInterceptor(basicParamsInterceptor)
                 .cache(cache)
                 .build();
 
