@@ -215,12 +215,6 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                password = s.toString();
-                if (!TextUtils.isEmpty(s) && loginCleanPassword.getVisibility() == View.GONE) {
-                    loginCleanPassword.setVisibility(View.VISIBLE);
-                } else if (TextUtils.isEmpty(s)) {
-                    loginCleanPassword.setVisibility(View.GONE);
-                }
                 if (s.toString().isEmpty())
                     return;
                 if (!s.toString().matches("[A-Za-z0-9]+")) {
@@ -228,6 +222,12 @@ public class LoginActivity extends BaseActivity {
                     ToastTool.error("请输入数字或字母");
                     s.delete(temp.length() - 1, temp.length());
                     loginPasswordEt.setSelection(s.length());
+                }
+                password = s.toString();
+                if (!TextUtils.isEmpty(s) && loginCleanPassword.getVisibility() == View.GONE) {
+                    loginCleanPassword.setVisibility(View.VISIBLE);
+                } else if (TextUtils.isEmpty(s)) {
+                    loginCleanPassword.setVisibility(View.GONE);
                 }
             }
         });
