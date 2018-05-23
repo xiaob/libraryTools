@@ -23,6 +23,7 @@
     <dimen name="hight_45">45dp</dimen>
     <dimen name="hight_48">48dp</dimen>
     <dimen name="hight_50">50dp</dimen>
+    <dimen name="hight_55">55dp</dimen>
     <dimen name="hight_52">52dp</dimen>
     <dimen name="hight_60">60dp</dimen>
     <dimen name="hight_80">80dp</dimen>

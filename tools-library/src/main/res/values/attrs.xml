@@ -19,6 +19,14 @@
         <attr name="wordMargin" format="dimension" />
         <attr name="labelBackground" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="ClearableEditText">
+
+        <attr name="right_drawable_color" format="color|reference" />
+        <attr name="left_drawable_color" format="color|reference" />
+
+    </declare-styleable>
+
     <!--动态生成验证码-->
     <declare-styleable name="VerificationCodeView">
         <attr name="isNetCode" format="boolean"/>

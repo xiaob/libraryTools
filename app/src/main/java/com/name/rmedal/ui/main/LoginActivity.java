@@ -47,18 +47,10 @@ public class LoginActivity extends BaseActivity {
     ImageView loginLogoIv;
     @BindView(R.id.login_mobile_et)
     EditText loginMobileEt;
-    @BindView(R.id.login_clean_phone)
-    ImageView loginCleanPhone;
     @BindView(R.id.login_password_et)
     EditText loginPasswordEt;
-    @BindView(R.id.login_clean_password)
-    ImageView loginCleanPassword;
-    @BindView(R.id.login_show_pwd)
-    ImageView loginShowPwd;
     @BindView(R.id.login_captcha_et)
     EditText loginCaptchaEt;
-    @BindView(R.id.login_clean_captcha)
-    ImageView loginCleanCaptcha;
     @BindView(R.id.login_get_captcha)
     TextView loginGetCaptcha;
     @BindView(R.id.login_content_ll)
@@ -115,20 +107,9 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_clean_phone, R.id.login_clean_password, R.id.login_show_pwd
-            , R.id.login_btn, R.id.login_clean_captcha, R.id.login_get_captcha
-            , R.id.login_about_us, R.id.login_contact_customer_service})
+    @OnClick({ R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.login_clean_phone:
-                loginMobileEt.setText("");
-                break;
-            case R.id.login_clean_password:
-                loginPasswordEt.setText("");
-                break;
-            case R.id.login_clean_captcha:
-                loginCaptchaEt.setText("");
-                break;
             case R.id.login_about_us://关于我们
                 break;
             case R.id.login_contact_customer_service://联系客服
@@ -148,18 +129,6 @@ public class LoginActivity extends BaseActivity {
                     return;
 
                 }
-                break;
-            case R.id.login_show_pwd:
-                if (loginPasswordEt.getInputType() != InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-                    loginPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                    loginShowPwd.setImageResource(R.mipmap.pass_visuable);
-                } else {
-                    loginPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    loginShowPwd.setImageResource(R.mipmap.pass_gone);
-                }
-                String pwd = loginPasswordEt.getText().toString();
-                if (!TextUtils.isEmpty(pwd))
-                    loginPasswordEt.setSelection(pwd.length());
                 break;
             case R.id.login_get_captcha://获取验证码
                 if (DataTools.isNullString(mobile)) {
@@ -192,11 +161,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 mobile = s.toString();
-                if (!TextUtils.isEmpty(s) && loginCleanPhone.getVisibility() == View.GONE) {
-                    loginCleanPhone.setVisibility(View.VISIBLE);
-                } else if (TextUtils.isEmpty(s)) {
-                    loginCleanPhone.setVisibility(View.GONE);
-                }
             }
         });
         loginPasswordEt.addTextChangedListener(new TextWatcher() {
@@ -221,11 +185,6 @@ public class LoginActivity extends BaseActivity {
                     loginPasswordEt.setSelection(s.length());
                 }
                 password = s.toString();
-                if (!TextUtils.isEmpty(s) && loginCleanPassword.getVisibility() == View.GONE) {
-                    loginCleanPassword.setVisibility(View.VISIBLE);
-                } else if (TextUtils.isEmpty(s)) {
-                    loginCleanPassword.setVisibility(View.GONE);
-                }
             }
         });
         loginCaptchaEt.addTextChangedListener(new TextWatcher() {
@@ -242,11 +201,6 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 captcha = s.toString();
-                if (!TextUtils.isEmpty(s) && loginCleanCaptcha.getVisibility() == View.GONE) {
-                    loginCleanCaptcha.setVisibility(View.VISIBLE);
-                } else if (TextUtils.isEmpty(s)) {
-                    loginCleanCaptcha.setVisibility(View.GONE);
-                }
             }
         });
         /*
