@@ -2,6 +2,7 @@ package com.veni.tools;
 
 import android.os.Build;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
@@ -19,6 +20,8 @@ import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by xiyn on 2016/1/24.
@@ -152,10 +155,84 @@ public class DataTools {
     }
 
     /**
-     * 判断字符串是否是数字
+     * 判断string 是否为数字
+     * double AppBarStateChangeListener = -19162431.1254
+     * 当数字位数很长时，系统会自动转为科学计数法。所以aa=-1.91624311254E7.
      */
-    public static boolean isNumber(String value) {
-        return isInteger(value) || isDouble(value);
+    public static boolean isNumber(String numstr) {
+        String numRegex = "-?[0-9]+\\.?[0-9]*";
+        return !TextUtils.isEmpty(numstr) && numstr.matches(numRegex);
+    }
+
+    /**
+     * 判断是否全是数字 (正整数)
+     *
+     * @param str
+     * @return
+     */
+    private static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
+    }
+//    /**
+//     * 判断字符串是否是数字
+//     */
+//    public static boolean isNumber(String value) {
+//        return isInteger(value) || isDouble(value);
+//    }
+    /**
+     * 判定输入汉字
+     *
+     * @param c
+     * @return
+     */
+    public static boolean isChinese(char c) {
+        Character.UnicodeBlock ub = Character.UnicodeBlock.of(c);
+        if (ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_COMPATIBILITY_IDEOGRAPHS
+                || ub == Character.UnicodeBlock.CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A
+                || ub == Character.UnicodeBlock.GENERAL_PUNCTUATION
+                || ub == Character.UnicodeBlock.CJK_SYMBOLS_AND_PUNCTUATION
+                || ub == Character.UnicodeBlock.HALFWIDTH_AND_FULLWIDTH_FORMS) {
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 保留一位小数
+     * 四舍五入
+     */
+    public static String getBigDecimalnum(String lastnum, int scale) {
+        String newnum;
+        try {
+            BigDecimal result = new BigDecimal(lastnum);
+            newnum = result.setScale(scale, BigDecimal.ROUND_HALF_UP).toPlainString() + "";
+        } catch (Exception e) {
+            e.printStackTrace();
+            newnum = "0";
+        }
+        return newnum;
+    }
+    /**
+     * checkNameChese检测String是否全是中文
+     *
+     * @param name
+     * @return
+     */
+    public static boolean checkNameChese(String name) {
+        boolean res = true;
+        char[] cTemp = name.toCharArray();
+        for (int i = 0; i < name.length(); i++) {
+            if (!isChinese(cTemp[i])) {
+                res = false;
+                break;
+            }
+        }
+        return res;
     }
 
     /**
