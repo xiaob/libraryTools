@@ -1,15 +1,15 @@
-package com.veni.tools.zxing;
+package com.name.rmedal.tools.zxing;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
-/*
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-*/
+
 import java.util.Hashtable;
 
 /**
@@ -81,7 +81,6 @@ public class QRCode {
 
     public static Bitmap creatQRCode(CharSequence content, int QR_WIDTH, int QR_HEIGHT, int backgroundColor, int codeColor) {
         Bitmap bitmap = null;
-        /*
         try {
             // 判断URL合法性
             if (content == null || "".equals(content) || content.length() < 1) {
@@ -109,7 +108,6 @@ public class QRCode {
         } catch (WriterException e) {
             e.printStackTrace();
         }
-        */
         return bitmap;
     }
 

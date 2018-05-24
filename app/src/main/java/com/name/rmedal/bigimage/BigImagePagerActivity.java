@@ -136,7 +136,7 @@ public class BigImagePagerActivity extends BaseActivity {
 
     private void initToolbar() {
         toolbar.setTitle("图片详情");
-        onCreateCustomToolBar(context, toolbar, true);
+        onCreateCustomToolBar( toolbar, true);
     }
 
     public void setPhotoDetailTitle(int position) {
@@ -290,23 +290,5 @@ public class BigImagePagerActivity extends BaseActivity {
     private void toolBarFadeIn() {
         mIsToolBarHidden = true;
         hideOrShowToolbar();
-    }
-
-    /**
-     * @param homeAsUpEnabled 是否可点击
-     */
-    public void onCreateCustomToolBar(Context context, Toolbar toolbarBaseTb, boolean homeAsUpEnabled) {
-        ((AppCompatActivity) context).setSupportActionBar(toolbarBaseTb);
-        toolbarBaseTb.setTitleTextColor(ContextCompat.getColor(context,
-                R.color.primary_text_default_material_dark));
-        if (homeAsUpEnabled) {
-            ActionBar actionBar = ((AppCompatActivity) context).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayShowHomeEnabled(true);
-                actionBar.setDisplayHomeAsUpEnabled(true);
-                actionBar.setDisplayUseLogoEnabled(false);
-                actionBar.setHomeAsUpIndicator(R.drawable.icon_previous);
-            }
-        }
     }
 }

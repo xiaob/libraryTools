@@ -1,14 +1,14 @@
-package com.veni.tools.zxing;
+package com.name.rmedal.tools.zxing;
 
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
- /*
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-*/
+
 /**
  * Created by xiyn on 2017/2/17.
  * 条形码
@@ -87,7 +87,6 @@ public class BarCode {
 
     public static Bitmap createBarCode(CharSequence content, int BAR_WIDTH, int BAR_HEIGHT, int backgroundColor, int codeColor) {
         Bitmap bitmap = null;
-        /*
          //条形码的编码类型
          BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
          final int backColor = backgroundColor;
@@ -113,7 +112,6 @@ public class BarCode {
          }
          bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
          bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-         */
         return bitmap;
     }
 
