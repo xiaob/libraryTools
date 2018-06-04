@@ -30,15 +30,18 @@ public class ClearableEditText extends EditText
     public static final String TAG = "ClearableEditText";
 
     public ClearableEditText(Context context) {
-        this(context, null);
+        super(context);
+        init(context, null, 0, 0);
     }
 
     public ClearableEditText(Context context, AttributeSet attrs) {
-        this(context, attrs, android.R.attr.editTextStyle);
+        super(context, attrs);
+        init(context, attrs, 0, 0);
     }
 
     public ClearableEditText(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
+        super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr, 0);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
