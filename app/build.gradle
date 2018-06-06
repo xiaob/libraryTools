@@ -46,26 +46,25 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile project(':tools-library')
-    compile project(':recycler-adapter-helper')
-    compile project(':refresh-layout')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation 'junit:junit:4.12'
+    implementation project(':tools-library')
+    implementation project(':recycler-adapter-helper')
+    implementation project(':refresh-layout')
     //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
-    compile 'com.jaredrummler:animated-svg-view:1.0.5'
-
+    implementation 'com.jaredrummler:animated-svg-view:1.0.5'
     //下拉刷新上拉加载
-//    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-//    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+    //    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    //    compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
     // banner
-    compile 'cn.bingoogolapple:bga-banner:2.1.9'
+    implementation 'cn.bingoogolapple:bga-banner:2.1.9'
     //底部导航按钮点击效果
-    compile 'com.aurelhubert:ahbottomnavigation:1.2.0'
+    implementation 'com.aurelhubert:ahbottomnavigation:1.2.0'
     //侧滑退出
-    compile 'com.gongwen:swipeback:1.0.2'
+    implementation 'com.gongwen:swipeback:1.0.2'
     //图片选择 TouchImageView图片缩放
-    compile 'me.iwf.photopicker:PhotoPicker:0.8.4@aar'
+    implementation 'me.iwf.photopicker:PhotoPicker:0.8.4@aar'
     //view注解
-    compile 'com.jakewharton:butterknife:8.0.1'
-    annotationProcessor  'com.jakewharton:butterknife-compiler:8.0.1'
+    implementation 'com.jakewharton:butterknife:8.0.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
 }

@@ -47,7 +47,6 @@ artifacts {
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    compileOnly 'com.android.support:recyclerview-v7:26+'
+    implementation 'com.android.support:recyclerview-v7:26+'
 }
