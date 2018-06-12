@@ -5,7 +5,8 @@ import com.veni.tools.base.BaseModel;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.BaseView;
 
-import rx.Observable;
+import io.reactivex.Observable;
+
 
 /**
  * 作者：Administrator on 2017/12/04 10:36
@@ -18,7 +19,7 @@ public interface MainContract {
      */
     interface Model extends BaseModel {
         //检测更新
-        Observable <String> checkVersion(String type);
+        Observable<String> checkVersion(String type);
     }
 
     /**

@@ -17,6 +17,7 @@ import com.name.rmedal.ui.main.presenter.MainPresenter;
 import com.name.rmedal.ui.personal.PersonalFragment;
 import com.name.rmedal.ui.trade.TradeFragment;
 import com.veni.tools.ActivityTools;
+import com.veni.tools.LogTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ToastTool;
@@ -24,8 +25,8 @@ import com.veni.tools.view.ToastTool;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.functions.Action1;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity<MainPresenter, MainModel> implements MainContract.View {
 
@@ -60,7 +61,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         StatusBarTools.immersive(this);
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);
-//        mPresenter.checkVersion("1");
+        mPresenter.checkVersion("1");
     }
 
     /**
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
      */
     @Override
     public void returnVersionData(String data) {
+        LogTools.e(TAG,"版本检测返回数据----"+data);
 
     }
 
@@ -159,9 +161,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
             isExit = true;
             ToastTool.normal("再按一次退出程序");
             Observable.timer(2000, TimeUnit.MILLISECONDS)
-                    .subscribe(new Action1<Long>() {
+                    .subscribe(new Consumer<Long>() {
                         @Override
-                        public void call(Long aLong) {
+                        public void accept(Long aLong) throws Exception {
                             isExit = false;
                         }
                     });

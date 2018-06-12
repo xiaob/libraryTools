@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -75,12 +75,13 @@ public class PersonalFragment extends BaseFragment {
         mRecyclerView.addItemDecoration(decoration);
         sectionAdapter = new SectionAdapter(R.layout.fragment_persional_item_wave_contact, R.layout.fragment_persional_item_pinned_header, list);
         mRecyclerView.setAdapter(sectionAdapter);
-        Observable.timer(100, TimeUnit.MILLISECONDS)
+
+        Observable.timer(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Long>() {
+                .subscribe(new Consumer<Long>() {
                     @Override
-                    public void call(Long aLong) {
+                    public void accept(Long aLong) throws Exception {
                         List<PersonalModelBean> modellist = JsonTools.parseArray(DATA, PersonalModelBean.class);
                         Collections.sort(modellist, new Comparator<PersonalModelBean>() {
                             @Override
@@ -110,7 +111,6 @@ public class PersonalFragment extends BaseFragment {
                         sectionAdapter.replaceData(list);
                     }
                 });
-
 
         mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
             @Override

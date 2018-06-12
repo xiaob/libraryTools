@@ -41,6 +41,8 @@ public class CrashLogTools {
     private static ExecutorService sExecutor;
 
     static {
+
+
         CRASH_HEAD = "\n************* Crash Log Head ****************" +
                 "\nDevice Manufacturer: " + Build.MANUFACTURER +// 设备厂商
                 "\nDevice Model       : " + Build.MODEL +// 设备型号
