@@ -1,7 +1,5 @@
 package com.veni.tools.baserx;
 
-import org.reactivestreams.Subscription;
-
 import java.util.HashMap;
 import java.util.Map;
 
