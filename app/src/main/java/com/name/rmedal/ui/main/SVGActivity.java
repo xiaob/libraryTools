@@ -10,6 +10,7 @@ import com.jaredrummler.android.widget.AnimatedSvgView;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.ModelSVG;
+import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
 
 import java.util.concurrent.TimeUnit;
@@ -71,7 +72,12 @@ public class SVGActivity extends BaseActivity {
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        MainActivity.startAction(context);
+                        // 第一次打开app
+                        if ((Boolean) SPTools.get(context, SPTools.FIRST_TIME, true)) {
+                            FirstStartActivity.startAction(context);
+                        } else {
+                            MainActivity.startAction(context);
+                        }
 
                     }
                 });
