@@ -86,6 +86,9 @@
         <activity android:name=".bigimage.BigImagePagerActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 
+        <activity android:name=".html5.WebViewActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
+
     </application>
 
 </manifest>

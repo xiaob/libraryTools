@@ -100,7 +100,7 @@ public class BigImagePagerActivity extends BaseActivity {
         initBackground();
 
         int startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
-        needtitle = getIntent().getBooleanExtra(INTENT_POSITION, false);
+        needtitle = getIntent().getBooleanExtra(INTENT_TITLE, false);
         String imgUrls = getIntent().getStringExtra(INTENT_IMGLISTJSON);
         img_list = JsonTools.parseArray(imgUrls, BigImageBean.class);
 
