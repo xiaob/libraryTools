@@ -63,7 +63,11 @@ public class RxHelper {
             @Override
             public void subscribe(ObservableEmitter<T> subscriber) throws Exception {
                 try {
-                    subscriber.onNext(data);
+                    if(data!=null){
+                        subscriber.onNext(data);
+                    }else {
+                        subscriber.onNext((T) "");
+                    }
                     subscriber.onComplete();
                 } catch (Exception e) {
                     subscriber.onError(e);
