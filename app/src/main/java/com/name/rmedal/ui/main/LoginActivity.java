@@ -183,6 +183,7 @@ public class LoginActivity extends BaseActivity {
                     ToastTool.error("请输入数字或字母");
                     s.delete(temp.length() - 1, temp.length());
                     loginPasswordEt.setSelection(s.length());
+                    return;
                 }
                 password = s.toString();
             }
