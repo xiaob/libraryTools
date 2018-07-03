@@ -166,7 +166,7 @@ public class AlertDialogBuilder {
     /**
      * 左边的文字颜色
      */
-    public AlertDialogBuilder setLeftcolor(@ColorInt int leftcolor) {
+    public AlertDialogBuilder setLeftcolor(int leftcolor) {
         if (leftcolor != 0) {
             this.leftcolor = leftcolor;
         }
@@ -196,7 +196,7 @@ public class AlertDialogBuilder {
     /**
      * 右边的文字颜色
      */
-    public AlertDialogBuilder setRightcolor(@ColorInt int rightcolor) {
+    public AlertDialogBuilder setRightcolor(int rightcolor) {
         if (rightcolor != 0) {
             this.rightcolor = rightcolor;
         }
