@@ -498,8 +498,7 @@ public class ImageTools {
         } catch (FileNotFoundException e) {
             return null;
         } finally {
-            FileTools.closeIO(fileInputStream);
-            FileTools.closeIO(is);
+            FileTools.closeIO(is,fileInputStream);
         }
     }
 
@@ -527,8 +526,7 @@ public class ImageTools {
         } catch (FileNotFoundException e) {
             return null;
         } finally {
-            FileTools.closeIO(fileInputStream);
-            FileTools.closeIO(is);
+            FileTools.closeIO(is,fileInputStream);
         }
     }
 
@@ -1529,8 +1527,7 @@ public class ImageTools {
             if (recycle && !src.isRecycled()) src.recycle();
         } catch (IOException ignored) {
         } finally {
-            FileTools.closeIO(fileOutputStream);
-            FileTools.closeIO(os);
+            FileTools.closeIO(os,fileOutputStream);
         }
         return ret;
     }
