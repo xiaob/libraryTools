@@ -223,7 +223,8 @@ public class EncryptTools {
             return md.digest();
         } catch (NoSuchAlgorithmException | IOException ignored) {
         } finally {
-            FileTools.closeIO(fis,channel);
+            FileTools.closeIO(channel);
+            FileTools.closeIO(fis);
         }
         return null;
     }
