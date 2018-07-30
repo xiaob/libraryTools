@@ -2,6 +2,7 @@ package com.name.rmedal.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 
 import com.name.rmedal.R;
@@ -13,12 +14,12 @@ import com.veni.tools.base.ActivityJumpOptionsTool;
 
 import butterknife.BindView;
 import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 
 /**
  * 作者：xiyn on 2017/11/30
  * 当前类注释:
- *      引导页 activity
- *
+ * 引导页 activity
  */
 public class FirstStartActivity extends BaseActivity {
 
@@ -51,10 +52,6 @@ public class FirstStartActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         StatusBarTools.immersive(this);
-//        StatusBarTools.setPaddingSmart(this, toastTitleView);
-
-        LogTools.e(TAG,SPTools.get(context, SPTools.FIRST_TIME, true));
-        SPTools.put(context, SPTools.FIRST_TIME, false);
 
         setListener();
         processLogic();
@@ -71,16 +68,20 @@ public class FirstStartActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
+//                SPTools.put(context, SPTools.FIRST_TIME, false);
                 MainActivity.startAction(context);
             }
         });
     }
 
     private void processLogic() {
+        // Bitmap 的宽高在 maxWidth maxHeight 和 minWidth minHeight 之间
+        BGALocalImageSize localImageSize = new BGALocalImageSize(720, 1280, 320, 640);
         // 设置数据源
-        mBackgroundBanner.setData(R.mipmap.uoko_guide_background_1, R.mipmap.uoko_guide_background_1, R.mipmap.uoko_guide_background_1);
-
-        mForegroundBanner.setData(R.mipmap.uoko_guide_foreground_1, R.mipmap.uoko_guide_foreground_1, R.mipmap.uoko_guide_foreground_1);
+        mBackgroundBanner.setData(localImageSize, ImageView.ScaleType.CENTER_CROP,
+                R.mipmap.uoko_guide_background_1, R.mipmap.uoko_guide_background_2, R.mipmap.uoko_guide_background_3);
+        mForegroundBanner.setData(localImageSize, ImageView.ScaleType.CENTER_CROP,
+                R.mipmap.uoko_guide_foreground_1, R.mipmap.uoko_guide_foreground_2, R.mipmap.uoko_guide_foreground_3);
     }
 
     @Override
@@ -88,6 +89,6 @@ public class FirstStartActivity extends BaseActivity {
         super.onResume();
 
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
-        mBackgroundBanner.setBackgroundResource(android.R.color.white);
+//        mBackgroundBanner.setBackgroundResource(android.R.color.white);
     }
 }

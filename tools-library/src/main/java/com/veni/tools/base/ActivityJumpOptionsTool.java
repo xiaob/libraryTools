@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
 
+import com.veni.tools.LogTools;
 import com.veni.tools.R;
 
 import java.io.Serializable;
@@ -138,13 +139,12 @@ public class ActivityJumpOptionsTool {
         return this;
     }
 
-    private Intent getIntent() {
+    private void getIntent() {
         if (context != null && clas != null) {
             intent = new Intent(context, clas);
             addintentflag(actionTag);
             if (bundle != null) intent.putExtras(bundle);
         }
-        return intent;
     }
 
     /**

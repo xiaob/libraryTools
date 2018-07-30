@@ -20,6 +20,7 @@
     </style>
 
     <style name="BannerDefaultStyle">
+        <!--7-30 最近直接引用style后页面不显示-->
         <!-- 自定义属性在styles.xml中不需要命名空间,直接用属性名就可以了 -->
         <!-- 开启自动轮播 -->
         <item name="banner_pointAutoPlayAble">true</item>

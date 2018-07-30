@@ -47,7 +47,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.FirstStartActivity" />
+            android:name=".ui.main.FirstStartActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".ui.main.MainActivity"
             android:launchMode="singleTask" />
