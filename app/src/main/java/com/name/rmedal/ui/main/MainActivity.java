@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         StatusBarTools.immersive(this);
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);
-//        mPresenter.checkVersion("1");
+        mPresenter.checkVersion("1");
     }
 
     /**
