@@ -212,16 +212,18 @@ public class EncryptTools {
         FileInputStream fis = null;
         MessageDigest md = null;
         MappedByteBuffer buffer = null;
+        FileChannel channel = null;
         try {
             fis = new FileInputStream(file);
-            FileChannel channel = fis.getChannel();
+            channel = fis.getChannel();
             buffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
+            channel.close();
             md = MessageDigest.getInstance("MD5");
             md.update(buffer);
             return md.digest();
         } catch (NoSuchAlgorithmException | IOException ignored) {
         } finally {
-            FileTools.closeIO(fis);
+            FileTools.closeIO(fis,channel);
         }
         return null;
     }

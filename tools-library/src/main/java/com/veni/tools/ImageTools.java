@@ -490,13 +490,15 @@ public class ImageTools {
     public static Bitmap getBitmap(File file) {
         if (file == null) return null;
         InputStream is = null;
+        FileInputStream fileInputStream = null;
         try {
-            is = new BufferedInputStream(new FileInputStream(file));
+            fileInputStream=new FileInputStream(file);
+            is = new BufferedInputStream(fileInputStream);
             return BitmapFactory.decodeStream(is);
         } catch (FileNotFoundException e) {
             return null;
         } finally {
-            FileTools.closeIO(is);
+            FileTools.closeIO(is,fileInputStream);
         }
     }
 
@@ -511,10 +513,12 @@ public class ImageTools {
     public static Bitmap getBitmap(File file, int maxWidth, int maxHeight) {
         if (file == null) return null;
         InputStream is = null;
+        FileInputStream fileInputStream = null;
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
-            is = new BufferedInputStream(new FileInputStream(file));
+            fileInputStream=new FileInputStream(file);
+            is = new BufferedInputStream(fileInputStream);
             BitmapFactory.decodeStream(is, null, options);
             options.inSampleSize = calculateInSampleSize(options, maxWidth, maxHeight);
             options.inJustDecodeBounds = false;
@@ -522,7 +526,7 @@ public class ImageTools {
         } catch (FileNotFoundException e) {
             return null;
         } finally {
-            FileTools.closeIO(is);
+            FileTools.closeIO(is,fileInputStream);
         }
     }
 
@@ -1514,14 +1518,16 @@ public class ImageTools {
         if (isEmptyBitmap(src) || !FileTools.createOrExistsFile(file)) return false;
         System.out.println(src.getWidth() + ", " + src.getHeight());
         OutputStream os = null;
+        FileOutputStream fileOutputStream = null;
         boolean ret = false;
         try {
-            os = new BufferedOutputStream(new FileOutputStream(file));
+            fileOutputStream=new FileOutputStream(file);
+            os = new BufferedOutputStream(fileOutputStream);
             ret = src.compress(format, 100, os);
             if (recycle && !src.isRecycled()) src.recycle();
         } catch (IOException ignored) {
         } finally {
-            FileTools.closeIO(os);
+            FileTools.closeIO(os,fileOutputStream);
         }
         return ret;
     }
@@ -1591,6 +1597,8 @@ public class ImageTools {
             return is.read(bytes, 0, 8) != -1 ? getImageType(bytes) : null;
         } catch (IOException e) {
             return null;
+        }finally {
+            FileTools.closeIO(is);
         }
     }
 
