@@ -51,8 +51,6 @@ public class FirstStartActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
-
         StatusBarTools.immersive(this);
 //        StatusBarTools.setPaddingSmart(this, toastTitleView);
 

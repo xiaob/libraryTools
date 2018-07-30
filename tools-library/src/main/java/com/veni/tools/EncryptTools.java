@@ -33,7 +33,7 @@ import javax.crypto.spec.SecretKeySpec;
  * encryptSHA512ToString       : SHA512加密
  * encryptSHA512               : SHA512加密
  * encryptAlgorithm            : 对data进行algorithm算法加密
- *
+ * <p>
  * DES加密相关
  * DESTemplet                  : DES加密
  * encryptDES                  : DES加密
@@ -42,7 +42,7 @@ import javax.crypto.spec.SecretKeySpec;
  * decryptBase64DES            : DES解密Base64编码密文
  * decryptHexStringDES         : DES解密16进制密文
  * decryptDES                  : DES解密
- *
+ * <p>
  * 3DES加密相关
  * encrypt3DES2Base64          : 3DES加密后转为Base64编码
  * encrypt3DES2HexString       : 3DES加密后转为16进制
@@ -50,7 +50,7 @@ import javax.crypto.spec.SecretKeySpec;
  * decryptBase64_3DES          : 3DES解密Base64编码密文
  * decryptHexString3DES        : 3DES解密16进制密文
  * decrypt3DES                 : 3DES解密
- *
+ * <p>
  * AES加密相关
  * encryptAES2Base64           : AES加密后转为Base64编码
  * encryptAES2HexString        : AES加密后转为16进制
@@ -210,11 +210,13 @@ public class EncryptTools {
      */
     public static byte[] encryptMD5File(File file) {
         FileInputStream fis = null;
+        MessageDigest md = null;
+        MappedByteBuffer buffer = null;
         try {
             fis = new FileInputStream(file);
             FileChannel channel = fis.getChannel();
-            MappedByteBuffer buffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
-            MessageDigest md = MessageDigest.getInstance("MD5");
+            buffer = channel.map(FileChannel.MapMode.READ_ONLY, 0, file.length());
+            md = MessageDigest.getInstance("MD5");
             md.update(buffer);
             return md.digest();
         } catch (NoSuchAlgorithmException | IOException e) {

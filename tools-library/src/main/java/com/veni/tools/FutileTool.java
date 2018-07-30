@@ -185,9 +185,11 @@ public class FutileTool {
      * @return
      */
     public static String Md5(String MStr) {
+        MessageDigest mDigest =null;
+        byte[] b = MStr.getBytes();
         try {
-            final MessageDigest mDigest = MessageDigest.getInstance("MD5");
-            mDigest.update(MStr.getBytes());
+             mDigest = MessageDigest.getInstance("MD5");
+            mDigest.update(b);
             return bytesToHexString(mDigest.digest());
         } catch (NoSuchAlgorithmException e) {
             return String.valueOf(MStr.hashCode());
