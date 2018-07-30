@@ -1,7 +1,9 @@
 package com.name.rmedal.test;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.DeviceTools;
+import com.veni.tools.PermissionsTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
@@ -108,6 +111,7 @@ public class PhoneInfoActivity extends BaseActivity {
         functionadapter.openLoadAnimation();
         toastRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         toastRecyclerview.setAdapter(functionadapter);
+        PermissionsTools.with(context).addPermission(Manifest.permission.READ_PHONE_STATE).initPermission();
     }
 
     @OnClick({R.id.phone_info_get_btn})

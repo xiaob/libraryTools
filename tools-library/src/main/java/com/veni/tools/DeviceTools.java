@@ -188,7 +188,7 @@ public class DeviceTools {
     /**
      * 获取设备的IMEI
      */
-    @SuppressLint("HardwareIds")
+    @SuppressLint({"HardwareIds", "MissingPermission"})
     public static String getDeviceIdIMEI(Context context) {
         String id;
         //android.telephony.TelephonyManager
@@ -205,6 +205,7 @@ public class DeviceTools {
     /**
      * 获取设备的软件版本号
      */
+    @SuppressLint("MissingPermission")
     public static String getDeviceSoftwareVersion(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getDeviceSoftwareVersion();
@@ -213,6 +214,7 @@ public class DeviceTools {
     /**
      * 获取手机号
      */
+    @SuppressLint("MissingPermission")
     public static String getLine1Number(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getLine1Number();
@@ -285,6 +287,7 @@ public class DeviceTools {
     /**
      * 获取SIM卡的序列号
      */
+    @SuppressLint("MissingPermission")
     public static String getSimSerialNumber(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getSimSerialNumber();
@@ -301,6 +304,7 @@ public class DeviceTools {
     /**
      * 获取唯一的用户ID
      */
+    @SuppressLint("MissingPermission")
     public static String getSubscriberId(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getSubscriberId();
@@ -309,6 +313,7 @@ public class DeviceTools {
     /**
      * 获取语音邮件号码
      */
+    @SuppressLint("MissingPermission")
     public static String getVoiceMailNumber(Context context) {
         TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         return tm.getVoiceMailNumber();
@@ -566,6 +571,7 @@ public class DeviceTools {
      * SubscriberId(IMSI) = 460030419724900<br>
      * VoiceMailNumber = *86<br>
      */
+    @SuppressLint("MissingPermission")
     public static String getPhoneStatus(Context context) {
         TelephonyManager tm = (TelephonyManager) context
                 .getSystemService(Context.TELEPHONY_SERVICE);

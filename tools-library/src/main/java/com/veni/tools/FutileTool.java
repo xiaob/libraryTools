@@ -135,12 +135,12 @@ public class FutileTool {
      * @param context
      * @return
      */
-    public static BroadcastReceiverNetWork initRegisterReceiverNetWork(Context context) {
+    public static BroadcastReceiverNetWork initRegisterReceiverNetWork(Context context,Handler handler) {
         // 注册监听网络状态的服务
         BroadcastReceiverNetWork mReceiverNetWork = new BroadcastReceiverNetWork();
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
-        context.registerReceiver(mReceiverNetWork, mFilter);
+        context.registerReceiver(mReceiverNetWork, mFilter, "permission.ALLOW_BROADCAST", handler);
         return mReceiverNetWork;
     }
 

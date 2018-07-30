@@ -129,15 +129,23 @@ public class ACache {
     public void put(String key, String value) {
         File file = mCache.newFile(key);
         BufferedWriter out = null;
+        FileWriter fileWriter = null;
         try {
-            out = new BufferedWriter(new FileWriter(file), 1024);
+            fileWriter =new FileWriter(file);
+            out = new BufferedWriter(fileWriter, 1024);
             out.write(value);
         } catch (IOException ignored) {
         } finally {
             if (out != null) {
                 try {
-                    out.flush();
+//                    out.flush();
                     out.close();
+                } catch (IOException ignored) {
+                }
+            }
+            if (fileWriter != null) {
+                try {
+                    fileWriter.close();
                 } catch (IOException ignored) {
                 }
             }
@@ -337,7 +345,7 @@ public class ACache {
         } finally {
             if (out != null) {
                 try {
-                    out.flush();
+//                    out.flush();
                     out.close();
                 } catch (IOException ignored) {
                 }
