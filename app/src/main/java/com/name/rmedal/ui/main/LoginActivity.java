@@ -1,18 +1,14 @@
 package com.name.rmedal.ui.main;
 
 import android.animation.ObjectAnimator;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -98,7 +94,7 @@ public class LoginActivity extends BaseActivity {
         setSwipeBackLayout(0);
 
         screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
-        keyHeight = screenHeight / 3;//弹起高度为屏幕高度的1/3
+        keyHeight = screenHeight / 4;//弹起高度为屏幕高度的1/4
         initEvent();
         long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
         if (codetime / 1000 > 2) {
@@ -107,7 +103,7 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({ R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
+    @OnClick({R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_about_us://关于我们
@@ -229,9 +225,9 @@ public class LoginActivity extends BaseActivity {
                         AnimationTools.zoomIn(loginLogoIv, 0.6f, dist);
                     }
                     loginService.setVisibility(View.INVISIBLE);
-
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     Log.e("wenzhihao", "down------>" + (bottom - oldBottom));
+
                     if ((loginContentLl.getBottom() - oldBottom) > 0) {
                         ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(loginContentLl, "translationY", loginContentLl.getTranslationY(), 0);
                         mAnimatorTranslateY.setDuration(300);
@@ -246,5 +242,4 @@ public class LoginActivity extends BaseActivity {
         });
 
     }
-
 }

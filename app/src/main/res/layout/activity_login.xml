@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/hight_45"
                 android:layout_marginBottom="@dimen/hight_10"
-                android:layout_marginTop="@dimen/hight_20"
+                android:layout_marginTop="@dimen/hight_30"
                 android:background="@drawable/btn_red_selected"
                 android:text="@string/login"
                 android:textColor="@color/white"
