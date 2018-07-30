@@ -81,6 +81,7 @@
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
             android:name=".ui.main.LoginActivity"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
             android:name=".ui.zxing.ScanerCodeActivity"
