@@ -137,10 +137,14 @@ public class HomeFragment extends BaseFragment {
                 List<BigImageBean> img_list = new ArrayList<>();
                 img_list.add(new BigImageBean("http://a0.att.hudong.com/31/35/300533991095135084358827466.jpg"
                         ,"美女111"));
-                img_list.add(new BigImageBean("http://www.zhlzw.com/UploadFiles/Article_UploadFiles/201210/2012102917591370.jpg"
-                        ,"美女222"));
                 img_list.add(new BigImageBean("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg"
+                        ,"美女222"));
+                img_list.add(new BigImageBean("http://x.itunes123.com/uploadfiles/1b13c3044431fb712bb712da97f42a2d.jpg"
                         ,"美女333"));
+                img_list.add(new BigImageBean("http://x.itunes123.com/uploadfiles/a3864382d68ce93bb7ab84775cb12d17.jpg"
+                        ,"美女444"));
+                img_list.add(new BigImageBean("http://07.imgmini.eastday.com/mobile/20171109/20171109213644_1d934ed6d1143d2a63227336004e922a_1.jpeg"
+                        ,"美女???"));
                 String imglistjson = JsonTools.toJson(img_list);
                 BigImagePagerActivity.startAction(context, imglistjson, 0);
             }
