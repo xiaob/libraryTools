@@ -76,10 +76,8 @@ public class SVGActivity extends BaseActivity {
                         // 第一次打开app
                         if ((Boolean) SPTools.get(context, SPTools.FIRST_TIME, true)) {
                             FirstStartActivity.startAction(context);
-                            LogTools.e("SVGActivity","start--FirstStartActivity");
                         } else {
                             MainActivity.startAction(context);
-                            LogTools.e("SVGActivity","start--MainActivity");
                         }
 
                     }
