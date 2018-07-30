@@ -96,8 +96,7 @@ public class BarCode {
          BitMatrix result = null;
          try {
          result = writer.encode(content + "", barcodeFormat, BAR_WIDTH, BAR_HEIGHT, null);
-         } catch (WriterException e) {
-         e.printStackTrace();
+         } catch (WriterException ignored) {
          }
 
          int width = result.getWidth();

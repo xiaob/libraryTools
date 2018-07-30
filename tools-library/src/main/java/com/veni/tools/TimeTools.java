@@ -154,8 +154,7 @@ public class TimeTools {
         Date date = null;
         try {
             date = mSimpleDateFormat.parse(strDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         return date;
     }
@@ -173,8 +172,7 @@ public class TimeTools {
         try {
             c.setTime(date);
             c.add(calendarField, offset);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return c.getTime();
     }
@@ -196,8 +194,7 @@ public class TimeTools {
             c.setTime(mSimpleDateFormat.parse(strDate));
             c.add(calendarField, offset);
             mDateTime = mSimpleDateFormat.format(c.getTime());
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         return mDateTime;
     }
@@ -219,8 +216,7 @@ public class TimeTools {
             c.setTime(date);
             c.add(calendarField, offset);
             strDate = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return strDate;
     }
@@ -257,8 +253,7 @@ public class TimeTools {
         String strDate = null;
         try {
             strDate = mSimpleDateFormat.format(date);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return strDate;
     }
@@ -278,8 +273,7 @@ public class TimeTools {
             c.setTime(mSimpleDateFormat.parse(strDate));
             SimpleDateFormat mSimpleDateFormat2 = new SimpleDateFormat(format);
             mDateTime = mSimpleDateFormat2.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return mDateTime;
     }
@@ -295,8 +289,7 @@ public class TimeTools {
         try {
             SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(format);
             thisDateTime = mSimpleDateFormat.format(milliseconds);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return thisDateTime;
     }
@@ -313,8 +306,7 @@ public class TimeTools {
             SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat(format);
             Calendar c = new GregorianCalendar();
             curDateTime = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return curDateTime;
 
@@ -341,8 +333,7 @@ public class TimeTools {
             Calendar c = new GregorianCalendar();
             c.add(Calendar.DAY_OF_MONTH, i);
             curDateTime = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return curDateTime;
     }
@@ -354,8 +345,7 @@ public class TimeTools {
             Calendar c = new GregorianCalendar();
             c.add(Calendar.HOUR_OF_DAY, i);
             curDateTime = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return curDateTime;
     }
@@ -375,8 +365,7 @@ public class TimeTools {
             Calendar c = new GregorianCalendar();
             c.add(calendarField, offset);
             mDateTime = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return mDateTime;
 
@@ -496,8 +485,7 @@ public class TimeTools {
                 c.add(Calendar.DATE, offectDay);
                 strDate = mSimpleDateFormat.format(c.getTime());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return strDate;
     }
@@ -516,8 +504,7 @@ public class TimeTools {
             //当前月的第一天
             c.set(GregorianCalendar.DAY_OF_MONTH, 1);
             strDate = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return strDate;
     }
@@ -537,8 +524,7 @@ public class TimeTools {
             c.set(Calendar.DATE, 1);
             c.roll(Calendar.DATE, -1);
             strDate = mSimpleDateFormat.format(c.getTime());
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return strDate;
     }
@@ -782,8 +768,7 @@ public class TimeTools {
             } else {
                 ret = -1;
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
 
         return ret;
@@ -811,8 +796,7 @@ public class TimeTools {
             } else {
                 ret = -1;
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         Log.e("JPush","ret="+ret);
         return ret;
@@ -1019,8 +1003,7 @@ public class TimeTools {
         try {
             date = sdf.parse(dateStr);
             longDate = date.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (ParseException ignored) {
         }
         return longDate;
     }
@@ -1041,8 +1024,7 @@ public class TimeTools {
             } else {
                 return -1;
             }
-        } catch (Exception exception) {
-            exception.printStackTrace();
+        } catch (Exception ignored) {
         }
         return 0;
     }

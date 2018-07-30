@@ -219,8 +219,7 @@ public class EncryptTools {
             md = MessageDigest.getInstance("MD5");
             md.update(buffer);
             return md.digest();
-        } catch (NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException | IOException ignored) {
         } finally {
             FileTools.closeIO(fis);
         }
@@ -391,8 +390,7 @@ public class EncryptTools {
             MessageDigest md = MessageDigest.getInstance(algorithm);
             md.update(data);
             return md.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (NoSuchAlgorithmException ignored) {
         }
         return new byte[0];
     }
@@ -412,8 +410,7 @@ public class EncryptTools {
             SecureRandom random = new SecureRandom();
             cipher.init(isEncrypt ? Cipher.ENCRYPT_MODE : Cipher.DECRYPT_MODE, keySpec, random);
             return cipher.doFinal(data);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        } catch (Throwable ignored) {
         }
         return null;
     }

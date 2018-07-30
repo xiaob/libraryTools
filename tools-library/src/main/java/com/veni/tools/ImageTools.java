@@ -298,7 +298,6 @@ public class ImageTools {
             data = null;
             return bitmap;
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -495,7 +494,6 @@ public class ImageTools {
             is = new BufferedInputStream(new FileInputStream(file));
             return BitmapFactory.decodeStream(is);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             return null;
         } finally {
             FileTools.closeIO(is);
@@ -522,7 +520,6 @@ public class ImageTools {
             options.inJustDecodeBounds = false;
             return BitmapFactory.decodeStream(is, null, options);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
             return null;
         } finally {
             FileTools.closeIO(is);
@@ -835,8 +832,7 @@ public class ImageTools {
                     degree = 270;
                     break;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return degree;
     }
@@ -1523,8 +1519,7 @@ public class ImageTools {
             os = new BufferedOutputStream(new FileOutputStream(file));
             ret = src.compress(format, 100, os);
             if (recycle && !src.isRecycled()) src.recycle();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         } finally {
             FileTools.closeIO(os);
         }
@@ -1577,7 +1572,6 @@ public class ImageTools {
             is = new FileInputStream(file);
             return getImageType(is);
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         } finally {
             FileTools.closeIO(is);
@@ -1596,7 +1590,6 @@ public class ImageTools {
             byte[] bytes = new byte[8];
             return is.read(bytes, 0, 8) != -1 ? getImageType(bytes) : null;
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
     }

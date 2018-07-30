@@ -226,7 +226,6 @@ public final class CameraManager {
             // }
             return framingRect;
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

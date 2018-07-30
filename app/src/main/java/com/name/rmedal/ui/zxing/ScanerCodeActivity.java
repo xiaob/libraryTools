@@ -169,8 +169,7 @@ public class ScanerCodeActivity extends BaseActivity {
                     } else {
                         ToastTool.success( "图片识别失败!");
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
         } else if (resultCode == Activity.RESULT_CANCELED) { // User canceled.

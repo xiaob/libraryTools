@@ -54,7 +54,7 @@ public class LocationTools {
      */
     public static boolean isGpsEnabled(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return lm != null && lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     /**
@@ -64,7 +64,7 @@ public class LocationTools {
      */
     public static boolean isLocationEnabled(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER) || lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return (lm != null && lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) || (lm != null && lm.isProviderEnabled(LocationManager.GPS_PROVIDER));
     }
 
     /**
@@ -89,8 +89,7 @@ public class LocationTools {
         try {
             List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (addresses.size() > 0) return addresses.get(0);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return null;
     }

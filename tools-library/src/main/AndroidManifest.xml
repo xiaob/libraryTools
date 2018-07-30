@@ -22,9 +22,15 @@
     <!-- 许可调用相机自动对焦 -->
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
+    <uses-permission android:name="com.veni.tools.permission.BroadcastReceiverNetWork" />
+
     <application android:allowBackup="true" android:label="@string/app_name"
         android:supportsRtl="true">
-
+        <receiver android:name=".FutileTool$BroadcastReceiverNetWork" android:permission="com.veni.tools.permission.BroadcastReceiverNetWork">
+            <intent-filter>
+                <action android:name="com.veni.tools.BroadcastReceiverNetWork" />
+            </intent-filter>
+        </receiver>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

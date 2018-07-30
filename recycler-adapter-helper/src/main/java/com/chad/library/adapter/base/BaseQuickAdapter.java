@@ -1061,14 +1061,10 @@ public abstract class BaseQuickAdapter<T, K extends BaseViewHolder> extends Recy
                 constructor.setAccessible(true);
                 return (K) constructor.newInstance(view);
             }
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (NoSuchMethodException ignored) {
+        } catch (IllegalAccessException ignored) {
+        } catch (InstantiationException ignored) {
+        } catch (InvocationTargetException ignored) {
         }
         return null;
     }

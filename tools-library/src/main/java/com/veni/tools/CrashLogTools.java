@@ -112,8 +112,7 @@ public class CrashLogTools {
                 versionName = pi.versionName;
                 versionCode = pi.versionCode;
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+        } catch (PackageManager.NameNotFoundException ignored) {
         }
         init("");
     }
@@ -170,7 +169,6 @@ public class CrashLogTools {
         try {
             return file.createNewFile();
         } catch (IOException e) {
-            e.printStackTrace();
             return false;
         }
     }

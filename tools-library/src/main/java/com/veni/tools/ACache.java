@@ -105,7 +105,7 @@ public class ACache {
     private class xFileOutputStream extends FileOutputStream {
         File file;
 
-        public xFileOutputStream(File file) throws FileNotFoundException {
+        xFileOutputStream(File file) throws FileNotFoundException {
             super(file);
             this.file = file;
         }
@@ -132,15 +132,13 @@ public class ACache {
         try {
             out = new BufferedWriter(new FileWriter(file), 1024);
             out.write(value);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         } finally {
             if (out != null) {
                 try {
                     out.flush();
                     out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
             mCache.put(file);
@@ -161,7 +159,7 @@ public class ACache {
     /**
      * 读取 String数据
      *
-     * @param key
+     * @param key 键
      * @return String 数据
      */
     public String getAsString(String key) {
@@ -172,37 +170,36 @@ public class ACache {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(file));
-            String readString = "";
+            StringBuilder readString = new StringBuilder();
             String currentLine;
             while ((currentLine = in.readLine()) != null) {
-                readString += currentLine;
+                readString.append(currentLine);
             }
-            if (!Utils.isDue(readString)) {
-                return Utils.clearDateInfo(readString);
+            if (!Utils.isDue(readString.toString())) {
+                return Utils.clearDateInfo(readString.toString());
             } else {
                 removeFile = true;
                 return null;
             }
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
-            if (removeFile)
+            if (removeFile){
                 remove(key);
+            }
         }
     }
 
     /**
      * 读取 缓存数据到期时间
      *
-     * @param key
+     * @param key 键
      * @return String 数据
      */
     public long getAsTime(String key) {
@@ -213,12 +210,12 @@ public class ACache {
         BufferedReader in = null;
         try {
             in = new BufferedReader(new FileReader(file));
-            String readString = "";
+            StringBuilder readString = new StringBuilder();
             String currentLine;
             while ((currentLine = in.readLine()) != null) {
-                readString += currentLine;
+                readString.append(currentLine);
             }
-            long datatime = Utils.getDataTime(readString);
+            long datatime = Utils.getDataTime(readString.toString());
             if (datatime > 0) {
                 return datatime;
             } else {
@@ -226,14 +223,12 @@ public class ACache {
                 return 0;
             }
         } catch (IOException e) {
-            e.printStackTrace();
             return 0;
         } finally {
             if (in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
             if (removeFile)
@@ -268,16 +263,14 @@ public class ACache {
     /**
      * 读取JSONObject数据
      *
-     * @param key
+     * @param key 键
      * @return JSONObject数据
      */
     public JSONObject getAsJSONObject(String key) {
         String JSONString = getAsString(key);
         try {
-            JSONObject obj = new JSONObject(JSONString);
-            return obj;
+            return new JSONObject(JSONString);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -310,16 +303,14 @@ public class ACache {
     /**
      * 读取JSONArray数据
      *
-     * @param key
+     * @param key 键
      * @return JSONArray数据
      */
     public JSONArray getAsJSONArray(String key) {
         String JSONString = getAsString(key);
         try {
-            JSONArray obj = new JSONArray(JSONString);
-            return obj;
+            return new JSONArray(JSONString);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -340,15 +331,13 @@ public class ACache {
         try {
             out = new FileOutputStream(file);
             out.write(value);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         } finally {
             if (out != null) {
                 try {
                     out.flush();
                     out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
             mCache.put(file);
@@ -412,14 +401,12 @@ public class ACache {
                 return null;
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         } finally {
             if (RAFile != null) {
                 try {
                     RAFile.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
             if (removeFile)
@@ -449,7 +436,7 @@ public class ACache {
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, Serializable value, int saveTime) {
-        ByteArrayOutputStream baos = null;
+        ByteArrayOutputStream baos;
         ObjectOutputStream oos = null;
         try {
             baos = new ByteArrayOutputStream();
@@ -461,15 +448,13 @@ public class ACache {
             } else {
                 put(key, data);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         } finally {
             try {
                 if (oos != null) {
                     oos.close();
                 }
-            } catch (IOException e) {
-
+            } catch (IOException ignored) {
             }
         }
     }
@@ -477,7 +462,7 @@ public class ACache {
     /**
      * 读取 Serializable数据
      *
-     * @param key
+     * @param key 键
      * @return Serializable 数据
      */
     public Object getAsObject(String key) {
@@ -488,23 +473,19 @@ public class ACache {
             try {
                 bais = new ByteArrayInputStream(data);
                 ois = new ObjectInputStream(bais);
-                Object reObject = ois.readObject();
-                return reObject;
+                return ois.readObject();
             } catch (Exception e) {
-                e.printStackTrace();
                 return null;
             } finally {
                 try {
                     if (bais != null)
                         bais.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
                 try {
                     if (ois != null)
                         ois.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
             }
         }
@@ -540,7 +521,7 @@ public class ACache {
     /**
      * 读取 bitmap 数据
      *
-     * @param key
+     * @param key 键
      * @return bitmap 数据
      */
     public Bitmap getAsBitmap(String key) {
@@ -578,7 +559,7 @@ public class ACache {
     /**
      * 读取 Drawable 数据
      *
-     * @param key
+     * @param key 键
      * @return Drawable 数据
      */
     public Drawable getAsDrawable(String key) {
@@ -591,7 +572,7 @@ public class ACache {
     /**
      * 获取缓存文件
      *
-     * @param key
+     * @param key 键
      * @return value 缓存的文件
      */
     public File file(String key) {
@@ -604,7 +585,7 @@ public class ACache {
     /**
      * 移除某个key
      *
-     * @param key
+     * @param key 键
      * @return 是否移除成功
      */
     public boolean remove(String key) {
@@ -725,7 +706,7 @@ public class ACache {
         /**
          * 移除旧的文件
          *
-         * @return
+         * @return  long
          */
         private long removeNext() {
             if (lastUsageDates.isEmpty()) {
@@ -770,7 +751,7 @@ public class ACache {
         /**
          * 判断缓存的String数据是否到期
          *
-         * @param str
+         * @param str str
          * @return true：到期了 false：还没有到期
          */
         private static boolean isDue(String str) {
@@ -780,7 +761,7 @@ public class ACache {
         /**
          * 判断缓存的byte数据是否到期
          *
-         * @param data
+         * @param data data
          * @return true：到期了 false：还没有到期
          */
         private static boolean isDue(byte[] data) {
@@ -792,9 +773,7 @@ public class ACache {
                 }
                 long saveTime = Long.valueOf(saveTimeStr);
                 long deleteAfter = Long.valueOf(strs[1]);
-                if (System.currentTimeMillis() > saveTime + deleteAfter * 1000) {
-                    return true;
-                }
+                return System.currentTimeMillis() > saveTime + deleteAfter * 1000;
             }
             return false;
         }
@@ -802,7 +781,7 @@ public class ACache {
         /**
          * 获取缓存数据到期时间
          *
-         * @param str
+         * @param str str
          * @return long：0 到期了或者没有这个数据
          */
         private static long getDataTime(String str) {
@@ -812,7 +791,7 @@ public class ACache {
         /**
          * 获取缓存数据到期时间
          *
-         * @param data
+         * @param data data
          * @return long：0 到期了或者没有这个数据
          */
         private static long getDataTime(byte[] data) {

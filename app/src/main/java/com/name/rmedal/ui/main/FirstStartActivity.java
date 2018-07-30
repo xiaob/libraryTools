@@ -33,7 +33,6 @@ public class FirstStartActivity extends BaseActivity {
     public static void startAction(Context context) {
         new ActivityJumpOptionsTool().setContext(context)
                 .setClass(FirstStartActivity.class)
-                .setExitResId(0)
                 .setFinish(true)
                 .customAnim()
                 .start();

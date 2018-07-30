@@ -72,8 +72,7 @@ public class QrBarTool {
             // 开始对图像资源解码
             try {
                 rawResult = multiFormatReader.decodeWithState(new BinaryBitmap(new HybridBinarizer(new BitmapLuminanceSource(smallBitmap))));
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
         return rawResult;

@@ -68,8 +68,7 @@ public class AppTools {
         String decryptString = null;
         try {
             decryptString = new String(decryptResult, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        } catch (UnsupportedEncodingException ignored) {
         }
         LogTools.d(TAG, "解密后json数据--->" + decryptString);
         return decryptString;

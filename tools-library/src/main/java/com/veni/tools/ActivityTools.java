@@ -118,8 +118,7 @@ public class ActivityTools {
                     finishActivity(activity);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -131,8 +130,7 @@ public class ActivityTools {
                     targetactivity = activity;
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
         return targetactivity;
     }
@@ -192,9 +190,10 @@ public class ActivityTools {
             finishAllActivity();
             ActivityManager activityMgr = (ActivityManager) context
                     .getSystemService(Context.ACTIVITY_SERVICE);
-            activityMgr.restartPackage(context.getPackageName());
-        } catch (Exception e) {
-
+            if (activityMgr != null) {
+                activityMgr.restartPackage(context.getPackageName());
+            }
+        } catch (Exception ignored) {
         } finally {
             // 注意，如果您有后台程序运行，请不要支持此句子
             if (!isBackground) {

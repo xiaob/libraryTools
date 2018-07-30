@@ -105,8 +105,7 @@ public class QRCode {
             // 生成二维码图片的格式，使用ARGB_8888
             bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
-        } catch (WriterException e) {
-            e.printStackTrace();
+        } catch (WriterException ignored) {
         }
         return bitmap;
     }

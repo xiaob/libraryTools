@@ -229,10 +229,8 @@ public class RegTools {
                 errorInfo = "身份证生日不在有效范围。";
                 return errorInfo;
             }
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        } catch (NumberFormatException ignored) {
+        } catch (ParseException ignored) {
         }
         if (Integer.parseInt(strMonth) > 12 || Integer.parseInt(strMonth) == 0) {
             errorInfo = "身份证月份无效";

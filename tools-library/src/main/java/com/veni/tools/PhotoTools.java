@@ -186,12 +186,9 @@ public class PhotoTools {
             if (!dir.exists()) dir.mkdirs();
             File f=new File(dir,fileName);
             Uri u = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), f.getAbsolutePath(), null, null));
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(activity.getContentResolver(), u);
-            return bitmap;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            return MediaStore.Images.Media.getBitmap(activity.getContentResolver(), u);
+        } catch (FileNotFoundException ignored) {
+        } catch (IOException ignored) {
         }
         return null;
     }
@@ -228,8 +225,7 @@ public class PhotoTools {
         Uri u = null;
         try {
             u = Uri.parse(MediaStore.Images.Media.insertImage(activity.getContentResolver(), dir.getAbsolutePath()+"/"+fileName, null, null));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ignored) {
         }
         return u;
     }
@@ -274,8 +270,7 @@ public class PhotoTools {
                 if (phone!=null){
                     return phone;
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException ignored) {
             }
         }else {
             Toast.makeText(activity.getApplicationContext(), "找不到该图片", Toast.LENGTH_SHORT).show();
@@ -326,8 +321,7 @@ public class PhotoTools {
             bos.flush();
             bos.close();
             return file.getPath();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ignored) {
         }
         return "";
     }
@@ -392,9 +386,10 @@ public class PhotoTools {
 //        intent.setDataAndType(uri, "image/*");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             String url=getPath(activity,uri);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(Uri.fromFile(new File(url)), "image/*");
+        }else{
+            intent.setDataAndType(uri, "image/*");
         }
-        intent.setDataAndType(uri, "image/*");
         intent.putExtra("crop", "true");
         // 裁剪框的比例，1：1
         intent.putExtra("aspectX", outputX);

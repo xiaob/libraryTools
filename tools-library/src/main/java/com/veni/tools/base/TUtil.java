@@ -13,9 +13,9 @@ public class TUtil {
             return ((Class<T>) ((ParameterizedType) (o.getClass()
                     .getGenericSuperclass())).getActualTypeArguments()[i])
                     .newInstance();
-        } catch (InstantiationException e) {
-        } catch (IllegalAccessException e) {
-        } catch (ClassCastException e) {
+        } catch (InstantiationException ignored) {
+        } catch (IllegalAccessException ignored) {
+        } catch (ClassCastException ignored) {
         }
         return null;
     }
@@ -23,8 +23,7 @@ public class TUtil {
     public static Class<?> forName(String className) {
         try {
             return Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (ClassNotFoundException ignored) {
         }
         return null;
     }
