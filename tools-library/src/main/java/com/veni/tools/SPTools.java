@@ -68,7 +68,6 @@ public class SPTools {
      */
     public static Object get(Context context, String key, Object defaultObject) {
         SharedPreferences sp = getSp(context);
-
         if (defaultObject instanceof String) {
             return sp.getString(key, (String) defaultObject);
         } else if (defaultObject instanceof Integer) {

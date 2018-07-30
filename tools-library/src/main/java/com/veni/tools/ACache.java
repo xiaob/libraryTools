@@ -465,8 +465,11 @@ public class ACache {
             e.printStackTrace();
         } finally {
             try {
-                oos.close();
+                if (oos != null) {
+                    oos.close();
+                }
             } catch (IOException e) {
+
             }
         }
     }
@@ -614,6 +617,7 @@ public class ACache {
     public void clear() {
         mCache.clear();
     }
+
     /**
      * 获取数据大小
      */
@@ -713,6 +717,7 @@ public class ACache {
                 }
             }
         }
+
         private long getCacheSize() {
             return cacheSize.get();
         }
@@ -744,10 +749,12 @@ public class ACache {
                     }
                 }
             }
-
-            long fileSize = calculateSize(mostLongUsedFile);
-            if (mostLongUsedFile.delete()) {
-                lastUsageDates.remove(mostLongUsedFile);
+            long fileSize = 0;
+            if (mostLongUsedFile != null) {
+                fileSize = calculateSize(mostLongUsedFile);
+                if (mostLongUsedFile.delete()) {
+                    lastUsageDates.remove(mostLongUsedFile);
+                }
             }
             return fileSize;
         }

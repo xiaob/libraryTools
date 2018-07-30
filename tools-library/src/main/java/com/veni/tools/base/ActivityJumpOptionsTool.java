@@ -45,7 +45,6 @@ public class ActivityJumpOptionsTool {
     private ActivityOptionsCompat options = null;
 
     private Type actionTag = Type.NEW_TASK;//intent标识
-    private boolean finish = false;//是否关闭act
 
     public ActivityJumpOptionsTool setContext(Context context) {
         this.context = context;
@@ -92,8 +91,15 @@ public class ActivityJumpOptionsTool {
         return this;
     }
 
+    /**
+     * 是否关闭act
+     * @param finish ture 关闭
+     * @return
+     */
     public ActivityJumpOptionsTool setFinish(boolean finish) {
-        this.finish = finish;
+        if(finish){
+            actionTag = ActivityJumpOptionsTool.Type.CLEAR_TASK;
+        }
         return this;
     }
 
@@ -163,7 +169,7 @@ public class ActivityJumpOptionsTool {
             return;
         }
         ActivityCompat.startActivity(context, intent, options.toBundle());
-        if (finish || actionTag == Type.CLEAR_TASK) {
+        if (actionTag == Type.CLEAR_TASK) {
             ((Activity) context).finish();
         }
     }

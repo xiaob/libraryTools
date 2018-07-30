@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
+import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -55,7 +56,8 @@ public class FirstStartActivity extends BaseActivity {
         StatusBarTools.immersive(this);
 //        StatusBarTools.setPaddingSmart(this, toastTitleView);
 
-        SPTools.put(this, SPTools.FIRST_TIME, false);
+        LogTools.e(TAG,SPTools.get(context, SPTools.FIRST_TIME, true));
+        SPTools.put(context, SPTools.FIRST_TIME, false);
 
         setListener();
         processLogic();

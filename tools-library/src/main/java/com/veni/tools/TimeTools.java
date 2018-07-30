@@ -1014,13 +1014,14 @@ public class TimeTools {
      */
     public static long getDatelongMills(String fomat,String dateStr){
         SimpleDateFormat sdf = new SimpleDateFormat(fomat);
-        Date date = null;
+        Date date;
+        long longDate =0;
         try {
             date = sdf.parse(dateStr);
+            longDate = date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long longDate = date.getTime();
         return longDate;
     }
 

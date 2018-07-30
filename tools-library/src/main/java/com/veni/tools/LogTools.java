@@ -2,6 +2,7 @@ package com.veni.tools;
 
 import android.content.Context;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -20,8 +21,15 @@ import java.util.Date;
  */
 public class LogTools {
 
-    private final static SimpleDateFormat LOG_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
-    private final static SimpleDateFormat FILE_SUFFIX = new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
+
+    @NonNull
+    private static SimpleDateFormat getLOG_FORMAT(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
+    }
+    @NonNull
+    private static SimpleDateFormat getFILE_SUFFIX(){
+        return new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
+    }
     private static Boolean LOG_SWITCH = true; // 日志文件总开关
     private static Boolean LOG_TO_FILE = false; // 日志写入文件开关
     private static String LOG_TAG = "TAG"; // 默认的tag
@@ -144,8 +152,8 @@ public class LogTools {
      **/
     private synchronized static void log2File(String mylogtype, String tag, String text) {
         Date nowtime = new Date();
-        String date = FILE_SUFFIX.format(nowtime);
-        String dateLogContent = LOG_FORMAT.format(nowtime) + ":" + mylogtype + ":" + tag + ":" + text; // 日志输出格式
+        String date = getFILE_SUFFIX().format(nowtime);
+        String dateLogContent = getLOG_FORMAT().format(nowtime) + ":" + mylogtype + ":" + tag + ":" + text; // 日志输出格式
         File destDir = new File(LOG_FILE_PATH);
         if (!destDir.exists()) {
             destDir.mkdirs();
@@ -167,7 +175,7 @@ public class LogTools {
      * 删除指定的日志文件
      */
     public static void delFile() {// 删除日志文件
-        String needDelFiel = FILE_SUFFIX.format(getDateBefore());
+        String needDelFiel =  getFILE_SUFFIX().format(getDateBefore());
         File file = new File(LOG_FILE_PATH, needDelFiel + LOG_FILE_NAME);
         if (file.exists()) {
             file.delete();

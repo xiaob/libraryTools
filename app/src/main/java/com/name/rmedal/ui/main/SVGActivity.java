@@ -10,6 +10,7 @@ import com.jaredrummler.android.widget.AnimatedSvgView;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.ModelSVG;
+import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
 
