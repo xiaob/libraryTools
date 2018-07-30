@@ -114,7 +114,7 @@ public class ActivityTools {
     public void finishActivity(Class<?> cls) {
         try {
             for (Activity activity : activityStack) {
-                if (activity.getClass().equals(cls)) {
+                if (activity.getClass().getCanonicalName().equals(cls.getCanonicalName())) {
                     finishActivity(activity);
                 }
             }
@@ -126,7 +126,7 @@ public class ActivityTools {
         Activity targetactivity = null;
         try {
             for (Activity activity : activityStack) {
-                if (activity.getClass().equals(cls)) {
+                if (activity.getClass().getCanonicalName().equals(cls.getCanonicalName())) {
                     targetactivity = activity;
                 }
             }

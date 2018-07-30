@@ -57,7 +57,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
     @Override
     public void initView(Bundle savedInstanceState) {
-
         StatusBarTools.immersive(this);
         initBottomNavigation();
         mainBottomNavigation.setCurrentItem(0, true);

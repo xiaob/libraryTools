@@ -35,7 +35,6 @@ import java.io.IOException;
 public final class CameraManager {
 
     static final int SDK_INT; // Later we can use Build.VERSION.SDK_INT
-    private static final String TAG = CameraManager.class.getSimpleName();
     public static int FRAME_WIDTH = -1;
     public static int FRAME_HEIGHT = -1;
     public static int FRAME_MARGINTOP = -1;

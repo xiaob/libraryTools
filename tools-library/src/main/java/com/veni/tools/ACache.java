@@ -174,6 +174,8 @@ public class ACache {
         File file = mCache.get(key);
         if (!file.exists())
             return null;
+        if (file.length() > MAX_SIZE)
+            return null;
         boolean removeFile = false;
         BufferedReader in = null;
         try {

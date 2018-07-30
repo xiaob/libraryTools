@@ -164,7 +164,6 @@ public class HTMLWebView extends WebView {
     }
 
     private class MyWebChromeClient extends WebChromeClient {
-        private Bitmap mDefaultVideoPoster;
 
         @Override
         public void onShowCustomView(View view,

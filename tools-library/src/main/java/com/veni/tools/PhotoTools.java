@@ -314,14 +314,21 @@ public class PhotoTools {
         File dir= new File(Environment.getExternalStorageDirectory() + "/DCIM/"+(type==0?"Camera":"Cut"));//将要保存图片的路径
         if (!dir.exists()) dir.mkdirs();
         File file = new File(dir, filename);
-
+        BufferedOutputStream bos =null;
         try {
-            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+            bos = new BufferedOutputStream(new FileOutputStream(file));
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-            bos.flush();
             bos.close();
             return file.getPath();
         } catch (IOException ignored) {
+        } finally {
+            if (bos != null) {
+                try {
+//                    bos.flush();
+                    bos.close();
+                } catch (IOException ignored) {
+                }
+            }
         }
         return "";
     }
@@ -330,7 +337,7 @@ public class PhotoTools {
      *  将指定路径下的图片缩小到原来的几分之一 返回bitmap.当inSampleSize=2时，表示缩小1/2
      */
     public static Bitmap getBitmapOption(String filePath, int inSampleSize){
-        System.gc();
+//        System.gc();
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPurgeable = true;
         options.inSampleSize = inSampleSize;

@@ -261,7 +261,7 @@ public class FutileTool {
         editText.setFilters(new InputFilter[]{new InputFilter() {
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                if (source.equals(".") && dest.toString().length() == 0) {
+                if (source.toString().equals(".") && dest.toString().length() == 0) {
                     return "0.";
                 }
                 if (dest.toString().contains(".")) {
