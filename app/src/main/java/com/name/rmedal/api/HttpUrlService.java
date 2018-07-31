@@ -22,6 +22,7 @@ public interface HttpUrlService {
     //版本更新
     @FormUrlEncoded
     @POST("system/getLastVersion")
+//    Observable<HttpRespose<String>> getLastVersion(@FieldMap Map<String, String> map);
     Observable<HttpRespose<String>> getLastVersion(@Field("data") String data, @Field("deviceToken") String deviceToken, @Field("version") String version);
 
 }
