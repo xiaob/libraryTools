@@ -161,9 +161,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         headerView.findViewById(R.id.main_nav_community).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_scan_address).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_exit).setOnClickListener(mListener);
-
-//        StatusBarTools.setMargin(context, mainNavHeadLayout);
-
     }
 
     private OnNoFastClickListener mListener = new OnNoFastClickListener() {
