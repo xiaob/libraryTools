@@ -7,6 +7,9 @@ package com.name.rmedal.api;
  */
 public class AppConstant {
     public static final String  pageSize = "20";
+    public static final String  PatternlockKey = "Patternlock";//手势密码
+    public static final String  PatternlockOK = "Patternlock_ok";//是否验证过手势密码
+    public static final String  FIRST_TIME = "first_time";//是否验证过手势密码
 
     public static final String LG_Code="login_Code";
 

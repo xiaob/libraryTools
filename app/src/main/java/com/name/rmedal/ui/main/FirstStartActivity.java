@@ -6,7 +6,9 @@ import android.widget.ImageView;
 
 
 import com.name.rmedal.R;
+import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
+import com.veni.tools.ACache;
 import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
@@ -52,7 +54,7 @@ public class FirstStartActivity extends BaseActivity {
     @Override
     public void initView(Bundle savedInstanceState) {
         StatusBarTools.immersive(this);
-
+        ACache.get(context).put(AppConstant.FIRST_TIME, "true", ACache.TIME_DAY);
         setListener();
         processLogic();
     }

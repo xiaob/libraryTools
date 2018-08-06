@@ -19,12 +19,14 @@ import android.widget.TextView;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.name.rmedal.R;
+import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.ui.main.contract.MainContract;
 import com.name.rmedal.ui.main.model.MainModel;
 import com.name.rmedal.ui.main.presenter.MainPresenter;
 import com.name.rmedal.ui.personal.PersonalFragment;
 import com.name.rmedal.ui.trade.TradeFragment;
+import com.veni.tools.ACache;
 import com.veni.tools.ActivityTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -75,7 +77,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         initBottomNavigation();
         initDrawerLayout();
         mainBottomNavigation.setCurrentItem(0, true);
-        mPresenter.checkVersion("1");
+//        mPresenter.checkVersion("1");
     }
 
     /**
@@ -84,9 +86,9 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     @Override
     public void returnVersionData(String data) {
         LogTools.e(TAG,"版本检测返回数据----"+data);
-
     }
 
+    private int mainposition;
     private HomeFragment homeFragment;
     private TradeFragment tradeFragment;
     private PersonalFragment personalFragment;
@@ -109,6 +111,17 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
             @Override
             public void onTabSelected(int position, boolean wasSelected) {
                 AHBottomNavigationItem selecetitem = mainBottomNavigation.getItem(position);
+                String title = selecetitem.getTitle(context);
+                LogTools.e(TAG,"title--"+title);
+                if(title.equals("我")){
+                    String value = ACache.get(context).getAsString(AppConstant.PatternlockOK);
+                    if(value==null){
+                        PatternlockActivity.startAction(context);
+                        mainBottomNavigation.setCurrentItem(mainposition);
+                        return;
+                    }
+                }
+                mainposition=position;
                 SwitchTo(selecetitem);
             }
         });
@@ -170,6 +183,10 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
             mainDrawer.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    String value = ACache.get(context).getAsString(AppConstant.PatternlockOK);
+                    if(value==null){
+                        PatternlockActivity.startAction(context);
+                    }
                     switch (view.getId()) {
                         case R.id.main_nav_community: // 圈子
                             break;

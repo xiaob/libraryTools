@@ -8,8 +8,10 @@ import android.widget.ImageView;
 
 import com.jaredrummler.android.widget.AnimatedSvgView;
 import com.name.rmedal.R;
+import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.modelbean.ModelSVG;
+import com.veni.tools.ACache;
 import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
@@ -74,7 +76,10 @@ public class SVGActivity extends BaseActivity {
                     @Override
                     public void accept(Long aLong) throws Exception {
                         // 第一次打开app
-                        if ((Boolean) SPTools.get(context, SPTools.FIRST_TIME, true)) {
+
+                      String isfirst=  ACache.get(context).getAsString(AppConstant.FIRST_TIME);
+//                        if ((Boolean) SPTools.get(context, SPTools.FIRST_TIME, true)) {
+                        if (isfirst==null) {
                             FirstStartActivity.startAction(context);
                         } else {
                             MainActivity.startAction(context);

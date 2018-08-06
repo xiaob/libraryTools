@@ -51,6 +51,12 @@ dependencies {
     implementation project(':tools-library')
     implementation project(':recycler-adapter-helper')
     implementation project(':refresh-layout')
+    implementation project(':patternlockview')
+    implementation project(':patternlockview-reactive')
+    // 手势交互
+   // compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    // 手势交互 for RxJava2 adapter
+    //compile 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
     //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
     implementation 'com.jaredrummler:animated-svg-view:1.0.5'
     //下拉刷新上拉加载
