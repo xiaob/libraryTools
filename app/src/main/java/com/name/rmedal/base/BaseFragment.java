@@ -12,6 +12,7 @@ import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.FragmentBase;
 import com.veni.tools.base.TUtil;
 import com.veni.tools.baserx.RxManager;
+import com.veni.tools.interfaces.AntiShake;
 import com.veni.tools.view.ToastTool;
 
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
     public RxManager mRxManager;
     private Unbinder unbinder;
     protected String TAG;
+    protected AntiShake antiShake;//防止重复点击
 
     //获取布局文件
     protected abstract int getLayoutId();
@@ -48,6 +50,7 @@ public abstract class BaseFragment<T extends BasePresenter, E extends BaseModel>
         }
         mRxManager = new RxManager();
         context = getContext();
+        antiShake = new AntiShake();
         mPresenter = TUtil.getT(this, 0);
         mModel = TUtil.getT(this, 1);
         if (mPresenter != null) {

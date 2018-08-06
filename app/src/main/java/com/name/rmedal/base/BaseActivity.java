@@ -13,6 +13,7 @@ import com.veni.tools.base.BaseModel;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.TUtil;
 import com.veni.tools.baserx.RxManager;
+import com.veni.tools.interfaces.AntiShake;
 import com.veni.tools.view.ToastTool;
 
 import butterknife.ButterKnife;
@@ -29,6 +30,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
     protected RxManager mRxManager;
     protected SwipeBackLayout swipeBackLayout;
     protected String TAG;
+    protected AntiShake antiShake;//防止重复点击
 
     /*********************子类实现*****************************/
     //获取布局文件
@@ -58,6 +60,7 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
      */
     private void doBeforeSetcontentView() {
         mRxManager = new RxManager();
+        antiShake = new AntiShake();
         // 设置竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }

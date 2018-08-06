@@ -23,7 +23,6 @@ import com.veni.tools.view.ToastTool;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -33,7 +32,6 @@ import java.util.List;
  * fixListViewHeight           : 手动计算出listView的高度，但是不再具有滚动效果
  * Md5                         : 生成MD5加密32位字符串
  * delayToDo                   : 延时操作
- * isFastClick                 : 是否快速点击
  * setEdTwoDecimal             : EditText 首位小数点自动加零，最多两位小数
  * setEditNumberPrefix         : EditText 前缀自动补零
  *
@@ -44,7 +42,6 @@ import java.util.List;
 public class FutileTool {
 
     private static Context context;
-    private static long lastClickTime;
 
     /**
      * 初始化工具类
@@ -226,18 +223,6 @@ public class FutileTool {
      */
     public static final int getResIdByName(Context context, String name, String defType) {
         return context.getResources().getIdentifier("ic_launcher", "drawable", context.getPackageName());
-    }
-
-    public static boolean isFastClick(int millisecond) {
-        long currentTime = Calendar.getInstance().getTimeInMillis();
-        long interval = (currentTime - lastClickTime);
-
-        if (0 < interval && currentTime - lastClickTime < millisecond) {
-            lastClickTime = currentTime;
-            return true;
-        }
-        lastClickTime = currentTime;
-        return false;
     }
 
     /**

@@ -3,9 +3,18 @@ package com.name.rmedal.ui.main;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -20,6 +29,7 @@ import com.veni.tools.ActivityTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarTools;
+import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.view.ToastTool;
 
 import java.util.concurrent.TimeUnit;
@@ -42,6 +52,10 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
                 .start();
     }
 
+    @BindView(R.id.main_nav_view)
+    NavigationView mainNavView;
+    @BindView(R.id.main_drawer)
+    DrawerLayout mainDrawer;
     @BindView(R.id.main_bottom_navigation)
     AHBottomNavigation mainBottomNavigation;
 
@@ -59,6 +73,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
     public void initView(Bundle savedInstanceState) {
         StatusBarTools.immersive(this);
         initBottomNavigation();
+        initDrawerLayout();
         mainBottomNavigation.setCurrentItem(0, true);
         mPresenter.checkVersion("1");
     }
@@ -135,7 +150,57 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         }
         transaction.commitAllowingStateLoss();
     }
+    /**
+     * inflateHeaderView 进来的布局要宽一些
+     */
+    private void initDrawerLayout() {
+        mainNavView.inflateHeaderView(R.layout.activity_main_nav);
+        View headerView = mainNavView.getHeaderView(0);
+        FrameLayout mainNavHeadLayout= headerView.findViewById(R.id.main_nav_head_layout);
+        ImageView mainNavBgView= headerView.findViewById(R.id.main_nav_bg_view);
+        headerView.findViewById(R.id.main_nav_community).setOnClickListener(mListener);
+        headerView.findViewById(R.id.main_nav_scan_address).setOnClickListener(mListener);
+        headerView.findViewById(R.id.main_nav_exit).setOnClickListener(mListener);
 
+//        StatusBarTools.setMargin(context, mainNavHeadLayout);
+
+    }
+
+    private OnNoFastClickListener mListener = new OnNoFastClickListener() {
+        @Override
+        protected void onNoDoubleClick(final View view) {
+            mainDrawer.closeDrawer(GravityCompat.START);
+            mainDrawer.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    switch (view.getId()) {
+                        case R.id.main_nav_community: // 圈子
+                            break;
+                        case R.id.main_nav_scan_address: // 关于我们
+                            break;
+                        case R.id.main_nav_feedback: // 问题反馈
+                            break;
+                        case R.id.main_nav_exit:
+                            creatDialogBuilder() .setDialog_title("温馨提示")
+                                    .setDialog_message("是否退出应用?")
+                                    .setDialog_Left("退出")
+                                    .setLeftlistener( new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            ActivityTools.getActivityTool().AppExit(context, false);
+                                        }
+                                    })
+                                    .setDialog_Right("取消")
+                                    .builder().show();
+
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }, 260);
+        }
+    };
     /**
      * 将所有的Fragment都置为隐藏状态。
      */
@@ -156,6 +221,13 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
     @Override
     public void onBackPressed() {
+
+        boolean isDrawerOpen = mainDrawer.isDrawerOpen(mainNavView);
+        if (isDrawerOpen) {
+            isExit = false;
+            mainDrawer.closeDrawer(mainNavView);
+            return;
+        }
         if (!isExit) {
             isExit = true;
             ToastTool.normal("再按一次退出程序");
