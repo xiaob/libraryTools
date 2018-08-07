@@ -5,7 +5,6 @@ import com.name.rmedal.R;
 import com.name.rmedal.api.HttpManager;
 import com.name.rmedal.base.rx.HttpRespose;
 import com.name.rmedal.modelbean.PersonalModelBean;
-import com.name.rmedal.tools.AppTools;
 import com.name.rmedal.ui.main.contract.MainContract;
 import com.name.rmedal.base.rx.RxSubscriber;
 import com.veni.tools.baserx.RxSchedulers;
@@ -21,21 +20,20 @@ public class MainPresenter extends MainContract.Presenter {
 
     @Override
     public void checkVersion(String type) {
-
         HashMap<String, String> param = new HashMap<>();
         param.put("type", type);
         HttpManager.getInstance().getOkHttpUrlService().getLastVersion(param)
                 .compose(RxSchedulers.<HttpRespose<List<PersonalModelBean>>>io_main())
                 .subscribe(new RxSubscriber<List<PersonalModelBean>>(mContext, mContext.getString(R.string.loading)) {
-            @Override
-            protected void _onNext(List<PersonalModelBean> data) {
-                mView.returnVersionData(data);
-            }
+                    @Override
+                    public void _onNext(List<PersonalModelBean> data) {
+                        mView.returnVersionData(data);
+                    }
 
-            @Override
-            protected void _onError(int code, String message) {
-                mView.onError(code,message);
-            }
-        });
+                    @Override
+                    public void _onError(int code, String message) {
+                        mView.onError(code, message);
+                    }
+                });
     }
 }

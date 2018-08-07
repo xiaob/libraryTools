@@ -53,9 +53,9 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
         HttpTipLoadDialog.getHttpTipLoadDialog().showDialog(context,loadmsg);
     }
 
-    protected abstract void _onNext(T t);
+    public abstract void _onNext(T t);
 
-    protected abstract void _onError(int code, String message);
+    public abstract void _onError(int code, String message);
 
     @Override
     public void onSubscribe(Disposable d) {
