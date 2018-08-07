@@ -6,6 +6,7 @@ import java.io.Serializable;
  * 作者：kkan on 2017/01/30
  * 当前类注释:
  *      封装服务器返回数据
+ *
  */
 public class HttpRespose<T> implements Serializable {
     private int code;
