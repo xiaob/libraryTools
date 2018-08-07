@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.NetworkOnMainThreadException;
 
 import com.name.rmedal.base.HttpRespose;
+import com.name.rmedal.base.HttpTipLoadDialog;
 import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
 
