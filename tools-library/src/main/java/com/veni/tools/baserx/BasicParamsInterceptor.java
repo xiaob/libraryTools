@@ -1,5 +1,6 @@
 package com.veni.tools.baserx;
 
+import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class BasicParamsInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
-        LogTools.d("HttpCommonInterceptor", "add common params");
+        LogTools.d("HttpCommonInterceptor", "add common params--"+ JsonTools.toJson(mHeaderParamsMap));
         Request oldRequest = chain.request();
         // 添加新的参数，添加到url 中
      /* HttpUrl.Builder authorizedUrlBuilder = oldRequest.url()                .newBuilder()

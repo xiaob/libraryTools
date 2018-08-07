@@ -101,7 +101,7 @@ public class HttpManager {
         return INSTANCE;
     }
 
-    private static String TOKEN="----";
+    private static String TOKEN="";
 
     public static void setToken(String token) {
         TOKEN = token;
@@ -111,7 +111,7 @@ public class HttpManager {
         //缓存
         File cacheFile = new File(FutileTool.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-        //1.处理没有认证  http 401 Not Authorised 增加头部信息
+        //1.处理没有认证  http 401 Not Authorised 只增加头部信息
         Authenticator mAuthenticator2 = new Authenticator() {
             @Override
             public Request authenticate(Route route, Response response) throws IOException {
@@ -163,9 +163,9 @@ public class HttpManager {
                 return originalResponse.newBuilder().build();
             }
         };
-        // 添加公共参数
+        // 添加公共参数 请求头和请求参数都增加
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
-//                .addHeaderParams("userName","")//添加公共参数
+//                .addHeaderParams("userName","123321")//添加公共参数
 //                .addHeaderParams("device","")
                 .build();
 
@@ -178,6 +178,7 @@ public class HttpManager {
                 .addNetworkInterceptor(mRequestInterceptor)
                 .addInterceptor(basicParamsInterceptor)
                 .addInterceptor(logInterceptor)
+                .authenticator(mAuthenticator2)
                 .cache(cache)
                 .build();
 
