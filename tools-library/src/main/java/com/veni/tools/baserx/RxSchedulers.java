@@ -1,6 +1,8 @@
 package com.veni.tools.baserx;
 
 
+import android.support.annotation.NonNull;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
@@ -16,8 +18,8 @@ public class RxSchedulers {
     public static <T> ObservableTransformer<T, T> io_main() {
         return new ObservableTransformer<T, T>() {
             @Override
-            public ObservableSource<T> apply(Observable<T> upstream) {
-                return upstream.subscribeOn(Schedulers.io())
+            public ObservableSource<T> apply(@NonNull Observable<T> observable) {
+                return observable.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };

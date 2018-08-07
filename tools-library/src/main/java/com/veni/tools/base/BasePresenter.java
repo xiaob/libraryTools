@@ -9,18 +9,13 @@ import com.veni.tools.baserx.RxManager;
  * 当前类注释:
  * 基类presenter
  */
-public abstract class BasePresenter<T,E>{
+public abstract class BasePresenter<T>{
     public Context mContext;
-    public E mModel;
     public T mView;
     public RxManager mRxManage = new RxManager();
 
-    public void setVM(T v, E m) {
+    public void setVM(T v) {
         this.mView = v;
-        this.mModel = m;
-        this.onStart();
-    }
-    public void onStart(){
     }
     public void onDestroy() {
         mRxManage.clear();

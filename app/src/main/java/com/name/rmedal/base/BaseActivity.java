@@ -7,14 +7,11 @@ import android.view.MenuItem;
 
 import com.gw.swipeback.SwipeBackLayout;
 import com.name.rmedal.BuildConfig;
-import com.name.rmedal.R;
 import com.veni.tools.base.ActivityBase;
-import com.veni.tools.base.BaseModel;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.TUtil;
 import com.veni.tools.baserx.RxManager;
 import com.veni.tools.interfaces.AntiShake;
-import com.veni.tools.view.ToastTool;
 
 import butterknife.ButterKnife;
 
@@ -23,10 +20,9 @@ import butterknife.ButterKnife;
  * 当前类注释:
  * 基类Activity
  */
-public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel> extends ActivityBase {
+public abstract class BaseActivity<T extends BasePresenter> extends ActivityBase {
 
     public T mPresenter;
-    public E mModel;
     protected RxManager mRxManager;
     protected SwipeBackLayout swipeBackLayout;
     protected String TAG;
@@ -70,7 +66,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
      */
     private void doAfterSetcontentView() {
         mPresenter = TUtil.getT(this, 0);
-        mModel = TUtil.getT(this, 1);
         if (mPresenter != null) {
             mPresenter.mContext = this;
         }
@@ -110,25 +105,6 @@ public abstract class BaseActivity<T extends BasePresenter, E extends BaseModel>
             swipeBackLayout.setDirectionMode(direction);
             swipeBackLayout.setSwipeFromEdge(false);//是否只能从边缘滑动退出
         }
-    }
-
-    protected void startProgressDialog(String loadtipmsg) {
-        creatDialogBuilder()
-                .setDialog_message(loadtipmsg)
-                .setLoadingView(R.color.colorAccent)
-                .builder().show();
-    }
-
-    protected void stopProgressDialog() {
-        destroyDialogBuilder();
-    }
-
-    protected void stopErrorProgressDialog(String errtipmsg) {
-        stopProgressDialog();
-        if (errtipmsg.equals("")) {
-            errtipmsg = getString(com.veni.tools.R.string.net_error);
-        }
-        ToastTool.error(errtipmsg);
     }
 
     @Override

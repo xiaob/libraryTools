@@ -9,20 +9,17 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
+import com.name.rmedal.modelbean.PersonalModelBean;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.name.rmedal.ui.main.model.MainModel;
 import com.name.rmedal.ui.main.presenter.MainPresenter;
 import com.name.rmedal.ui.personal.PersonalFragment;
 import com.name.rmedal.ui.trade.TradeFragment;
@@ -34,13 +31,14 @@ import com.veni.tools.StatusBarTools;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.view.ToastTool;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
-public class MainActivity extends BaseActivity<MainPresenter, MainModel> implements MainContract.View {
+public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     /**
      * 启动入口
@@ -68,7 +66,7 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
 
     @Override
     public void initPresenter() {
-        mPresenter.setVM(this, mModel);
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -77,15 +75,20 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
         initBottomNavigation();
         initDrawerLayout();
         mainBottomNavigation.setCurrentItem(0, true);
-//        mPresenter.checkVersion("1");
+        mPresenter.checkVersion("1");
     }
 
     /**
      * 版本检测返回数据
      */
     @Override
-    public void returnVersionData(String data) {
+    public void returnVersionData(List<PersonalModelBean> data) {
         LogTools.e(TAG,"版本检测返回数据----"+data);
+    }
+
+    @Override
+    public void onError(int code,String errtipmsg) {
+        ToastTool.error(errtipmsg);
     }
 
     private int mainposition;
@@ -256,21 +259,6 @@ public class MainActivity extends BaseActivity<MainPresenter, MainModel> impleme
             return;
         }
         ActivityTools.getActivityTool().AppExit(this, false);
-    }
-
-    @Override
-    public void showLoading(String loadtipmsg) {
-        startProgressDialog(loadtipmsg);
-    }
-
-    @Override
-    public void stopLoading() {
-        stopProgressDialog();
-    }
-
-    @Override
-    public void showErrorTip(String errtipmsg) {
-        stopErrorProgressDialog(errtipmsg);
     }
 
 }

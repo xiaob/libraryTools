@@ -2,15 +2,16 @@ package com.name.rmedal.ui.main.presenter;
 
 
 import com.name.rmedal.R;
+import com.name.rmedal.api.HttpManager;
+import com.name.rmedal.base.rx.HttpRespose;
+import com.name.rmedal.modelbean.PersonalModelBean;
 import com.name.rmedal.tools.AppTools;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.veni.tools.baserx.RxSubscriber;
+import com.name.rmedal.base.rx.RxSubscriber;
+import com.veni.tools.baserx.RxSchedulers;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 作者：Administrator on 2017/12/04 10:36
@@ -21,30 +22,19 @@ public class MainPresenter extends MainContract.Presenter {
     @Override
     public void checkVersion(String type) {
 
-        mModel.checkVersion(type).subscribe(new RxSubscriber<String>(mContext) {
-
+        HashMap<String, String> param = new HashMap<>();
+        param.put("type", type);
+        HttpManager.getInstance().getOkHttpUrlService().getLastVersion(param)
+                .compose(RxSchedulers.<HttpRespose<List<PersonalModelBean>>>io_main())
+                .subscribe(new RxSubscriber<List<PersonalModelBean>>(mContext, mContext.getString(R.string.loading)) {
             @Override
-            public void onSubscribe(Disposable d) {
-                super.onSubscribe(d);
-                mRxManage.add(d);
-            }
-            //
-//            @Override
-//            public void onStart() {
-//                super.onStart();
-//                mView.showLoading(mContext.getString(R.string.loading));
-//            }
-//
-            @Override
-            protected void _onNext(String datastr) {
-                String data = AppTools.desAESCode(datastr);
+            protected void _onNext(List<PersonalModelBean> data) {
                 mView.returnVersionData(data);
-                mView.stopLoading();
             }
 
             @Override
-            protected void _onError(String message) {
-                mView.showErrorTip(message);
+            protected void _onError(int code, String message) {
+                mView.onError(code,message);
             }
         });
     }

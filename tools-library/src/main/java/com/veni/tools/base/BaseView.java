@@ -7,7 +7,8 @@ package com.veni.tools.base;
  */
 public interface BaseView {
     /*******内嵌加载*******/
-    void showLoading(String loadtipmsg);
-    void stopLoading();
-    void showErrorTip(String errtipmsg);
+//    void showLoading(String loadtipmsg);
+//    void stopLoading();
+//    void showErrorTip(String errtipmsg);
+    void onError(int code,String errtipmsg);
 }

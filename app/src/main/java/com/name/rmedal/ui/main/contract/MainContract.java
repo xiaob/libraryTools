@@ -1,9 +1,12 @@
 package com.name.rmedal.ui.main.contract;
 
 
-import com.veni.tools.base.BaseModel;
+import com.name.rmedal.base.rx.HttpRespose;
+import com.name.rmedal.modelbean.PersonalModelBean;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.BaseView;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -14,13 +17,6 @@ import io.reactivex.Observable;
  * MVP契约类
  */
 public interface MainContract {
-    /**
-     * 请求数据   数据相关
-     */
-    interface Model extends BaseModel {
-        //检测更新
-        Observable<String> checkVersion(String type);
-    }
 
     /**
      * 向 页面 返回数据
@@ -28,14 +24,14 @@ public interface MainContract {
      */
     interface View extends BaseView {
         //注册返回的数据
-        void returnVersionData(String data);
+        void returnVersionData(List<PersonalModelBean> data);
     }
     /**
      * 发起请求
      * 继承这个抽象类
      *   调用Model获取网络数据，用View中的接口  更新界面
      */
-    abstract static class Presenter extends BasePresenter<View, Model> {
+    abstract static class Presenter extends BasePresenter<View> {
         //发起注册请求
         public abstract void checkVersion(String type);
     }
