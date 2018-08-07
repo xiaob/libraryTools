@@ -1,7 +1,7 @@
 package com.name.rmedal.api;
 
 
-import com.name.rmedal.base.rx.HttpRespose;
+import com.name.rmedal.base.HttpRespose;
 import com.name.rmedal.modelbean.PersonalModelBean;
 
 import java.util.List;

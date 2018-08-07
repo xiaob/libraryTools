@@ -1,14 +1,11 @@
 package com.name.rmedal.ui.main.contract;
 
 
-import com.name.rmedal.base.rx.HttpRespose;
 import com.name.rmedal.modelbean.PersonalModelBean;
 import com.veni.tools.base.BasePresenter;
 import com.veni.tools.base.BaseView;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 
 /**

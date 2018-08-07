@@ -3,6 +3,7 @@ package com.name.rmedal.base.rx;
 import android.content.Context;
 import android.os.NetworkOnMainThreadException;
 
+import com.name.rmedal.base.HttpRespose;
 import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
 
@@ -11,12 +12,9 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.net.UnknownServiceException;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import retrofit2.HttpException;
 
 
