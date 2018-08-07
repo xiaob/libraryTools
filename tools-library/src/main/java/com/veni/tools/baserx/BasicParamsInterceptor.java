@@ -1,6 +1,6 @@
 package com.veni.tools.baserx;
 
-import android.util.Log;
+import com.veni.tools.LogTools;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class BasicParamsInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Interceptor.Chain chain) throws IOException {
-        Log.d("HttpCommonInterceptor", "add common params");
+        LogTools.d("HttpCommonInterceptor", "add common params");
         Request oldRequest = chain.request();
         // 添加新的参数，添加到url 中
      /* HttpUrl.Builder authorizedUrlBuilder = oldRequest.url()                .newBuilder()

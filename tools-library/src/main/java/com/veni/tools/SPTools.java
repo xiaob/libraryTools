@@ -20,10 +20,11 @@ public class SPTools {
     /**
      * 保存在手机里面的文件名
      */
-    private static final String FILE_NAME = "share_data";
+    private static final String FILE_NAME = "sp_data";
     private static final String str= BuildConfig.APPLICATION_ID;
 
     public static final String FIRST_TIME = "first_time";
+    public static final String KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN";
 
     // 消息通知 0:允许 1：不允许
     public static final String MESSAGE_STATE = "message_state";
