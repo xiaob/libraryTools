@@ -115,7 +115,6 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             public void onTabSelected(int position, boolean wasSelected) {
                 AHBottomNavigationItem selecetitem = mainBottomNavigation.getItem(position);
                 String title = selecetitem.getTitle(context);
-                LogTools.e(TAG,"title--"+title);
                 if(title.equals("我")){
                     String value = ACache.get(context).getAsString(AppConstant.PatternlockOK);
                     if(value==null){
