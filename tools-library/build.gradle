@@ -41,6 +41,8 @@ dependencies {
     api 'com.android.support:recyclerview-v7:26+'
     api 'com.android.support:support-annotations:26+'
     api 'com.android.support.constraint:constraint-layout:1.0.2'
+    //facebook.rebound 动画
+    api 'com.facebook.rebound:rebound:0.3.8'
     //retrofit、okhttp3和rxjava
 
     //HTTP Request

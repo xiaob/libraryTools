@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:card="http://schemas.android.com/tools"
     android:background="@color/whitesmoke"
     android:orientation="vertical">
 
@@ -14,10 +15,13 @@
         app:title="Toast_LabelsView"
         app:titleColor="@color/white" />
 
-    <com.veni.tools.view.CardGroupView
+    <com.veni.tools.view.cardslide.CardSlidePanel
         android:id="@+id/cardgroupview_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        card:bottomMarginTop="38dp"
+        card:itemMarginTop="10dp"
+        card:yOffsetStep="13dp" />
 
 
 </LinearLayout>

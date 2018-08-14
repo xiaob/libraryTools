@@ -27,6 +27,13 @@
 
     </declare-styleable>
 
+    <!--拖拽式层叠卡片-->
+    <declare-styleable name="card">
+        <attr name="itemMarginTop" format="dimension" />
+        <attr name="bottomMarginTop" format="dimension" />
+        <attr name="yOffsetStep" format="dimension" />
+        <attr name="widthHeightRate" format="float" />
+    </declare-styleable>
     <!--动态生成验证码-->
     <declare-styleable name="VerificationCodeView">
         <attr name="isNetCode" format="boolean"/>
