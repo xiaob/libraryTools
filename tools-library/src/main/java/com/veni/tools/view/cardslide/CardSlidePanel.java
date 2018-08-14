@@ -120,20 +120,25 @@ public class CardSlidePanel extends ViewGroup {
         // 2. viewList初始化
         viewList.clear();
         for (int i = 0; i < VIEW_COUNT; i++) {
-            viewList.add((CardItemView) getChildAt(VIEW_COUNT - 1 - i));
+            View view =getChildAt(VIEW_COUNT - 1 - i);
+            if(view!=null){
+                viewList.add((CardItemView) view);
+            }
         }
 
 
         // 3. 填充数据
         int count = adapter.getCount();
         for (int i = 0; i < VIEW_COUNT; i++) {
-            if (i < count) {
-                adapter.bindView(viewList.get(i), i);
-                if (i == 0) {
-                    savedFirstItemData = new WeakReference<>(adapter.getItem(i));
+            if(viewList!=null&&viewList.size()>0){
+                if (i < count) {
+                    adapter.bindView(viewList.get(i), i);
+                    if (i == 0) {
+                        savedFirstItemData = new WeakReference<>(adapter.getItem(i));
+                    }
+                } else {
+                    viewList.get(i).setVisibility(View.INVISIBLE);
                 }
-            } else {
-                viewList.get(i).setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -560,27 +565,29 @@ public class CardSlidePanel extends ViewGroup {
 
                 int delay = 0;
                 for (int i = 0; i < VIEW_COUNT; i++) {
-                    CardItemView itemView = viewList.get(i);
-                    if (isShowing + i < adapter.getCount()) {
-                        if (itemView.getVisibility() == View.VISIBLE) {
-                            if (!reset) {
-                                continue;
+                    if(viewList!=null&&viewList.size()>0){
+                        CardItemView itemView = viewList.get(i);
+                        if (isShowing + i < adapter.getCount()) {
+                            if (itemView.getVisibility() == View.VISIBLE) {
+                                if (!reset) {
+                                    continue;
+                                }
+                            } else if (i == 0) {
+                                if (isShowing > 0) {
+                                    isShowing++;
+                                }
+                                cardSwitchListener.onShow(isShowing);
                             }
-                        } else if (i == 0) {
-                            if (isShowing > 0) {
-                                isShowing++;
+                            if (i == VIEW_COUNT - 1) {
+                                itemView.setAlpha(0);
+                                itemView.setVisibility(View.VISIBLE);
+                            } else {
+                                itemView.setVisibilityWithAnimation(View.VISIBLE, delay++);
                             }
-                            cardSwitchListener.onShow(isShowing);
-                        }
-                        if (i == VIEW_COUNT - 1) {
-                            itemView.setAlpha(0);
-                            itemView.setVisibility(View.VISIBLE);
+                            adapter.bindView(itemView, isShowing + i);
                         } else {
-                            itemView.setVisibilityWithAnimation(View.VISIBLE, delay++);
+                            itemView.setVisibility(View.INVISIBLE);
                         }
-                        adapter.bindView(itemView, isShowing + i);
-                    } else {
-                        itemView.setVisibility(View.INVISIBLE);
                     }
                 }
             }

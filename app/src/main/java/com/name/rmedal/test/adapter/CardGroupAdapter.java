@@ -9,6 +9,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.name.rmedal.R;
 import com.name.rmedal.modelbean.CardDataItem;
+import com.veni.tools.interfaces.OnNoFastClickListener;
+import com.veni.tools.view.ToastTool;
 import com.veni.tools.view.cardslide.CardAdapter;
 
 import java.util.ArrayList;
@@ -62,6 +64,8 @@ public class CardGroupAdapter extends CardAdapter {
         TextView userNameTv;
         TextView imageNumTv;
         TextView likeNumTv;
+        TextView cardOtherDescription;
+        View contentView;
 
         public ViewHolder(View view) {
             imageView = view.findViewById(R.id.card_image_view);
@@ -69,13 +73,28 @@ public class CardGroupAdapter extends CardAdapter {
             userNameTv = view.findViewById(R.id.card_user_name);
             imageNumTv = view.findViewById(R.id.card_pic_num);
             likeNumTv = view.findViewById(R.id.card_like);
+            cardOtherDescription = view.findViewById(R.id.card_other_description);
+            contentView = view.findViewById(R.id.card_item_content);
         }
 
-        public void bindData(CardDataItem itemData) {
+        public void bindData(final CardDataItem itemData) {
             Glide.with(context).load(itemData.getImagePath()).into(imageView);
             userNameTv.setText(itemData.getUserName());
             imageNumTv.setText(itemData.getImageNum() + "");
             likeNumTv.setText(itemData.getLikeNum() + "");
+            contentView.setOnClickListener(new OnNoFastClickListener() {
+                @Override
+                protected void onNoDoubleClick(View view) {
+                    ToastTool.normal(""+itemData.getUserName());
+                }
+            });
+
+            maskView.setOnClickListener(new OnNoFastClickListener() {
+                @Override
+                protected void onNoDoubleClick(View view) {
+                    ToastTool.normal("其他");
+                }
+            });
         }
     }
 

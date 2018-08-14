@@ -2,6 +2,7 @@ package com.name.rmedal.test;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
@@ -15,13 +16,8 @@ import com.veni.tools.view.cardslide.CardSlidePanel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：kkan on 2018/04/20
@@ -67,50 +63,50 @@ public class CardGroupActivity extends BaseActivity {
         StatusBarTools.setPaddingSmart(this, cardgroupviewTitleView);
         cardgroupviewTitleView.setLeftFinish(context);
         cardgroupviewTitleView.setTitle("拖拽式层叠卡片");
+        cardgroupviewTitleView.setRightIcon(R.mipmap.card_left2);
+        cardgroupviewTitleView.setRightIconVisibility(true);
+        cardgroupviewTitleView.setRightIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                addCard();
+                addCard();
+                cardGroupAdapter.upData(dataList);
+            }
+        });
         setSwipeBackLayout(0);
         // 1. 左右滑动监听
         cardSwitchListener = new CardSlidePanel.CardSwitchListener() {
 
             @Override
             public void onShow(int index) {
-                LogTools.e(TAG,"正在显示---"+index);
+                LogTools.e(TAG, "正在显示---" + index);
             }
 
             @Override
             public void onCardVanish(int index, int type) {
-                LogTools.e(TAG,"正在消失---"+index+ " 消失type=" + type);
+                LogTools.e(TAG, "正在消失---" + index + " 消失type=" + type);
             }
         };
         slidePanel.setCardSwitchListener(cardSwitchListener);
-        cardGroupAdapter=new CardGroupAdapter(context);
+        cardGroupAdapter = new CardGroupAdapter(context);
         slidePanel.setAdapter(cardGroupAdapter);
         addCard();
         addCard();
-        Observable.timer(500, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<Long>() {
-                    @Override
-                    public void accept(Long aLong) throws Exception {
-                        cardGroupAdapter.upData(dataList);
-                    }
-                });
+        cardGroupAdapter.upData(dataList);
     }
 
-    private String imagePaths[] = {"file:///android_asset/wall01.jpg",
-            "file:///android_asset/wall02.jpg", "file:///android_asset/wall03.jpg",
-            "file:///android_asset/wall04.jpg", "file:///android_asset/wall05.jpg",
-            "file:///android_asset/wall06.jpg", "file:///android_asset/wall07.jpg",
-            "file:///android_asset/wall08.jpg", "file:///android_asset/wall09.jpg",
-            "file:///android_asset/wall10.jpg", "file:///android_asset/wall11.jpg",
-            "file:///android_asset/wall12.jpg"}; // 12个图片资源
-
-    private String names[] = {"郭富城", "刘德华", "张学友", "李连杰", "成龙", "谢霆锋", "李易峰",
-            "霍建华", "胡歌", "曾志伟", "吴孟达", "梁朝伟"}; // 12个人名
     private void addCard() {
-        for(int i=0;i<12;i++){
-            dataList.add(new CardDataItem(imagePaths[i],names[i]));
-        }
+        dataList.add(new CardDataItem("http://a0.att.hudong.com/31/35/300533991095135084358827466.jpg"
+                ,"美女111"));
+        dataList.add(new CardDataItem("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg"
+                ,"美女222"));
+        dataList.add(new CardDataItem("http://x.itunes123.com/uploadfiles/1b13c3044431fb712bb712da97f42a2d.jpg"
+                ,"美女333"));
+        dataList.add(new CardDataItem("http://x.itunes123.com/uploadfiles/a3864382d68ce93bb7ab84775cb12d17.jpg"
+                ,"美女444"));
+        dataList.add(new CardDataItem("http://07.imgmini.eastday.com/mobile/20171109/20171109213644_1d934ed6d1143d2a63227336004e922a_1.jpeg"
+                ,"美女???"));
     }
 
 
