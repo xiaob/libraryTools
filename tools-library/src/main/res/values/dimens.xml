@@ -14,5 +14,5 @@
     <dimen name="heart_anim_length">100.0dp</dimen>
     <dimen name="heart_anim_length_rand">150.0dp</dimen>
     <dimen name="heart_anim_x_point_factor">30.0dp</dimen>
-
+    <dimen name="card_item_margin">5dip</dimen>
 </resources>

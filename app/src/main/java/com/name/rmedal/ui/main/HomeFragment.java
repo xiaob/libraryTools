@@ -19,6 +19,7 @@ import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
+import com.name.rmedal.test.CardGroupActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.HeartLikeViewActivity;
 import com.name.rmedal.test.PhoneInfoActivity;
@@ -189,6 +190,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 PhoneInfoActivity.startAction(context,view);
+            }
+        }));
+        functionlist.add(new FunctionBean("拖拽式层叠卡片", R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                CardGroupActivity.startAction(context);
             }
         }));
         functionlist.add(new FunctionBean("登录", R.mipmap.pikachu_sit, new OnNoFastClickListener() {
