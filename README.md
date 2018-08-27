@@ -6,18 +6,19 @@
 无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
 
 #### 软件架构
-#下拉刷新上拉加载
+
+# 下拉刷新上拉加载
 地址：https://github.com/scwang90/SmartRefreshLayout
 导入
    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 
-#侧滑退出
+# 侧滑退出
 地址：https://github.com/gongwen/SwipeBackLayout
 导入
    implementation 'com.gongwen:swipeback:1.0.2'
 
-#手势交互
+# 手势交互
 地址：https://github.com/aritraroy/PatternLockView
 导入
    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
