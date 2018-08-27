@@ -1,59 +1,59 @@
 # RMedal
 
-#### 项目介绍
+## 项目介绍
 {**以下是码云平台说明，您可以替换为您的项目简介**
 码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
 无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
 
-#### 软件架构
+## 软件架构
 
-# 下拉刷新上拉加载
-地址：https://github.com/scwang90/SmartRefreshLayout
-导入
+### 下拉刷新上拉加载
+##### 地址：https://github.com/scwang90/SmartRefreshLayout
+##### 导入
    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 
-# 侧滑退出
-地址：https://github.com/gongwen/SwipeBackLayout
-导入
+### 侧滑退出
+##### 地址：https://github.com/gongwen/SwipeBackLayout
+##### 导入
    implementation 'com.gongwen:swipeback:1.0.2'
 
-# 手势交互
-地址：https://github.com/aritraroy/PatternLockView
-导入
+### 手势交互
+##### 地址：https://github.com/aritraroy/PatternLockView
+##### 导入
    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
    for RxJava2 adapter
    implementation 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
 
-# SVG描边动画
+### SVG描边动画
 地址：http://blog.csdn.net/leaf_130/article/details/54848071
 导入
    implementation 'com.jaredrummler:animated-svg-view:1.0.5'
 
-# banner
+### banner
 地址：https://github.com/bingoogolapple/BGABanner-Android
 导入
    implementation 'cn.bingoogolapple:bga-banner:2.2.4'
 
-# 底部导航按钮点击效果
+### 底部导航按钮点击效果
 地址：https://github.com/aurelhubert/ahbottomnavigation
 导入
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
-# 图片选择
+### 图片选择
 地址：https://github.com/donglua/PhotoPicker
 导入
    implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
 
-# facebook.rebound 动画
+### facebook.rebound 动画
 地址：
 导入
    implementation 'com.facebook.rebound:rebound:0.3.8'
-# retrofit
-# gson解析
-# okhttp3
-# rxjava
-# glide
+### retrofit
+### gson解析
+### okhttp3
+### rxjava
+### glide
 
 
 
