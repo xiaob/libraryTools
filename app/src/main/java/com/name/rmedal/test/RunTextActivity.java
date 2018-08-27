@@ -133,7 +133,7 @@ public class RunTextActivity extends BaseActivity {
                 //因为淘宝那儿是两条数据，但是当数据是奇数时就不需要赋值第二个，所以加了一个判断，还应该把第二个布局给隐藏掉
                 tv2.setText("五一充值送机，你准备好了吗？");
             } else {
-                moreView.findViewById(R.id.runtext_item_rl2).setVisibility(View.GONE);
+                tv2.setVisibility(View.GONE);
             }
 
             //添加到循环滚动数组里面去

@@ -89,12 +89,12 @@ public class PhoneInfoActivity extends BaseActivity {
         setSwipeBackLayout(0);
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
+            public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
                 clooserefreshlayout();
             }
 
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 clooserefreshlayout();
             }
         });

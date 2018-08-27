@@ -82,7 +82,7 @@ public class Dialog_ProgressActivity extends BaseActivity {
                 clooserefreshlayout();
             }
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 clooserefreshlayout();
             }
         });

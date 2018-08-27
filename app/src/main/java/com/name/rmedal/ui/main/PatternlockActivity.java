@@ -25,6 +25,11 @@ import java.util.List;
 import butterknife.BindView;
 import io.reactivex.functions.Consumer;
 
+/**
+ * 作者：kkan on 2018/04/20
+ * 当前类注释:
+ * 手势密码
+ */
 public class PatternlockActivity extends BaseActivity {
 
     /**

@@ -90,7 +90,7 @@ public class HomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
                 clooserefreshlayout();
             }
         });

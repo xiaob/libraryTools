@@ -35,6 +35,7 @@ import butterknife.OnClick;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * 登录
  */
 
 public class LoginActivity extends BaseActivity {
