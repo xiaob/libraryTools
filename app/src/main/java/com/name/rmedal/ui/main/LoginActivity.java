@@ -21,6 +21,8 @@ import com.veni.tools.ACache;
 import com.veni.tools.CaptchaTime;
 import com.veni.tools.DataTools;
 import com.veni.tools.KeyboardTools;
+import com.veni.tools.LogTools;
+import com.veni.tools.RegTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.KeyboardLayout;
@@ -80,6 +82,8 @@ public class LoginActivity extends BaseActivity {
     private String password = "";
     private String captcha = "";
     private CaptchaTime timeCount;
+    private int lastdist;
+    private boolean viewIsZoom = false;
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -97,14 +101,21 @@ public class LoginActivity extends BaseActivity {
                     scrollToBottom();
                 }
                 if (keyboardHeight > 0) {
-                    if (dist > 0) {
-                        ZoomIn(dist);
+                    if (dist > 0 && lastdist != dist) {
+                        viewIsZoom = true;
+//                        ZoomIn(dist);
                     }
-                    loginService.setVisibility(View.INVISIBLE);
+                    if (loginService.getVisibility() != View.INVISIBLE) {
+                        loginService.setVisibility(View.INVISIBLE);
+                    }
                 } else {
-                    ZoomOut();
-                    loginService.setVisibility(View.VISIBLE);
+                    if (loginService.getVisibility() != View.VISIBLE && viewIsZoom) {
+                        viewIsZoom = false;
+//                        ZoomOut();
+                        loginService.setVisibility(View.VISIBLE);
+                    }
                 }
+                lastdist = dist;
             }
         });
         long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
@@ -142,28 +153,31 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.login_btn://登录
                 if (DataTools.isNullString(mobile)) {
-                    ToastTool.normal("请输入手机号");
+                    ToastTool.error("请输入手机号");
                     return;
                 }
-//                if (RegTools.isMobileExact(mobile)) {
-//                    ToastTool.normal("请输入正确手机号");
-//                      return;
-//                }
-                if (DataTools.isNullString(captcha)) {
-                    ToastTool.normal("请输入验证码");
+                if (!RegTools.isMobileExact(mobile)) {
+                    ToastTool.error("请输入正确手机号");
                     return;
-
+                }
+                if (DataTools.isNullString(captcha)) {
+                    ToastTool.error("请输入验证码");
+                    return;
+                }
+                if (DataTools.isNullString(password)) {
+                    ToastTool.error("请输入密码");
+                    return;
                 }
                 break;
             case R.id.login_get_captcha://获取验证码
                 if (DataTools.isNullString(mobile)) {
-                    ToastTool.normal("请输入手机号");
+                    ToastTool.error("请输入手机号");
                     return;
                 }
-//                if (RegTools.isMobileExact(mobile)) {
-//                    ToastTool.normal("请输入正确手机号");
-//                      return;
-//                }
+                if (!RegTools.isMobileExact(mobile)) {
+                    ToastTool.error("请输入正确手机号");
+                    return;
+                }
                 timeCount = new CaptchaTime(loginGetCaptcha, 60);
 
                 ACache.get(context).put(AppConstant.LG_Code, mobile, ACache.TIME_MINUTE);

@@ -14,8 +14,8 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/login_logo_iv"
             android:layout_width="@dimen/hight_100"
+            android:visibility="gone"
             android:layout_height="@dimen/hight_100"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
@@ -40,14 +40,23 @@
             <LinearLayout
                 android:id="@+id/login_content_ll"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/login_logo_iv"
+                    android:layout_width="@dimen/hight_100"
+                    android:layout_height="@dimen/hight_100"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/hight_80"
+                    android:background="@null"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/ic_launcher" />
 
                 <com.veni.tools.view.ClearableEditText
                     android:id="@+id/login_mobile_et"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/hight_55"
-                    android:layout_marginTop="200dp"
                     android:background="@drawable/underline_gray"
                     android:drawableLeft="@mipmap/ic_mobile_flag"
                     android:drawablePadding="@dimen/hight_15"
