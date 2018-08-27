@@ -83,11 +83,11 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
      */
     @Override
     public void returnVersionData(List<PersonalModelBean> data) {
-        LogTools.e(TAG,"版本检测返回数据----"+data);
+        LogTools.e(TAG, "版本检测返回数据----" + data);
     }
 
     @Override
-    public void onError(int code,String errtipmsg) {
+    public void onError(int code, String errtipmsg) {
         ToastTool.error(errtipmsg);
     }
 
@@ -97,34 +97,48 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private PersonalFragment personalFragment;
 
     private void initBottomNavigation() {
+        //Create items
         AHBottomNavigationItem homepage = new AHBottomNavigationItem(R.string.homepage, R.mipmap.ic_main_homepage, android.R.color.white);
         AHBottomNavigationItem tradepage = new AHBottomNavigationItem(R.string.trade, R.mipmap.ic_main_trade, android.R.color.white);
         AHBottomNavigationItem vippage = new AHBottomNavigationItem(R.string.personal, R.mipmap.ic_main_personal, android.R.color.white);
-
+        // Add items
         mainBottomNavigation.addItem(homepage);
         mainBottomNavigation.addItem(tradepage);
         mainBottomNavigation.addItem(vippage);
-
-        mainBottomNavigation.setAccentColor(ContextCompat.getColor(context,
-                R.color.colorPrimary));
+        // Set background color
         mainBottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
+        // 禁用CoordinatorLayout内部的转换
+        mainBottomNavigation.setBehaviorTranslationEnabled(false);
+        // 启用FloatingActionButton的转换
+//        mainBottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
+
+        // Change colors
+        mainBottomNavigation.setAccentColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        mainBottomNavigation.setInactiveColor(ContextCompat.getColor(context, R.color.google_green));
+        //强制着色绘图(例如，对于带有图标的字体有用)
         mainBottomNavigation.setForceTint(true);
-        mainBottomNavigation.setForceTitlesDisplay(true);
+        // 在导航栏下显示颜色(API 21+)
+        // Don't forget these lines in your style-v21
+        // <item name="android:windowTranslucentNavigation">true</item>
+        // <item name="android:fitsSystemWindows">true</item>
+//        mainBottomNavigation.setTranslucentNavigationEnabled(true);
+
         mainBottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
-            public void onTabSelected(int position, boolean wasSelected) {
+            public boolean onTabSelected(int position, boolean wasSelected) {
                 AHBottomNavigationItem selecetitem = mainBottomNavigation.getItem(position);
                 String title = selecetitem.getTitle(context);
-                if(title.equals("我")){
+                if (title.equals("我")) {
                     String value = ACache.get(context).getAsString(AppConstant.PatternlockOK);
-                    if(value==null){
+                    if (value == null) {
                         PatternlockActivity.startAction(context);
                         mainBottomNavigation.setCurrentItem(mainposition);
-                        return;
+                        return false;
                     }
                 }
-                mainposition=position;
+                mainposition = position;
                 SwitchTo(selecetitem);
+                return true;
             }
         });
     }
@@ -165,14 +179,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         }
         transaction.commitAllowingStateLoss();
     }
+
     /**
      * inflateHeaderView 进来的布局要宽一些
      */
     private void initDrawerLayout() {
         mainNavView.inflateHeaderView(R.layout.activity_main_nav);
         View headerView = mainNavView.getHeaderView(0);
-        FrameLayout mainNavHeadLayout= headerView.findViewById(R.id.main_nav_head_layout);
-        ImageView mainNavBgView= headerView.findViewById(R.id.main_nav_bg_view);
+        FrameLayout mainNavHeadLayout = headerView.findViewById(R.id.main_nav_head_layout);
+        ImageView mainNavBgView = headerView.findViewById(R.id.main_nav_bg_view);
         headerView.findViewById(R.id.main_nav_community).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_scan_address).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_exit).setOnClickListener(mListener);
@@ -186,7 +201,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                 @Override
                 public void run() {
                     String value = ACache.get(context).getAsString(AppConstant.PatternlockOK);
-                    if(value==null){
+                    if (value == null) {
                         PatternlockActivity.startAction(context);
                     }
                     switch (view.getId()) {
@@ -197,10 +212,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         case R.id.main_nav_feedback: // 问题反馈
                             break;
                         case R.id.main_nav_exit:
-                            creatDialogBuilder() .setDialog_title("温馨提示")
+                            creatDialogBuilder().setDialog_title("温馨提示")
                                     .setDialog_message("是否退出应用?")
                                     .setDialog_Left("退出")
-                                    .setLeftlistener( new View.OnClickListener() {
+                                    .setLeftlistener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             ActivityTools.getActivityTool().AppExit(context, false);
@@ -217,6 +232,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
             }, 260);
         }
     };
+
     /**
      * 将所有的Fragment都置为隐藏状态。
      */
