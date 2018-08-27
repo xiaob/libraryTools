@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorInt;
 import android.support.annotation.StyleRes;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
@@ -18,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.veni.tools.DeviceTools;
-import com.veni.tools.FutileTool;
+import com.veni.tools.FutileTools;
 import com.veni.tools.R;
 import com.veni.tools.interfaces.OnDelayListener;
 import com.veni.tools.view.progressing.sprite.SpriteContainer;
@@ -249,7 +248,7 @@ public class AlertDialogBuilder {
                 ((SpriteContainer) messageDrawable).start();
             }
             if (canceltime != 0) {
-                FutileTool.delayToDo(canceltime, new OnDelayListener() {
+                FutileTools.delayToDo(canceltime, new OnDelayListener() {
                     @Override
                     public void doSomething() {
                         dismissDialog();

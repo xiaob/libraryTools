@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.veni.tools.FutileTool;
+import com.veni.tools.FutileTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
 import com.veni.tools.baserx.BasicParamsInterceptor;
@@ -109,7 +109,7 @@ public class HttpManager {
     //构造方法私有
     private HttpManager(String BaseUrl) {
         //缓存
-        File cacheFile = new File(FutileTool.getContext().getCacheDir(), "cache");
+        File cacheFile = new File(FutileTools.getContext().getCacheDir(), "cache");
         Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
         //1.处理没有认证  http 401 Not Authorised 只增加头部信息
         Authenticator mAuthenticator2 = new Authenticator() {
@@ -136,7 +136,7 @@ public class HttpManager {
             public Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 if (TextUtils.isEmpty(TOKEN)) {
-                    TOKEN = (String) SPTools.get(FutileTool.getContext(),SPTools.KEY_ACCESS_TOKEN, "");
+                    TOKEN = (String) SPTools.get(FutileTools.getContext(),SPTools.KEY_ACCESS_TOKEN, "");
                 }
 
                 /**

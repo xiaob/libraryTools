@@ -46,7 +46,7 @@ public class TabLayoutTools {
         return tabWidth;
     }
     public static int getScreenWith() {
-        return FutileTool.getContext().getResources().getDisplayMetrics().widthPixels;
+        return FutileTools.getContext().getResources().getDisplayMetrics().widthPixels;
     }
     public static View getRootView(Activity context) {
         return ((ViewGroup) context.findViewById(android.R.id.content)).getChildAt(0);

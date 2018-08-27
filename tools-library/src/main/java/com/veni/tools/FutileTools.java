@@ -39,7 +39,7 @@ import java.util.List;
  * BroadcastReceiverNetWork    : 监听网络状态改变的广播
  * initRegisterReceiverNetWork : 注册监听网络状态的广播
  */
-public class FutileTool {
+public class FutileTools {
 
     private static Context context;
 
@@ -49,7 +49,7 @@ public class FutileTool {
      * @param context 上下文
      */
     public static void init(Context context) {
-        FutileTool.context = context.getApplicationContext();
+        FutileTools.context = context.getApplicationContext();
         CrashLogTools.init(context);
     }
 

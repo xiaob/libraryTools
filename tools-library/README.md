@@ -10,12 +10,15 @@
 -- TUtil 类转换
 - baserx rxjava 封装
 - interfaces
+-- AntiShake 防止重复点击
 -- AppBarStateChangeListener AppBarLayout 滚动状态监听
+-- LimitQueue 存储一定对象的链表，超出了定义的范围就删除第一个对象
 -- OnDelayListener 延时任务封装回调
 -- OnNoFastClickListener 重复点击的监听器
 
 - model 实体类
 - view
+-- cardslide 拖拽式层叠卡片
 -- heart 爱心点赞控件
 -- imageload 图片加载工具类 使用glide框架封装
 -- likeview 点赞爆炸按钮
@@ -25,8 +28,10 @@
 -- sidebar 波浪侧边栏(字母快速导航)
 -- swipemenu Item侧滑删除菜单
 -- ticker 数字增长动画
+-- ClearableEditText 带有删除按钮的EditText
 -- InnerPagerAdapter  TabLayout 配套的Adapter
 -- LabelsView 自定义标签列表
+-- PasswordEditText 带有显示密码按钮的EditText
 -- RoundProgress 弧形进度条
 -- RunTextView 跑马灯效果
 -- SeatAirplane 飞机票选座控件
@@ -41,12 +46,10 @@
 -- VerificationCodeView 动态生成验证码
 -- ViewPagerFixed  修复v4 的ViewPager点击会崩溃
 
-- zxing zxing扫码
-
 - ACache 本地文件缓存工具类
-- ActivityTool Activity操作相关工具类
+- ActivityTools Activity操作相关工具类
 - CaptchaTime 验证码倒计时
-- ClipboardTool 剪贴板相关工具
+- ClipboardTools 剪贴板相关工具
 - ConstantTools 常量工具类
 - CrashLogTools 崩溃日志处理工具
 - DataTools 数据处理相关
@@ -66,7 +69,6 @@
 - PermissionsTools 权限请求操作工具类
 - PhotoTools 相机相关工具
 - RegTools 正则判断
-- RxVibrateTool 震动帮助类
 - SPTools SharedPreferences工具类
 - StatusBarTools 状态栏工具
 - TabLayoutTools

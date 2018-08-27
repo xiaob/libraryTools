@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.veni.tools.FutileTool;
+import com.veni.tools.FutileTools;
 import com.veni.tools.R;
 
 /**
@@ -56,74 +56,74 @@ public class ToastTool {
     private static long mExitTime;
 
     public static void normal(@NonNull String message) {
-        normal(FutileTool.getContext(), message, Toast.LENGTH_SHORT, null, false).show();
+        normal(FutileTools.getContext(), message, Toast.LENGTH_SHORT, null, false).show();
     }
 
     public static void normal(@NonNull String message, Drawable icon) {
-        normal(FutileTool.getContext(), message, Toast.LENGTH_SHORT, icon, true).show();
+        normal(FutileTools.getContext(), message, Toast.LENGTH_SHORT, icon, true).show();
     }
 
     public static void normal(@NonNull String message, int duration) {
-        normal(FutileTool.getContext(), message, duration, null, false).show();
+        normal(FutileTools.getContext(), message, duration, null, false).show();
     }
 
     public static void normal(@NonNull String message, int duration, Drawable icon) {
-        normal(FutileTool.getContext(), message, duration, icon, true).show();
+        normal(FutileTools.getContext(), message, duration, icon, true).show();
     }
 
     public static Toast normal(@NonNull String message, int duration, Drawable icon, boolean withIcon) {
-        return custom(FutileTool.getContext(), message, icon, DEFAULT_TEXT_COLOR, duration, withIcon);
+        return custom(FutileTools.getContext(), message, icon, DEFAULT_TEXT_COLOR, duration, withIcon);
     }
 
     public static void warning(@NonNull String message) {
-        warning(FutileTool.getContext(), message, Toast.LENGTH_SHORT, true).show();
+        warning(FutileTools.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
 
     public static void warning(@NonNull String message, int duration) {
-        warning(FutileTool.getContext(), message, duration, true).show();
+        warning(FutileTools.getContext(), message, duration, true).show();
     }
 
     public static Toast warning(@NonNull String message, int duration, boolean withIcon) {
-        return custom(FutileTool.getContext(), message, getDrawable(FutileTool.getContext(), R.drawable.ic_error_outline_white_48dp), DEFAULT_TEXT_COLOR, WARNING_COLOR, duration, withIcon, true);
+        return custom(FutileTools.getContext(), message, getDrawable(FutileTools.getContext(), R.drawable.ic_error_outline_white_48dp), DEFAULT_TEXT_COLOR, WARNING_COLOR, duration, withIcon, true);
     }
 
     public static void info(@NonNull String message) {
-        info(FutileTool.getContext(), message, Toast.LENGTH_SHORT, true).show();
+        info(FutileTools.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
 
     public static void info(@NonNull String message, int duration) {
-        info(FutileTool.getContext(), message, duration, true).show();
+        info(FutileTools.getContext(), message, duration, true).show();
     }
 
     public static Toast info(@NonNull String message, int duration, boolean withIcon) {
-        return custom(FutileTool.getContext(), message, getDrawable(FutileTool.getContext(), R.drawable.ic_info_outline_white_48dp), DEFAULT_TEXT_COLOR, INFO_COLOR, duration, withIcon, true);
+        return custom(FutileTools.getContext(), message, getDrawable(FutileTools.getContext(), R.drawable.ic_info_outline_white_48dp), DEFAULT_TEXT_COLOR, INFO_COLOR, duration, withIcon, true);
     }
 
     public static void success(@NonNull String message) {
-        success(FutileTool.getContext(), message, Toast.LENGTH_SHORT, true).show();
+        success(FutileTools.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
 
     public static void success(@NonNull String message, int duration) {
-        success(FutileTool.getContext(), message, duration, true).show();
+        success(FutileTools.getContext(), message, duration, true).show();
     }
 
     public static Toast success(@NonNull String message, int duration, boolean withIcon) {
-        return custom(FutileTool.getContext(), message, getDrawable(FutileTool.getContext(), R.drawable.ic_check_white_48dp), DEFAULT_TEXT_COLOR, SUCCESS_COLOR, duration, withIcon, true);
+        return custom(FutileTools.getContext(), message, getDrawable(FutileTools.getContext(), R.drawable.ic_check_white_48dp), DEFAULT_TEXT_COLOR, SUCCESS_COLOR, duration, withIcon, true);
     }
 
     public static void error(@NonNull String message) {
-        error(FutileTool.getContext(), message, Toast.LENGTH_SHORT, true).show();
+        error(FutileTools.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
     //===========================================使用ApplicationContext 方法=========================
 
     //*******************************************常规方法********************************************
 
     public static void error(@NonNull String message, int duration) {
-        error(FutileTool.getContext(), message, duration, true).show();
+        error(FutileTools.getContext(), message, duration, true).show();
     }
 
     public static Toast error(@NonNull String message, int duration, boolean withIcon) {
-        return custom(FutileTool.getContext(), message, getDrawable(FutileTool.getContext(), R.drawable.ic_clear_white_48dp), DEFAULT_TEXT_COLOR, ERROR_COLOR, duration, withIcon, true);
+        return custom(FutileTools.getContext(), message, getDrawable(FutileTools.getContext(), R.drawable.ic_clear_white_48dp), DEFAULT_TEXT_COLOR, ERROR_COLOR, duration, withIcon, true);
     }
 
     @CheckResult
@@ -304,28 +304,28 @@ public class ToastTool {
      * 封装了Toast的方法 :需要等待
      */
     public static void showToastShort(String str) {
-        Toast.makeText(FutileTool.getContext(), str, Toast.LENGTH_SHORT).show();
+        Toast.makeText(FutileTools.getContext(), str, Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 封装了Toast的方法 :需要等待
      */
     public static void showToastShort(int resId) {
-        Toast.makeText(FutileTool.getContext(), FutileTool.getContext().getString(resId), Toast.LENGTH_SHORT).show();
+        Toast.makeText(FutileTools.getContext(), FutileTools.getContext().getString(resId), Toast.LENGTH_SHORT).show();
     }
 
     /**
      * 封装了Toast的方法 :需要等待
      */
     public static void showToastLong(String str) {
-        Toast.makeText(FutileTool.getContext(), str, Toast.LENGTH_LONG).show();
+        Toast.makeText(FutileTools.getContext(), str, Toast.LENGTH_LONG).show();
     }
 
     /**
      * 封装了Toast的方法 :需要等待
      */
     public static void showToastLong(int resId) {
-        Toast.makeText(FutileTool.getContext(), FutileTool.getContext().getString(resId), Toast.LENGTH_LONG).show();
+        Toast.makeText(FutileTools.getContext(), FutileTools.getContext().getString(resId), Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -335,7 +335,7 @@ public class ToastTool {
      */
     public static void showToast(String msg) {
         if (mToast == null) {
-            mToast = Toast.makeText(FutileTool.getContext(), msg, Toast.LENGTH_LONG);
+            mToast = Toast.makeText(FutileTools.getContext(), msg, Toast.LENGTH_LONG);
         } else {
             mToast.setText(msg);
         }
@@ -349,9 +349,9 @@ public class ToastTool {
      */
     public static void showToast(int resId) {
         if (mToast == null) {
-            mToast = Toast.makeText(FutileTool.getContext(), FutileTool.getContext().getString(resId), Toast.LENGTH_LONG);
+            mToast = Toast.makeText(FutileTools.getContext(), FutileTools.getContext().getString(resId), Toast.LENGTH_LONG);
         } else {
-            mToast.setText(FutileTool.getContext().getString(resId));
+            mToast.setText(FutileTools.getContext().getString(resId));
         }
         mToast.show();
     }

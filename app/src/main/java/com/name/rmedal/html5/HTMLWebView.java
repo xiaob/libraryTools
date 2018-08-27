@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.name.rmedal.R;
-import com.veni.tools.FutileTool;
+import com.veni.tools.FutileTools;
 import com.veni.tools.NetWorkTools;
 
 import java.util.ArrayList;
@@ -260,9 +260,9 @@ public class HTMLWebView extends WebView {
                     //如果另外的应用程序WebView，我们可以进行重用
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra(Browser.EXTRA_APPLICATION_ID,
-                            FutileTool.getContext().getPackageName());
+                            FutileTools.getContext().getPackageName());
                     try {
-                        FutileTool.getContext().startActivity(intent);
+                        FutileTools.getContext().startActivity(intent);
                         return true;
                     } catch (ActivityNotFoundException ex) {
                     }

@@ -36,7 +36,7 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.DataTools;
 import com.veni.tools.JsonTools;
-import com.veni.tools.FutileTool;
+import com.veni.tools.FutileTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.StatusBarTools;
@@ -124,7 +124,7 @@ public class HomeFragment extends BaseFragment {
                 int image = item.getFunctionImage();
                 if (image != 0) {
                     function_item_iv.setVisibility(View.VISIBLE);
-                    function_item_iv.setImageDrawable(ContextCompat.getDrawable(FutileTool.getContext(), image));
+                    function_item_iv.setImageDrawable(ContextCompat.getDrawable(FutileTools.getContext(), image));
                 }
             }
         };

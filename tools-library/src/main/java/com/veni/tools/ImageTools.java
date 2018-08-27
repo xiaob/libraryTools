@@ -52,7 +52,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 
-import static com.veni.tools.FutileTool.getContext;
+import static com.veni.tools.FutileTools.getContext;
 
 /**
  * Created by xiyn on 2016/1/24.

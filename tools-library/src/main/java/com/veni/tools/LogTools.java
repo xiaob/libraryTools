@@ -196,7 +196,7 @@ public class LogTools {
     }
 
     public static void saveLogFile(String message) {
-        File fileDir = new File(FileTools.getRootPath() + File.separator + FutileTool.getContext().getPackageName());
+        File fileDir = new File(FileTools.getRootPath() + File.separator + FutileTools.getContext().getPackageName());
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
