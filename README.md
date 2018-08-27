@@ -11,12 +11,12 @@
 
 
 ### 目录结构
-1.app
-①api 网络请求封装和请求地址
-2)base 基类
-3)modelbean 实体类
-4)ui 视图 mvp
-2.tools-library 常用封装工具
+1.[app](https://gitee.com/KKan/RMedal/tree/master/app)
+-api 网络请求封装和请求地址
+-base 基类
+-modelbean 实体类
+-ui 视图 mvp
+2.[tools-library 常用封装工具](https://gitee.com/KKan/RMedal/tree/master/tools-library)
 
 #### 使用说明
 
