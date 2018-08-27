@@ -78,6 +78,23 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    public void onAttach(Context context) {//执行此方法 则说明会员Fragment 与Activity 绑定了，
+        super.onAttach(context);
+
+    }
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){//不在最前端界面显示，相当于调用了onPause()
+
+
+        }else{//重新显示到最前端 ,相当于调用了onResume()
+
+            //进行网络数据刷新  此处执行必须要在 Fragment与Activity绑定了 即需要添加判断是否完成绑定，否则将会报空（即非第一个显示出来的fragment，虽然onCreateView没有被调用,
+            //但是onHiddenChanged也会被调用，所以如果你尝试去获取活动的话，注意防止出现空指针）
+
+        }
+    }
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
 
     @Override
@@ -115,23 +132,6 @@ public class HomeFragment extends BaseFragment {
         homeFunctions.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         homeFunctions.setAdapter(functionadapter);
         setfuctionview();
-    }
-    public void onAttach(Context context) {//执行此方法 则说明会员Fragment 与Activity 绑定了，
-        super.onAttach(context);
-
-    }
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(hidden){//不在最前端界面显示，相当于调用了onPause()
-
-
-        }else{//重新显示到最前端 ,相当于调用了onResume()
-
-            //进行网络数据刷新  此处执行必须要在 Fragment与Activity绑定了 即需要添加判断是否完成绑定，否则将会报空（即非第一个显示出来的fragment，虽然onCreateView没有被调用,
-            //但是onHiddenChanged也会被调用，所以如果你尝试去获取活动的话，注意防止出现空指针）
-
-        }
     }
 
     private void setfuctionview() {
