@@ -84,6 +84,7 @@
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
             android:name=".ui.main.LoginActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
             android:name=".ui.main.PatternlockActivity"

@@ -103,15 +103,18 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
+    @OnClick({R.id.login_content_ll,R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
+        KeyboardTools.hideSoftInput(context);
+        if(antiShake.check(view.getId()))return;
         switch (view.getId()) {
+            case R.id.login_content_ll:
+                break;
             case R.id.login_about_us://关于我们
                 break;
             case R.id.login_contact_customer_service://联系客服
                 break;
             case R.id.login_btn://登录
-                KeyboardTools.hideSoftInput(context);
                 if (DataTools.isNullString(mobile)) {
                     ToastTool.normal("请输入手机号");
                     return;
