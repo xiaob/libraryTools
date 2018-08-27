@@ -5,15 +5,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -27,6 +23,7 @@ import com.veni.tools.DataTools;
 import com.veni.tools.KeyboardTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
+import com.veni.tools.view.KeyboardLayout;
 import com.veni.tools.view.ToastTool;
 
 import butterknife.BindView;
@@ -57,7 +54,7 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.login_service)
     LinearLayout loginService;
     @BindView(R.id.login_root_iv)
-    RelativeLayout loginRootRv;
+    KeyboardLayout loginRootRv;
 
     /**
      * 启动入口
@@ -79,9 +76,6 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    private int screenHeight = 0;//屏幕高度
-    private int keyHeight = 0; //软件盘弹起后所占高度
-
     private String mobile = "";
     private String password = "";
     private String captcha = "";
@@ -94,9 +88,25 @@ public class LoginActivity extends BaseActivity {
         StatusBarTools.darkMode(this, true);
         setSwipeBackLayout(0);
 
-        screenHeight = this.getResources().getDisplayMetrics().heightPixels; //获取屏幕高度
-        keyHeight = screenHeight / 4;//弹起高度为屏幕高度的1/4
         initEvent();
+        loginRootRv.setKeyboardListener(new KeyboardLayout.KeyboardLayoutListener() {
+            @Override
+            public void onKeyboardStateChanged(boolean isActive, int keyboardHeight, int bottom) {
+                int dist = loginContentLl.getBottom() - bottom;
+                if (isActive) {
+                    scrollToBottom();
+                }
+                if (keyboardHeight > 0) {
+                    if (dist > 0) {
+                        ZoomIn(dist);
+                    }
+                    loginService.setVisibility(View.INVISIBLE);
+                } else {
+                    ZoomOut();
+                    loginService.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
         if (codetime / 1000 > 2) {
             timeCount = new CaptchaTime(loginGetCaptcha, codetime / 1000);
@@ -104,10 +114,25 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.login_content_ll,R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
+    /**
+     * 弹出软键盘时将SVContainer滑到底
+     */
+    private void scrollToBottom() {
+
+        loginScrollView.postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                loginScrollView.smoothScrollTo(0, loginScrollView.getBottom() + StatusBarTools.getStatusBarHeight(context));
+            }
+        }, 100);
+
+    }
+
+    @OnClick({R.id.login_content_ll, R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
         KeyboardTools.hideSoftInput(context);
-        if(antiShake.check(view.getId()))return;
+        if (antiShake.check(view.getId())) return;
         switch (view.getId()) {
             case R.id.login_content_ll:
                 break;
@@ -204,46 +229,22 @@ public class LoginActivity extends BaseActivity {
                 captcha = s.toString();
             }
         });
-        /*
-         * 禁止键盘弹起的时候可以滚动
-         */
-        loginScrollView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
-        loginScrollView.addOnLayoutChangeListener(new ViewGroup.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-              /* old是改变前的左上右下坐标点值，没有old的是改变后的左上右下坐标点值
-              现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起*/
-                if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-                    Log.e("wenzhihao", "up------>" + (oldBottom - bottom));
-                    int dist = loginContentLl.getBottom() - bottom;
-                    if (dist > 0) {
-                        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(loginContentLl, "translationY", 0.0f, -dist);
-                        mAnimatorTranslateY.setDuration(300);
-                        mAnimatorTranslateY.setInterpolator(new LinearInterpolator());
-                        mAnimatorTranslateY.start();
-                        AnimationTools.zoomIn(loginLogoIv, 0.6f, dist);
-                    }
-                    loginService.setVisibility(View.INVISIBLE);
-                } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-                    Log.e("wenzhihao", "down------>" + (bottom - oldBottom));
+    }
 
-                    if ((loginContentLl.getBottom() - oldBottom) > 0) {
-                        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(loginContentLl, "translationY", loginContentLl.getTranslationY(), 0);
-                        mAnimatorTranslateY.setDuration(300);
-                        mAnimatorTranslateY.setInterpolator(new LinearInterpolator());
-                        mAnimatorTranslateY.start();
-                        //键盘收回后，logo恢复原来大小，位置同样回到初始位置
-                        AnimationTools.zoomOut(loginLogoIv, 0.6f);
-                    }
-                    loginService.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+    private void ZoomIn(int dist) {
+        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(loginContentLl, "translationY", 0.0f, -dist);
+        mAnimatorTranslateY.setDuration(300);
+        mAnimatorTranslateY.setInterpolator(new LinearInterpolator());
+        mAnimatorTranslateY.start();
+        AnimationTools.zoomIn(loginLogoIv, 0.6f, dist);
+    }
 
+    private void ZoomOut() {
+        ObjectAnimator mAnimatorTranslateY = ObjectAnimator.ofFloat(loginContentLl, "translationY", loginContentLl.getTranslationY(), 0);
+        mAnimatorTranslateY.setDuration(300);
+        mAnimatorTranslateY.setInterpolator(new LinearInterpolator());
+        mAnimatorTranslateY.start();
+        //键盘收回后，logo恢复原来大小，位置同样回到初始位置
+        AnimationTools.zoomOut(loginLogoIv, 0.6f);
     }
 }
