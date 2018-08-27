@@ -47,7 +47,7 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
 
     public RxSubscriber(Context context, String loadmsg) {
         this.context = context;
-        HttpTipLoadDialog.getHttpTipLoadDialog().showDialog(context,loadmsg);
+        RxHttpTipLoadDialog.getHttpTipLoadDialog().showDialog(context,loadmsg);
     }
 
     public abstract void _onNext(T t);
@@ -117,7 +117,7 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
      * 销毁disposable
      */
     private void disposeIt() {
-        HttpTipLoadDialog.getHttpTipLoadDialog().dismissDialog();
+        RxHttpTipLoadDialog.getHttpTipLoadDialog().dismissDialog();
         if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
             disposable = null;

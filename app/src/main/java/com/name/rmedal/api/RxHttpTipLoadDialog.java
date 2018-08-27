@@ -7,9 +7,9 @@ import com.name.rmedal.R;
 import com.veni.tools.LogTools;
 import com.veni.tools.base.AlertDialogBuilder;
 
-public class HttpTipLoadDialog {
+public class RxHttpTipLoadDialog {
 
-    private volatile static HttpTipLoadDialog instance;
+    private volatile static RxHttpTipLoadDialog instance;
     private AlertDialogBuilder dialogBuilder = null;
 
     private Context context;
@@ -17,11 +17,11 @@ public class HttpTipLoadDialog {
     /**
      * 单一实例
      */
-    public static HttpTipLoadDialog getHttpTipLoadDialog() {
+    public static RxHttpTipLoadDialog getHttpTipLoadDialog() {
         if (instance == null) {
-            synchronized (HttpTipLoadDialog.class) {
+            synchronized (RxHttpTipLoadDialog.class) {
                 if (instance == null) {
-                    instance = new HttpTipLoadDialog();
+                    instance = new RxHttpTipLoadDialog();
                 }
             }
         }
@@ -43,7 +43,7 @@ public class HttpTipLoadDialog {
                         .builder().show();
             }
         });
-        LogTools.e("HttpTipLoadDialog",  "showDialog");
+        LogTools.e("RxHttpTipLoadDialog",  "showDialog");
     }
 
     public void dismissDialog() {
@@ -55,7 +55,7 @@ public class HttpTipLoadDialog {
                 destroyDialogBuilder();
             }
         });
-        LogTools.e("HttpTipLoadDialog",  "dismissDialog");
+        LogTools.e("RxHttpTipLoadDialog",  "dismissDialog");
     }
     /**
      * 获取默认Dialog
