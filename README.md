@@ -36,7 +36,7 @@
       implementation 'com.squareup.retrofit2:retrofit:2.3.0'
       implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 ##### [gson解析](https://github.com/google/gson)
-      [retrofit定义的gson解析](http://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson)
+##### [retrofit定义的gson解析](http://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson)
       implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 ##### [okhttp3日志拦截器](https://github.com/victorfan336/okhttp-logging-interceptor)
       implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
@@ -44,8 +44,8 @@
       implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
 ##### [rxandroid](https://github.com/ReactiveX/RxAndroid)
       implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-##### glide
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+##### [Google Glide](https://github.com/bumptech/glide)
+      implementation 'com.github.bumptech.glide:glide:3.7.0'
 
 
 
