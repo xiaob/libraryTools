@@ -65,3 +65,5 @@
       implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 ##### 15. [Google Glide](https://github.com/bumptech/glide)
       implementation 'com.github.bumptech.glide:glide:3.7.0'
+##### 16. [Zxing 二维码](https://github.com/zxing/zxing)
+      zxing.jar
