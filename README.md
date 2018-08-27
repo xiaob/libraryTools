@@ -6,8 +6,8 @@
 无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
 
 ### 软件架构
-    Retrofit+Rxjava+MVP架构
-    自己工作中的整理总结
+   - Retrofit+Rxjava+MVP架构
+   - 自己工作中的整理总结
 
 
 ### 目录结构
