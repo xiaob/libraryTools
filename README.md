@@ -30,19 +30,20 @@
 ##### [图片选择](https://github.com/donglua/PhotoPicker)
       implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
 
-##### facebook.rebound 动画
+##### [facebook.rebound 动画](http://facebook.github.io/rebound/)
       implementation 'com.facebook.rebound:rebound:0.3.8'
-##### retrofit
+##### [retrofitHTTP请求](http://square.github.io/retrofit/)
       implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-##### gson解析
-      implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-##### okhttp3
-      implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
-##### rxjava
-      implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
-      implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
       implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-      implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+##### [gson解析](https://github.com/google/gson)
+      [retrofit定义的gson解析](http://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson)
+      implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+##### [okhttp3日志拦截器](https://github.com/victorfan336/okhttp-logging-interceptor)
+      implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+##### [rxjava](https://github.com/ReactiveX/RxJava)
+      implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+##### [rxandroid](https://github.com/ReactiveX/RxAndroid)
+      implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 ##### glide
     implementation 'com.github.bumptech.glide:glide:3.7.0'
 
