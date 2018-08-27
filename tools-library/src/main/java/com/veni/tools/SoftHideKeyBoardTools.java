@@ -9,18 +9,25 @@ import android.widget.FrameLayout;
 
 /**
  * 解决键盘档住输入框
+ * 1) 当输入框比较少时，界面只有一个输入框时，可以通过方法一设置adjustPan；
+ * 2) 如果对于非全屏/非沉浸式状态栏需求，只需要使用方法二ScrollView+adjustResize；
+ * 3) 如果对于使用沉浸式状态栏，使用fitSystemWindow=true属性，按道理android系统已经做好适配，键盘不会挡住输入框；
+ * 4) 如果全屏/沉浸式状态栏界面，类似于登录界面，有需要把登录键钮或是评论按钮也顶起，使用KeyboardLayout；
+ * 5) 如果界面使用全屏或沉浸式状态栏，没有使用fitSystemWindow=true属性，一般如需要用到抽屈而且状态栏颜色也需要跟着变化，则选择SoftHideKeyBoardTools更恰当。
  */
 public class SoftHideKeyBoardTools {
-    public static void assistActivity (Activity activity) {
+    public static void assistActivity(Activity activity) {
         new SoftHideKeyBoardTools(activity);
     }
+
     private View mChildOfContent;
     private int usableHeightPrevious;
     private FrameLayout.LayoutParams frameLayoutParams;
     //为适应华为小米等手机键盘上方出现黑条或不适配
     private int contentHeight;//获取setContentView本来view的高度
     private boolean isfirst = true;//只用获取一次
-    private  int statusBarHeight;//状态栏高度
+    private int statusBarHeight;//状态栏高度
+
     private SoftHideKeyBoardTools(Activity activity) {
         //1､找到Activity的最外层布局控件，它其实是一个DecorView,它所用的控件就是FrameLayout
         FrameLayout content = (FrameLayout) activity.findViewById(android.R.id.content);
@@ -53,9 +60,9 @@ public class SoftHideKeyBoardTools {
             //4､Activity中xml布局的高度-当前可用高度
             int heightDifference = usableHeightSansKeyboard - usableHeightNow;
             //5､高度差大于屏幕1/4时，说明键盘弹出
-            if (heightDifference > (usableHeightSansKeyboard/4)) {
+            if (heightDifference > (usableHeightSansKeyboard / 4)) {
                 // 6､键盘弹出了，Activity的xml布局高度应当减去键盘高度
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                     frameLayoutParams.height = usableHeightSansKeyboard - heightDifference + statusBarHeight;
                 } else {
                     frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
@@ -68,6 +75,7 @@ public class SoftHideKeyBoardTools {
             usableHeightPrevious = usableHeightNow;
         }
     }
+
     private int computeUsableHeight() {
         Rect r = new Rect();
         mChildOfContent.getWindowVisibleDisplayFrame(r);

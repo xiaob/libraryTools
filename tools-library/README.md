@@ -30,6 +30,7 @@
 -- ticker 数字增长动画
 -- ClearableEditText 带有删除按钮的EditText
 -- InnerPagerAdapter  TabLayout 配套的Adapter
+-- KeyboardLayout 键盘档住输入框--适配键盘高度变化
 -- LabelsView 自定义标签列表
 -- PasswordEditText 带有显示密码按钮的EditText
 -- RoundProgress 弧形进度条
@@ -69,6 +70,7 @@
 - PermissionsTools 权限请求操作工具类
 - PhotoTools 相机相关工具
 - RegTools 正则判断
+- SoftHideKeyBoardTools 键盘档住输入框
 - SPTools SharedPreferences工具类
 - StatusBarTools 状态栏工具
 - TabLayoutTools
