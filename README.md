@@ -7,50 +7,34 @@
 
 ## 软件架构
 
-### 下拉刷新上拉加载
-##### 地址：https://github.com/scwang90/SmartRefreshLayout
-##### 导入implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+### [SmartRefreshLayout下拉刷新上拉加载 ](https://github.com/scwang90/SmartRefreshLayout)
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 
-### 侧滑退出
+### [SwipeBack侧滑退出](https://github.com/gongwen/SwipeBackLayout)
+    implementation 'com.gongwen:swipeback:1.0.2'
 
-
-
-地址：https://github.com/gongwen/SwipeBackLayout
-导入:implementation 'com.gongwen:swipeback:1.0.2'
-
-### 手势交互
-##### 地址：https://github.com/aritraroy/PatternLockView
-##### 导入
+### [手势交互](https://github.com/aritraroy/PatternLockView)
    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
-   for RxJava2 adapter
+   //for RxJava2 adapter
    implementation 'com.andrognito.patternlockview:patternlockview-reactive:1.0.0'
 
-### SVG描边动画
-地址：http://blog.csdn.net/leaf_130/article/details/54848071
-导入
+### [SVG描边动画](http://blog.csdn.net/leaf_130/article/details/54848071)
    implementation 'com.jaredrummler:animated-svg-view:1.0.5'
 
-### banner
-地址：https://github.com/bingoogolapple/BGABanner-Android
-导入
+### [BGABanner](https://github.com/bingoogolapple/BGABanner-Android)
    implementation 'cn.bingoogolapple:bga-banner:2.2.4'
 
-### 底部导航按钮点击效果
-地址：https://github.com/aurelhubert/ahbottomnavigation
-导入
+### [底部导航按钮点击效果](https://github.com/aurelhubert/ahbottomnavigation)
     implementation 'com.aurelhubert:ahbottomnavigation:2.1.0'
 
-### 图片选择
-地址：https://github.com/donglua/PhotoPicker
-导入
+### [图片选择](https://github.com/donglua/PhotoPicker)
    implementation 'me.iwf.photopicker:PhotoPicker:0.9.12@aar'
 
 ### facebook.rebound 动画
-地址：
-导入
-   implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'com.facebook.rebound:rebound:0.3.8'
 ### retrofit
-implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 ### gson解析
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 ### okhttp3
