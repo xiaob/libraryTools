@@ -49,10 +49,14 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation 'junit:junit:4.12'
     implementation project(':tools-library')
+    //下拉刷新上拉加载
     implementation project(':recycler-adapter-helper')
     implementation project(':refresh-layout')
+    // 手势交互
     implementation project(':patternlockview')
     implementation project(':patternlockview-reactive')
+    //侧滑退出
+    implementation project(':swipebacklayout')
     // 手势交互
    // compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
     // 手势交互 for RxJava2 adapter
@@ -67,7 +71,7 @@ dependencies {
     //底部导航按钮点击效果
     implementation 'com.aurelhubert:ahbottomnavigation:1.2.0'
     //侧滑退出
-    implementation 'com.gongwen:swipeback:1.0.2'
+//    implementation 'com.gongwen:swipeback:1.0.2'
     //图片选择 TouchImageView图片缩放
     implementation 'me.iwf.photopicker:PhotoPicker:0.8.4@aar'
     //view注解
