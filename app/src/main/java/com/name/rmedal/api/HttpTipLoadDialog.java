@@ -1,4 +1,4 @@
-package com.name.rmedal.base;
+package com.name.rmedal.api;
 
 import android.app.Activity;
 import android.content.Context;

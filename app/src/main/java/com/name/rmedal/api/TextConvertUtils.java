@@ -1,4 +1,4 @@
-package com.name.rmedal.base;
+package com.name.rmedal.api;
 
 /**
  * Created by zenglb on 2016/7/4.

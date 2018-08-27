@@ -5,16 +5,18 @@
 码云是开源中国推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
 无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
 
-## 软件架构
+### 软件架构
+    Retrofit+Rxjava+MVP架构
+    自己工作中的整理总结
 
- Retrofit+Rxjava+MVP架构
 
-
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
+### 目录结构
+1.app
+1)api 网络请求封装和请求地址
+2)base 基类
+3)modelbean 实体类
+4)ui 视图 mvp
+2.tools-library 常用封装工具
 
 #### 使用说明
 

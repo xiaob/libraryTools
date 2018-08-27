@@ -1,4 +1,4 @@
-package com.name.rmedal.base;
+package com.name.rmedal.api;
 
 import java.io.Serializable;
 

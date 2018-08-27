@@ -3,10 +3,10 @@ package com.name.rmedal.ui.main.presenter;
 
 import com.name.rmedal.R;
 import com.name.rmedal.api.HttpManager;
-import com.name.rmedal.base.HttpRespose;
+import com.name.rmedal.api.HttpRespose;
 import com.name.rmedal.modelbean.PersonalModelBean;
 import com.name.rmedal.ui.main.contract.MainContract;
-import com.name.rmedal.base.RxSubscriber;
+import com.name.rmedal.api.RxSubscriber;
 import com.veni.tools.baserx.RxSchedulers;
 
 import java.util.HashMap;
