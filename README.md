@@ -9,14 +9,14 @@
 
 ### 下拉刷新上拉加载
 ##### 地址：https://github.com/scwang90/SmartRefreshLayout
-##### 导入
-   implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-   implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
+##### 导入implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
 
 ### 侧滑退出
-##### 地址：https://github.com/gongwen/SwipeBackLayout
-##### 导入
-   implementation 'com.gongwen:swipeback:1.0.2'
+
+
+
+地址：https://github.com/gongwen/SwipeBackLayout
+导入:implementation 'com.gongwen:swipeback:1.0.2'
 
 ### 手势交互
 ##### 地址：https://github.com/aritraroy/PatternLockView
@@ -50,10 +50,18 @@
 导入
    implementation 'com.facebook.rebound:rebound:0.3.8'
 ### retrofit
+implementation 'com.squareup.retrofit2:retrofit:2.3.0'
 ### gson解析
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 ### okhttp3
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 ### rxjava
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.8'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 ### glide
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 
 
 
