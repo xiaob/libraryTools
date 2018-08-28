@@ -30,8 +30,8 @@
 ## 支持鸣谢
 
 ##### 1. 码云
-2. [butterknife 注解](https://github.com/JakeWharton/butterknife)
-         implementation 'com.jakewharton:butterknife:8.0.1'
+##### 2. [butterknife 注解](https://github.com/JakeWharton/butterknife)
+      implementation 'com.jakewharton:butterknife:8.0.1'
 ##### 3. [SmartRefreshLayout下拉刷新上拉加载 ](https://github.com/scwang90/SmartRefreshLayout)
       implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
       implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3'//没有使用特殊Header，可以不加这行
