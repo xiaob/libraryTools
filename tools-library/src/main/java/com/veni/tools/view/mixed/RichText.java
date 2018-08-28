@@ -1,7 +1,9 @@
 package com.veni.tools.view.mixed;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -11,6 +13,8 @@ import android.text.style.ImageSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
+
+import com.veni.tools.DataTools;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +54,11 @@ public class RichText extends TextView implements Drawable.Callback, View.OnAtta
      * @param text 富文本
      */
     public void setRichText(String text) {
-        glideImageGeter=new GlideImageGeter(getContext(), this);
-        Spanned spanned = Html.fromHtml(text,glideImageGeter, null);
+        if(DataTools.IsDestroyed(getContext())){
+            return;
+        }
+        glideImageGeter = new GlideImageGeter(getContext(), this);
+        Spanned spanned = Html.fromHtml(text, glideImageGeter, null);
         SpannableStringBuilder spannableStringBuilder;
         if (spanned instanceof SpannableStringBuilder) {
             spannableStringBuilder = (SpannableStringBuilder) spanned;
@@ -87,9 +94,11 @@ public class RichText extends TextView implements Drawable.Callback, View.OnAtta
         super.setText(spanned);
         setMovementMethod(LinkMovementMethod.getInstance());
     }
+
     public void setOnRichTextImageClickListener(OnRichTextImageClickListener onRichTextImageClickListener) {
         this.onRichTextImageClickListener = onRichTextImageClickListener;
     }
+
     public interface OnRichTextImageClickListener {
         /**
          * 图片被点击后的回调方法
@@ -99,14 +108,17 @@ public class RichText extends TextView implements Drawable.Callback, View.OnAtta
          */
         void imageClicked(List<String> imageUrls, int position);
     }
+
     @Override
     public void onViewAttachedToWindow(View v) {
 
     }
+
     @Override
     public void onViewDetachedFromWindow(View v) {
         glideImageGeter.recycle();
     }
+
     @Override
     public void invalidateDrawable(Drawable who) {
 

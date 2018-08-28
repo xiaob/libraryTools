@@ -113,8 +113,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 //        mainBottomNavigation.manageFloatingActionButtonBehavior(floatingActionButton);
 
         // Change colors
-        mainBottomNavigation.setAccentColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        mainBottomNavigation.setInactiveColor(ContextCompat.getColor(context, R.color.google_green));
+        mainBottomNavigation.setAccentColor(ContextCompat.getColor(context, R.color.google_green));
+        mainBottomNavigation.setInactiveColor(ContextCompat.getColor(context, R.color.google_blue));
         //强制着色绘图(例如，对于带有图标的字体有用)
         mainBottomNavigation.setForceTint(true);
         // 在导航栏下显示颜色(API 21+)
@@ -190,6 +190,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         ImageView mainNavBgView = headerView.findViewById(R.id.main_nav_bg_view);
         headerView.findViewById(R.id.main_nav_community).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_scan_address).setOnClickListener(mListener);
+        headerView.findViewById(R.id.main_nav_feedback).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_exit).setOnClickListener(mListener);
     }
 
@@ -229,7 +230,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                             break;
                     }
                 }
-            }, 260);
+            }, 100);
         }
     };
 

@@ -1,11 +1,14 @@
 package com.veni.tools.view.imageload;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.veni.tools.DataTools;
 import com.veni.tools.R;
 
 import java.io.File;
@@ -49,6 +52,9 @@ import java.io.File;
 public class ImageLoaderTool {
 
     public static void display(Context context, ImageView imageView, String url, int placeholder, int error) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -58,6 +64,9 @@ public class ImageLoaderTool {
     }
 
     public static void displaynullplace(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -69,6 +78,9 @@ public class ImageLoaderTool {
     }
 
     public static void display(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -81,6 +93,9 @@ public class ImageLoaderTool {
     }
 
     public static void displayoverride(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -93,6 +108,9 @@ public class ImageLoaderTool {
     }
 
     public static void display(Context context, ImageView imageView, File url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -105,6 +123,9 @@ public class ImageLoaderTool {
     }
 
     public static void displaySmallPhoto(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -117,6 +138,9 @@ public class ImageLoaderTool {
     }
 
     public static void displayBigPhoto(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -129,6 +153,9 @@ public class ImageLoaderTool {
     }
 
     public static void display(Context context, ImageView imageView, int url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -148,6 +175,9 @@ public class ImageLoaderTool {
      * 圆形图片
      */
     public static void displayCircle(Context context, ImageView imageView, String url, int errimage) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -158,6 +188,9 @@ public class ImageLoaderTool {
     }
 
     public static void displayCircle(Context context, ImageView imageView, int resId) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -171,6 +204,9 @@ public class ImageLoaderTool {
      * 圆角图片
      */
     public static void displayRound(Context context, ImageView imageView, String url, int rounddp) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }
@@ -184,6 +220,9 @@ public class ImageLoaderTool {
      * 圆角图片
      */
     public static void displayRound(Context context, ImageView imageView, String url) {
+        if(DataTools.IsDestroyed(context)){
+            return;
+        }
         if (imageView == null) {
             throw new IllegalArgumentException("argument error");
         }

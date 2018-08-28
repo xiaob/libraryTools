@@ -1,5 +1,7 @@
 package com.veni.tools;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -81,6 +83,19 @@ public class DataTools {
 
     private static final DecimalFormat amountFormat = new DecimalFormat("###,###,###,##0.00");
 
+    /**
+     *  content所属的activity是否被销毁
+     * @param context 需要判断的content
+     * @return
+     */
+    public static boolean IsDestroyed(Context context){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (((Activity) context).isDestroyed()) {
+                return true;
+            }
+        }
+        return ((Activity) context).isFinishing();
+    }
     /**
      * 判断字符串是否为空 为空即true
      *
@@ -178,12 +193,7 @@ public class DataTools {
         }
         return true;
     }
-//    /**
-//     * 判断字符串是否是数字
-//     */
-//    public static boolean isNumber(String value) {
-//        return isInteger(value) || isDouble(value);
-//    }
+
     /**
      * 判定输入汉字
      *
