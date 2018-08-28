@@ -47,33 +47,34 @@
 - VerificationCodeView 动态生成验证码
 - ViewPagerFixed  修复v4 的ViewPager点击会崩溃
 
-##### 6. ACache 本地文件缓存工具类
-##### 7. ActivityTools Activity操作相关工具类
-##### 8. CaptchaTime 验证码倒计时
-##### 9. ClipboardTools 剪贴板相关工具
-##### 10. ConstantTools 常量工具类
-##### 11. CrashLogTools 崩溃日志处理工具
-##### 12. DataTools 数据处理相关
-##### 13. DeviceTools 手机硬件信息设备工具类
-##### 14. EncodeTools 编码解码相关工具类
-##### 15. EncryptTools 加密解密相关的工具类
-##### 16. FileTools SD卡操作工具
-##### 17. FutileTools 常用工具类
-##### 18. ImageTools 图像工具类
-##### 19. IntentTools Intent相关
-##### 21. JsonTools JSON解析二次封装
-##### 22. KeyboardTools 键盘相关
-##### 23. LocationTools 定位相关工具类
-##### 24. LogTools Log管理
-##### 25. NetWorkTools 网络相关
-##### 26. Note
-##### 27. PermissionsTools 权限请求操作工具类
-##### 28. PhotoTools 相机相关工具
-##### 29. RegTools 正则判断
-##### 31. SoftHideKeyBoardTools 键盘档住输入框
-##### 32. SPTools SharedPreferences工具类
-##### 33. StatusBarTools 状态栏工具
-##### 34. TabLayoutTools
-##### 35. TimeTools 时间相关
-##### 36. ToolBarUtils 标题栏工具
+##### 6.  常用封装工具
+-  ACache 本地文件缓存工具类
+-  ActivityTools Activity操作相关工具类
+-  CaptchaTime 验证码倒计时
+-  ClipboardTools 剪贴板相关工具
+-  ConstantTools 常量工具类
+-  CrashLogTools 崩溃日志处理工具
+-  DataTools 数据处理相关
+-  DeviceTools 手机硬件信息设备工具类
+-  EncodeTools 编码解码相关工具类
+-  EncryptTools 加密解密相关的工具类
+-  FileTools SD卡操作工具
+-  FutileTools 常用工具类
+-  ImageTools 图像工具类
+-  IntentTools Intent相关
+-  JsonTools JSON解析二次封装
+-  KeyboardTools 键盘相关
+-  LocationTools 定位相关工具类
+-  LogTools Log管理
+-  NetWorkTools 网络相关
+-  Note
+-  PermissionsTools 权限请求操作工具类
+-  PhotoTools 相机相关工具
+-  RegTools 正则判断
+-  SoftHideKeyBoardTools 键盘档住输入框
+-  SPTools SharedPreferences工具类
+-  StatusBarTools 状态栏工具
+-  TabLayoutTools
+-  TimeTools 时间相关
+-  ToolBarUtils 标题栏工具
 
