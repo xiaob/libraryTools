@@ -136,19 +136,19 @@ public class HomeFragment extends BaseFragment {
 
     private void setfuctionview() {
         List<FunctionBean> functionlist = new ArrayList<>();
-        functionlist.add(new FunctionBean("Dialog展示", 0, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("Dialog展示", R.mipmap.ic_dialog, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 Dialog_ProgressActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("Toast_LabelsView",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("Toast_LabelsView",  R.mipmap.ic_toast, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 ToastActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("查看大图",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("查看大图",  R.mipmap.ic_bigimage, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 List<BigImageBean> img_list = new ArrayList<>();
@@ -166,61 +166,61 @@ public class HomeFragment extends BaseFragment {
                 BigImagePagerActivity.startAction(context, imglistjson, 0);
             }
         }));
-        functionlist.add(new FunctionBean("数据时效存储",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("数据时效存储",  R.mipmap.ic_acache, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 ACacheActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("爱心点赞-爆炸",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("爱心点赞-爆炸",  R.mipmap.ic_likes, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 HeartLikeViewActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("图文混排",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("图文混排",  R.mipmap.ic_richtext, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 RichTextActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("popupwindows",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("popupwindows",  R.mipmap.ic_popwin, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 PopWinActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("随机验证码",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("随机验证码",  R.mipmap.ic_verifycode, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 VerifyCodeActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("RunTextView",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("RunTextView",  R.mipmap.ic_runtext, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 RunTextActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("设备信息",  R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("设备信息",  R.mipmap.ic_phone, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 PhoneInfoActivity.startAction(context,view);
             }
         }));
-        functionlist.add(new FunctionBean("拖拽式层叠卡片", R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("拖拽式层叠卡片", R.mipmap.ic_cardgroup, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 CardGroupActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("登录", R.mipmap.pikachu_sit, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("登录", R.mipmap.ic_login, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 LoginActivity.startAction(context);
             }
         }));
-        functionlist.add(new FunctionBean("二维码", R.mipmap.s_code_icon, new OnNoFastClickListener() {
+        functionlist.add(new FunctionBean("二维码", R.mipmap.ic_scanercode, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
                 Intent intent = new Intent();
@@ -229,6 +229,7 @@ public class HomeFragment extends BaseFragment {
                 startActivityForResult(intent, AppConstant.REQUEST_QRCODE);
             }
         }));
+        functionlist.add(new FunctionBean("没有图片", 0,null));
         functionadapter.replaceData(functionlist);
     }
 
