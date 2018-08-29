@@ -3,6 +3,7 @@
 
 ## 项目介绍
    - 自己工作中的整理与总结
+   ![](https://gitee.com/KKan/RMedal/blob/master/appimg/Screenshot_20180829-105143.png)
 
 ### 软件架构
    - Retrofit+Rxjava+MVP架构
