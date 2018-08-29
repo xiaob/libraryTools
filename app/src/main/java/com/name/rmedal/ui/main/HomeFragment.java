@@ -75,7 +75,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initPresenter() {
-
     }
 
     public void onAttach(Context context) {//执行此方法 则说明会员Fragment 与Activity 绑定了，
