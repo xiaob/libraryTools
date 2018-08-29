@@ -146,8 +146,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private void SwitchTo(AHBottomNavigationItem selecetitem) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+//        transaction.setTransition(FragmentTransaction.TRANSIT_EXIT_MASK);//Fragment切换动画效果1
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);//Fragment切换动画效果2
         hideFragments(transaction);
         String title = selecetitem.getTitle(context);
         switch (title) {
