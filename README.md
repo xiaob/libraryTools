@@ -17,11 +17,9 @@
    - ui 视图 mvp
 2.  [tools-library 常用封装工具](https://gitee.com/KKan/RMedal/tree/master/tools-library)
 
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
+#### 开发环境信息
+1. AS版本3.1
+2. gradle 3.1.2
 
 #### 参与贡献
 
