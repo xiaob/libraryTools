@@ -29,8 +29,8 @@
 ## 支持鸣谢
 
 ##### 1. [码云](https://gitee.com/explore/recommend?lang=Android)
-##### 3. [GitHub](https://github.com/)
-##### 2. [度娘](https://www.baidu.com/)
+##### 2. [GitHub](https://github.com/)
+##### 3. [度娘](https://www.baidu.com/)
 
 ## 依赖
 
