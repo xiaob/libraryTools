@@ -82,8 +82,8 @@ public class LoginActivity extends BaseActivity {
     private String password = "";
     private String captcha = "";
     private CaptchaTime timeCount;
-    private int lastdist;
-    private boolean viewIsZoom = false;
+//    private int lastdist;
+//    private boolean viewIsZoom = false;
 
     @Override
     public void initView(Bundle savedInstanceState) {
@@ -96,26 +96,27 @@ public class LoginActivity extends BaseActivity {
         loginRootRv.setKeyboardListener(new KeyboardLayout.KeyboardLayoutListener() {
             @Override
             public void onKeyboardStateChanged(boolean isActive, int keyboardHeight, int bottom) {
-                int dist = loginContentLl.getBottom() - bottom;
+//                int dist = loginContentLl.getBottom() - bottom;
                 if (isActive) {
                     scrollToBottom();
                 }
                 if (keyboardHeight > 0) {
-                    if (dist > 0 && lastdist != dist) {
-                        viewIsZoom = true;
+//                    if (dist > 0 && lastdist != dist) {
+//                        viewIsZoom = true;
 //                        ZoomIn(dist);
-                    }
+//                    }
                     if (loginService.getVisibility() != View.INVISIBLE) {
                         loginService.setVisibility(View.INVISIBLE);
                     }
                 } else {
-                    if (loginService.getVisibility() != View.VISIBLE && viewIsZoom) {
-                        viewIsZoom = false;
+                    if (loginService.getVisibility() != View.VISIBLE) {
+//                            && viewIsZoom) {
+//                        viewIsZoom = false;
 //                        ZoomOut();
                         loginService.setVisibility(View.VISIBLE);
                     }
                 }
-                lastdist = dist;
+//                lastdist = dist;
             }
         });
         long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
