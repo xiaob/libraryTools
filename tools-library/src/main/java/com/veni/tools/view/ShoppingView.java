@@ -449,9 +449,12 @@ public class ShoppingView extends View {
      * @param num 购买数量
      */
     public void setTextNum(int num) {
-        mNum = num;
         if (num > 0) {
             mState = STATE_ROTATE_OVER;
+            if(mNum<=0){
+                startMoveAnim();
+            }
+            mNum = num;
         } else {
             mNum = 0;
             if (mShoppingClickListener != null) {
