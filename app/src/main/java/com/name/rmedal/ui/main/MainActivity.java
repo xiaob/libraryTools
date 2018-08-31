@@ -91,7 +91,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         ToastTool.error(errtipmsg);
     }
 
-    private int mainposition;
+    private int mainposition=-1;
     private HomeFragment homeFragment;
     private TradeFragment tradeFragment;
     private PersonalFragment personalFragment;
@@ -136,8 +136,10 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
                         return false;
                     }
                 }
-                mainposition = position;
-                SwitchTo(selecetitem);
+                if(mainposition!=position){
+                    mainposition = position;
+                    SwitchTo(selecetitem);
+                }
                 return true;
             }
         });
