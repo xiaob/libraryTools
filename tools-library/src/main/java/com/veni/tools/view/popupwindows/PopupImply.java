@@ -18,7 +18,7 @@ import com.veni.tools.model.ActionItem;
 import java.util.ArrayList;
 
 /**
- *  @author Created by xiyn on 2016/8/4.
+ *  @author Created by kkan on 2016/8/4.
  */
 public class PopupImply extends PopupWindow {
 

@@ -13,7 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 加密解密相关的工具类
  * 哈希加密相关
  * encryptMD2ToString          : MD2加密

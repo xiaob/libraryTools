@@ -28,6 +28,7 @@ import butterknife.BindView;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ *  RunText
  */
 
 public class RunTextActivity extends BaseActivity {
@@ -67,14 +68,21 @@ public class RunTextActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置启动动画对应的view
         View view = runtextTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, runtextTitleView);
+        //设置返回点击事件
         runtextTitleView.setLeftFinish(context);
+        //设置显示标题
         runtextTitleView.setTitle("RunTextView");
+        //设置侧滑退出
         setSwipeBackLayout(0);
 
+        //模拟数据1
         titleList.add("你是天上最受宠的一架钢琴");
         titleList.add("我是丑人脸上的鼻涕");
         titleList.add("你发出完美的声音");
@@ -84,6 +92,7 @@ public class RunTextActivity extends BaseActivity {
         titleList.add("你踏着七彩祥云离去");
         titleList.add("我被留在这里");
 
+        //初始化TextViewVertical配置
         runtextVerticalView.setTextList(titleList);
         runtextVerticalView.setText(26, 5, 0xff766156);//设置属性
         runtextVerticalView.setTextStillTime(3000);//设置停留时长间隔
@@ -119,7 +128,9 @@ public class RunTextActivity extends BaseActivity {
         runtextVerticalView.stopAutoScroll();
     }
 
-
+    /**
+     * 模拟数据2
+     */
     private void setUPMarqueeView(List<View> views, int size) {
         for (int i = 0; i < size; i = i + 2) {
             //设置滚动的单个布局

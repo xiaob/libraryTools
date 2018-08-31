@@ -55,7 +55,7 @@ import java.net.URL;
 import static com.veni.tools.FutileTools.getContext;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 图像工具类
  *
  * 单位转换

@@ -65,10 +65,13 @@ public class PersonalFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(context, personalRxtitle);
+        //隐藏左侧按钮
         personalRxtitle.setLeftIconVisibility(false);
 
 
+        // 初始化Recyclerview配置
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
 
         final PinnedHeaderDecoration decoration = new PinnedHeaderDecoration();
@@ -79,9 +82,13 @@ public class PersonalFragment extends BaseFragment {
             }
         });
         list =new ArrayList<>();
+         // Recyclerview分界线
         mRecyclerView.addItemDecoration(decoration);
+        //初始化adapter
         sectionAdapter = new SectionAdapter(R.layout.fragment_persional_item_wave_contact, R.layout.fragment_persional_item_pinned_header, list);
         mRecyclerView.setAdapter(sectionAdapter);
+
+        //SmartRefreshLayout 刷新加载监听
         personalRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -93,8 +100,10 @@ public class PersonalFragment extends BaseFragment {
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         personalRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
-        Observable.timer(200, TimeUnit.MILLISECONDS)
+        //整理数据
+        mRxManager.add(Observable.timer(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -128,8 +137,8 @@ public class PersonalFragment extends BaseFragment {
                         }
                         sectionAdapter.replaceData(list);
                     }
-                });
-
+                }));
+        //波浪侧边栏滑动监听
         mSideBarView.setOnTouchLetterChangeListener(new WaveSideBarView.OnTouchLetterChangeListener() {
             @Override
             public void onLetterChange(String letter) {
@@ -145,8 +154,11 @@ public class PersonalFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -155,7 +167,7 @@ public class PersonalFragment extends BaseFragment {
                         personalRefreshlayout.finishRefresh();
                         personalRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
 
     }
 

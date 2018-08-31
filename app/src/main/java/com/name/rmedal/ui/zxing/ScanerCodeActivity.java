@@ -74,7 +74,9 @@ public class ScanerCodeActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, scanerCodePreview);
         initView();//界面控件初始化
         initScanerAnimation();//扫描动画初始化

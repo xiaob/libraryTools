@@ -24,8 +24,9 @@ import com.veni.tools.view.ToastTool;
 
 
 /**
- * 作者：xiyn on 2017/11/30
+ * 作者：kkan on 2017/11/30
  * 当前类注释:
+ * 网页窗口封装
  */
 
 public class WebViewActivity extends BaseActivity {
@@ -34,9 +35,6 @@ public class WebViewActivity extends BaseActivity {
     public static final String INTENT_TITLE = "title";
     public static final String INTENT_NEEDTITLE = "needtitle";
 
-    /**
-     * 启动入口
-     */
 
     public static void startAction(Context context, String url) {
         startAction(context, url, "", true);
@@ -46,16 +44,24 @@ public class WebViewActivity extends BaseActivity {
         startAction(context, url, title, false);
     }
 
+    /**
+     *
+     * 启动入口
+     * @param context context
+     * @param url 网络地址
+     * @param title 显示标题
+     * @param needtitle 是否获取url的标题
+     */
     public static void startAction(Context context, String url, String title, boolean needtitle) {
         new ActivityJumpOptionsTool().setContext(context)
-                .setClass(BigImagePagerActivity.class)
+                .setClass(WebViewActivity.class)
                 .setBundle(INTENT_URL, url)
                 .setBundle(INTENT_TITLE, title)
                 .setBundle(INTENT_NEEDTITLE, needtitle)
                 .customAnim()
                 .start();
     }
-
+//不使用xml布局
     @Override
     public int getLayoutId() {
         return 0;
@@ -67,7 +73,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private HTMLWebView mWebView;
-    private String act_url = "http://www.zttmall.com/Wapshop/Topic.aspx?TopicId=18";
+    private String act_url = "https://www.baidu.com/";
     private String act_title = "";
     private boolean needtitle;
 
@@ -77,7 +83,9 @@ public class WebViewActivity extends BaseActivity {
         act_title = getIntent().getStringExtra(INTENT_TITLE);
         needtitle = getIntent().getBooleanExtra(INTENT_NEEDTITLE, false);
 
+        //根布局视图构造器
         ContentViewHelper contentViewHelper = new ContentViewHelper(context, null, R.color.colorPrimary);
+        //根布局视图
         LinearLayout baseView = contentViewHelper.getContentView();
 
         mWebView = new HTMLWebView(context, context);
@@ -88,7 +96,7 @@ public class WebViewActivity extends BaseActivity {
                 ViewGroup.LayoutParams.MATCH_PARENT));
         baseView.addView(userView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT));
-
+        //获取网页标题
         mWebView.addWebUtilsListener(new WebUtilsListener() {
             @Override
             public void onReceivedTitle(WebView view, String title) {
@@ -99,6 +107,7 @@ public class WebViewActivity extends BaseActivity {
                 }
             }
         });
+        //WebView Download监听
         mWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent,
@@ -123,8 +132,9 @@ public class WebViewActivity extends BaseActivity {
         setContentView(baseView);
         setSwipeBackLayout(0);
 
-        //设置透明状态栏
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         contentViewHelper.initToolbarState();
     }
 
@@ -204,6 +214,9 @@ public class WebViewActivity extends BaseActivity {
         private Context context;
         private String TAG = "Js2JavaInterface";
 
+        /**
+         * Js回调 根据需要命名方法和参数
+         */
         @JavascriptInterface
         public void showProduct(String productId) {
             if (productId != null) {

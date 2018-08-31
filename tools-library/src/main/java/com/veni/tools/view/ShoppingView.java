@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author xiyn on 16/7/10 17:59
+ * @author kkan on 16/7/10 17:59
  * 商品数量加减控件
  */
 public class ShoppingView extends View {

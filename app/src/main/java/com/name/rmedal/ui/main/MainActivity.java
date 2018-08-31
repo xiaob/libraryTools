@@ -10,6 +10,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -38,6 +39,11 @@ import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 
+/**
+ * 作者：kkan on 2018/04/20
+ * 当前类注释:
+ * 主页
+ */
 public class MainActivity extends BaseActivity<MainPresenter> implements MainContract.View {
 
     /**
@@ -64,6 +70,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         return R.layout.activity_main;
     }
 
+    /*启用MVP一定要设置这句*/
     @Override
     public void initPresenter() {
         mPresenter.setVM(this);
@@ -71,10 +78,15 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏,标题栏不是通用的  标题栏高度需要在每个Fragment或者侧滑菜单中设置
         StatusBarTools.immersive(this);
+        //初始化底部按钮
         initBottomNavigation();
+        //初始化侧滑菜单
         initDrawerLayout();
+        //设置底部默认选中按钮
         mainBottomNavigation.setCurrentItem(0, true);
+        //调用网络请求
         mPresenter.checkVersion("1");
     }
 
@@ -96,6 +108,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     private TradeFragment tradeFragment;
     private PersonalFragment personalFragment;
 
+    /**
+     * 初始化底部按钮
+     */
     private void initBottomNavigation() {
         //Create items
         AHBottomNavigationItem homepage = new AHBottomNavigationItem(R.string.homepage, R.mipmap.ic_main_homepage, android.R.color.white);
@@ -145,6 +160,9 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         });
     }
 
+    /**
+     * 底部按钮点击事件
+     */
     private void SwitchTo(AHBottomNavigationItem selecetitem) {
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -183,6 +201,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     /**
+     * 侧滑菜单
      * inflateHeaderView 进来的布局要宽一些
      */
     private void initDrawerLayout() {
@@ -190,12 +209,21 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         View headerView = mainNavView.getHeaderView(0);
         FrameLayout mainNavHeadLayout = headerView.findViewById(R.id.main_nav_head_layout);
         ImageView mainNavBgView = headerView.findViewById(R.id.main_nav_bg_view);
+
         headerView.findViewById(R.id.main_nav_community).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_scan_address).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_feedback).setOnClickListener(mListener);
         headerView.findViewById(R.id.main_nav_exit).setOnClickListener(mListener);
+
+        //增加状态栏的高度
+        ViewGroup.LayoutParams lp = mainNavHeadLayout.getLayoutParams();
+        lp.height +=StatusBarTools.getStatusBarHeight(context);//增高
+        mainNavHeadLayout.setLayoutParams(lp);
     }
 
+    /**
+     * 侧滑菜单点击事件
+     */
     private OnNoFastClickListener mListener = new OnNoFastClickListener() {
         @Override
         protected void onNoDoubleClick(final View view) {
@@ -266,13 +294,13 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         if (!isExit) {
             isExit = true;
             ToastTool.normal("再按一次退出程序");
-            Observable.timer(2000, TimeUnit.MILLISECONDS)
+            mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                     .subscribe(new Consumer<Long>() {
                         @Override
                         public void accept(Long aLong) throws Exception {
                             isExit = false;
                         }
-                    });
+                    }));
 
             return;
         }

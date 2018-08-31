@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * 作者：xiyn on 2018/04/26
+ * 作者：kkan on 2018/04/26
  * 当前类注释:
  * 动态生成验证码
  */

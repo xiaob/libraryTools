@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * 作者：xiyn on 2017/12/19
+ * 作者：kkan on 2017/12/19
  * 当前类注释:
  */
 

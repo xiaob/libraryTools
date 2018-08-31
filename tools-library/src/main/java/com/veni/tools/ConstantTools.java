@@ -1,7 +1,7 @@
 package com.veni.tools;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 常量工具类
  * 存储相关常量
  * BYTE                        : Byte与Byte的倍数

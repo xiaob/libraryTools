@@ -2,8 +2,6 @@ package com.name.rmedal.ui.main;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +15,7 @@ import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.veni.tools.ACache;
+import com.veni.tools.LogTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 
@@ -60,9 +59,15 @@ public class PatternlockActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //初始化手势密码参数
         initlockview();
     }
+
+    /**
+     * 初始化手势密码参数
+     */
     private void initlockview(){
         //更改行（或列）中的点的数目
         patterLockView.setDotCount(3);
@@ -96,42 +101,49 @@ public class PatternlockActivity extends BaseActivity {
         patterLockView.setTactileFeedbackEnabled(true);
         //完全禁用模式锁定视图中的任何输入
         patterLockView.setInputEnabled(true);
-        patterLockView.addPatternLockListener(mPatternLockViewListener);
         ACache.get(context).put(AppConstant.PatternlockKey, "012345678");
+        /*以下监听选择一个就行*/
+        //设置手势密码滑动监听
+        patterLockView.addPatternLockListener(mPatternLockViewListener);
+        //设置手势密码滑动监听
         RxPatternLockView.patternChanges(patterLockView)
                 .subscribe(new Consumer<PatternLockCompoundEvent>() {
                     @Override
                     public void accept(PatternLockCompoundEvent event) throws Exception {
                         if (event.getEventType() == PatternLockCompoundEvent.EventType.PATTERN_STARTED) {
-                            Log.d(getClass().getName(), "Pattern drawing started");
+                            LogTools.d(getClass().getName(), "Pattern drawing started");
                         } else if (event.getEventType() == PatternLockCompoundEvent.EventType.PATTERN_PROGRESS) {
-                            Log.d(getClass().getName(), "Pattern progress: " +
+                            LogTools.d(getClass().getName(), "Pattern progress: " +
                                     PatternLockUtils.patternToString(patterLockView, event.getPattern()));
                         } else if (event.getEventType() == PatternLockCompoundEvent.EventType.PATTERN_COMPLETE) {
-                            Log.d(getClass().getName(), "Pattern complete: " +
+                            LogTools.d(getClass().getName(), "Pattern complete: " +
                                     PatternLockUtils.patternToString(patterLockView, event.getPattern()));
 
                         } else if (event.getEventType() == PatternLockCompoundEvent.EventType.PATTERN_CLEARED) {
-                            Log.d(getClass().getName(), "Pattern has been cleared");
+                            LogTools.d(getClass().getName(), "Pattern has been cleared");
                         }
                     }
                 });
     }
+
+    /**
+     * 手势密码滑动监听
+     */
     private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
         @Override
         public void onStarted() {
-            Log.d(getClass().getName(), "Pattern drawing started");
+            LogTools.d(getClass().getName(), "Pattern drawing started");
         }
 
         @Override
         public void onProgress(List<PatternLockView.Dot> progressPattern) {
-            Log.d(getClass().getName(), "Pattern progress: " +
+            LogTools.d(getClass().getName(), "Pattern progress: " +
                     PatternLockUtils.patternToString(patterLockView, progressPattern));
         }
 
         @Override
         public void onComplete(List<PatternLockView.Dot> pattern) {
-            Log.d(getClass().getName(), "Pattern complete: " +
+            LogTools.d(getClass().getName(), "Pattern complete: " +
                     PatternLockUtils.patternToString(patterLockView, pattern));
             String inputpwd=PatternLockUtils.patternToString(patterLockView, pattern);
             String pwd=  ACache.get(context).getAsString(AppConstant.PatternlockKey);
@@ -145,7 +157,7 @@ public class PatternlockActivity extends BaseActivity {
 
         @Override
         public void onCleared() {
-            Log.d(getClass().getName(), "Pattern has been cleared");
+            LogTools.d(getClass().getName(), "Pattern has been cleared");
         }
     };
 

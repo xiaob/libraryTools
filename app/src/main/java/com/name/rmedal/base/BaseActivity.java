@@ -16,15 +16,15 @@ import com.veni.tools.interfaces.AntiShake;
 import butterknife.ButterKnife;
 
 /**
- * 作者：xiyn on 2017/01/30
+ * 作者：kkan on 2017/01/30
  * 当前类注释:
  * 基类Activity
  */
 public abstract class BaseActivity<T extends BasePresenter> extends ActivityBase {
 
-    public T mPresenter;
-    protected RxManager mRxManager;
-    protected SwipeBackLayout swipeBackLayout;
+    public T mPresenter;//Presenter 对象
+    protected RxManager mRxManager;//Rxjava管理
+    protected SwipeBackLayout swipeBackLayout;//侧滑退出
     protected String TAG;
     protected AntiShake antiShake;//防止重复点击
 
@@ -128,8 +128,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends ActivityBase
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null)
+        if (mPresenter != null) {
             mPresenter.onDestroy();
+        }
         if (mRxManager != null) {
             mRxManager.clear();
         }

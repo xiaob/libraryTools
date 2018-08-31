@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
- * 作者：xiyn on 2017/12/22
+ * 作者：kkan on 2017/12/22
  * 当前类注释:
  * 存储一定对象的链表，超出了定义的范围就删除第一个对象
  */

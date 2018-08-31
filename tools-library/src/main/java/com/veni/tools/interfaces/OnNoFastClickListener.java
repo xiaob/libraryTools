@@ -5,7 +5,7 @@ import android.view.View;
 import java.util.Calendar;
 
 /**
- * Created by xiyn on 2017/7/24.
+ * Created by kkan on 2017/7/24.
  * 重复点击的监听器
  */
 

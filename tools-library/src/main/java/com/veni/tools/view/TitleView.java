@@ -19,7 +19,7 @@ import com.veni.tools.ImageTools;
 import com.veni.tools.KeyboardTools;
 
 /**
- * @author by xiyn on 2017/1/2.
+ * @author by kkan on 2017/1/2.
  * 自定义标题控件
  * setLeftText
  * setLeftTextColor

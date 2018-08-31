@@ -19,7 +19,7 @@ import cn.bingoogolapple.bgabanner.BGABanner;
 import cn.bingoogolapple.bgabanner.BGALocalImageSize;
 
 /**
- * 作者：xiyn on 2017/11/30
+ * 作者：kkan on 2017/11/30
  * 当前类注释:
  * 引导页 activity
  */
@@ -53,14 +53,19 @@ public class FirstStartActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //设置标识表示app不再是第一次启动,我为了测试,数据有效期为一天,实际可以将ACache.TIME_DAY去掉,也可以用SPTools,对应的也的做出相应修改
         ACache.get(context).put(AppConstant.FIRST_TIME, "true", ACache.TIME_DAY);
+//                SPTools.put(context, SPTools.FIRST_TIME, false);
+        //设置进入主页的监听
         setListener();
+        //设置图片
         processLogic();
     }
 
     private void setListener() {
-        /**
+        /*
          * 设置进入按钮和跳过按钮控件资源 id 及其点击事件
          * 如果进入按钮和跳过按钮有一个不存在的话就传 0
          * 在 BGABanner 里已经帮开发者处理了防止重复点击事件
@@ -70,7 +75,6 @@ public class FirstStartActivity extends BaseActivity {
         mForegroundBanner.setEnterSkipViewIdAndDelegate(R.id.btn_guide_enter, R.id.tv_guide_skip, new BGABanner.GuideDelegate() {
             @Override
             public void onClickEnterOrSkip() {
-//                SPTools.put(context, SPTools.FIRST_TIME, false);
                 MainActivity.startAction(context);
             }
         });
@@ -89,7 +93,6 @@ public class FirstStartActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         // 如果开发者的引导页主题是透明的，需要在界面可见时给背景 Banner 设置一个白色背景，避免滑动过程中两个 Banner 都设置透明度后能看到 Launcher
 //        mBackgroundBanner.setBackgroundResource(android.R.color.white);
     }

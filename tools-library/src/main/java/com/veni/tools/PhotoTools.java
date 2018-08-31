@@ -25,7 +25,7 @@ import java.io.IOException;
 
 /**
  * 相册 相机 图片工具类
- * Created by xiyn on 2017/8/9.
+ * Created by kkan on 2017/8/9.
  */
 
 public class PhotoTools {

@@ -44,9 +44,9 @@ import java.util.List;
 import butterknife.BindView;
 
 /**
- * 作者：jaydenxiao
+ * 作者：kkan on 2018/04/24
  * 当前类注释:
- * 查看大图 glide 多张
+ * 查看大图 Glide 多张
  */
 public class BigImagePagerActivity extends BaseActivity {
 
@@ -66,14 +66,22 @@ public class BigImagePagerActivity extends BaseActivity {
     public static final String INTENT_POSITION = "position";
     public static final String INTENT_TITLE = "needtitle";
 
-    public static void startAction(Context context, String imgUrls, int position) {
-        startAction(context, imgUrls, position, false);
+    public static void startAction(Context context, String imglistjson, int position) {
+        startAction(context, imglistjson, position, false);
     }
 
-    public static void startAction(Context context, String imgUrls, int position, boolean needtitle) {
+    /**
+     * 页面跳转参数
+     *
+     * @param context     context
+     * @param imglistjson 图片集合的json数据
+     * @param position    默认选中图片的位置
+     * @param needtitle   是否读取 BigImageBean中的 图片标题
+     */
+    public static void startAction(Context context, String imglistjson, int position, boolean needtitle) {
         new ActivityJumpOptionsTool().setContext(context)
                 .setClass(BigImagePagerActivity.class)
-                .setBundle(INTENT_IMGLISTJSON, imgUrls)
+                .setBundle(INTENT_IMGLISTJSON, imglistjson)
                 .setBundle(INTENT_POSITION, position)
                 .setBundle(INTENT_TITLE, needtitle)
                 .customAnim()
@@ -85,30 +93,42 @@ public class BigImagePagerActivity extends BaseActivity {
         return R.layout.activity_bigimage_pager;
     }
 
+    @Override
+    public void initPresenter() {
 
+    }
+
+    //图片数据
     private List<BigImageBean> img_list = new ArrayList<>();
+    //是否读取 BigImageBean中的 图片标题
     private boolean needtitle;
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置侧滑退出
 //        setSwipeBackLayout(2);
-        //设置透明状态栏
-        StatusBarTools.immersive(this);
-        StatusBarTools.setPaddingSmart(this, toolbar);
+        //设置沉侵状态栏
+        StatusBarTools.immersive(context);
+        //增加状态栏的高度
+        StatusBarTools.setPaddingSmart(context, toolbar);
+        //第一次进入显示标题栏
         toolBarFadeIn();
+        //初始化标题栏
         initToolbar();
+        //设置背景黑色
         initBackground();
-
+        //默认选中图片的位置
         int startPos = getIntent().getIntExtra(INTENT_POSITION, 0);
         needtitle = getIntent().getBooleanExtra(INTENT_TITLE, false);
         String imgUrls = getIntent().getStringExtra(INTENT_IMGLISTJSON);
         img_list = JsonTools.parseArray(imgUrls, BigImageBean.class);
-
+        //设置描述和标题
         setPhotoDetailTitle(startPos);
-
-        ImageAdapter mAdapter = new ImageAdapter(this);
+        //设置适配器
+        BigImageAdapter mAdapter = new BigImageAdapter(context);
         mAdapter.setDatas(img_list);
         bigimagViewPager.setAdapter(mAdapter);
+        //ViewPager滑动监听
         bigimagViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -126,19 +146,23 @@ public class BigImagePagerActivity extends BaseActivity {
 
             }
         });
+        //ViewPager选中的位置
         bigimagViewPager.setCurrentItem(startPos);
     }
 
-    @Override
-    public void initPresenter() {
-
-    }
-
+    /**
+     * 初始化标题栏
+     */
     private void initToolbar() {
         toolbar.setTitle("图片详情");
-        onCreateCustomToolBar( toolbar, true);
+        onCreateCustomToolBar(toolbar, true);
     }
 
+    /**
+     * 图片显示的标题和描述
+     *
+     * @param position 图片位置
+     */
     public void setPhotoDetailTitle(int position) {
         if (img_list.size() > position) {
             if (img_list.size() == 1) {
@@ -164,7 +188,7 @@ public class BigImagePagerActivity extends BaseActivity {
         }
     }
 
-    private class ImageAdapter extends PagerAdapter {
+    private class BigImageAdapter extends PagerAdapter {
 
         private List<BigImageBean> datas = new ArrayList<>();
         private LayoutInflater inflater;
@@ -175,7 +199,7 @@ public class BigImagePagerActivity extends BaseActivity {
                 this.datas = datas;
         }
 
-        public ImageAdapter(Context context) {
+        public BigImageAdapter(Context context) {
             this.context = context;
             this.inflater = LayoutInflater.from(context);
 
@@ -203,7 +227,7 @@ public class BigImagePagerActivity extends BaseActivity {
             imageView.setOnClickListener(new OnNoFastClickListener() {
                 @Override
                 protected void onNoDoubleClick(View view) {
-                    hideOrShowToolbar();
+                    hideOrShowToolbaranimate();
                     hideOrShowStatusBar();
                 }
             });
@@ -218,6 +242,7 @@ public class BigImagePagerActivity extends BaseActivity {
 
 
             loading.setVisibility(View.VISIBLE);
+
             Glide.with(context).load(uri)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(me.iwf.photopicker.R.drawable.__picker_ic_photo_black_48dp)
@@ -263,14 +288,18 @@ public class BigImagePagerActivity extends BaseActivity {
         }
     }
 
-
+    /**
+     * 设置背景黑色
+     */
     private void initBackground() {
         ColorDrawable mBackground = new ColorDrawable(Color.BLACK);
         TabLayoutTools.getRootView(this).setBackgroundDrawable(mBackground);
     }
 
-
-    protected void hideOrShowToolbar() {
+    /**
+     * toolbar 显示或隐藏的动画
+     */
+    protected void hideOrShowToolbaranimate() {
         toolbar.animate()
                 .alpha(mIsToolBarHidden ? 1.0f : 0.0f)
                 .setInterpolator(new DecelerateInterpolator(2))
@@ -278,6 +307,9 @@ public class BigImagePagerActivity extends BaseActivity {
         mIsToolBarHidden = !mIsToolBarHidden;
     }
 
+    /**
+     * 显示或隐藏状态栏
+     */
     private void hideOrShowStatusBar() {
         if (mIsStatusBarHidden) {
             SystemUiVisibilityUtil.enter(context);
@@ -287,8 +319,11 @@ public class BigImagePagerActivity extends BaseActivity {
         mIsStatusBarHidden = !mIsStatusBarHidden;
     }
 
+    /**
+     * 显示标题栏
+     */
     private void toolBarFadeIn() {
         mIsToolBarHidden = true;
-        hideOrShowToolbar();
+        hideOrShowToolbaranimate();
     }
 }

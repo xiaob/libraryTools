@@ -12,7 +12,7 @@ import android.provider.MediaStore;
 import java.io.File;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * Intent相关
  * getInstallAppIntent         : 获取安装App(支持7.0)的Intent
  * getUninstallAppIntent       : 获取卸载App的Intent

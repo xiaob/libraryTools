@@ -36,6 +36,7 @@ import butterknife.OnClick;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * popupwindows
  */
 
 public class PopWinActivity extends BaseActivity implements PopupViewManager.TipListener{
@@ -108,41 +109,25 @@ public class PopWinActivity extends BaseActivity implements PopupViewManager.Tip
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置启动动画对应的view
         View view = popwinTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, popwinTitleView);
+        //设置返回点击事件
         popwinTitleView.setLeftFinish(context);
-        popwinTitleView.setTitle("popupwindows");
+        //设置显示标题
+        popwinTitleView.setTitle("PopWin");
+        //设置侧滑退出
         setSwipeBackLayout(0);
+        //初始化pop弹窗管理器
         mRxPopupViewManager = new PopupViewManager(this);
 
+        //默认选中居中
         mButtonAlignCenter.setChecked(true);
 
-    }
-
-
-    private void initPopupView() {
-        titlePopup = new PopupSingleView(context, ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, R.layout.activity_popwin_item);
-        titlePopup.addAction(new ActionItem("标清"));
-        titlePopup.addAction(new ActionItem("高清"));
-        titlePopup.addAction(new ActionItem("超清"));
-        titlePopup.setColorItemText(R.color.darkgray);
-        titlePopup.setItemOnClickListener(new PopupSingleView.OnItemOnClickListener() {
-
-            @Override
-            public void onItemClick(ActionItem item, int position) {
-                // TODO Auto-generated method stub
-                if (titlePopup.getAction(position).mTitle.equals(mTvDefinition.getText())) {
-                    ToastTool.showToast(context, "当前已经为" + mTvDefinition.getText(), 500);
-                } else {
-                    if (position >= 0 && position < 3) {
-                        mTvDefinition.setText(titlePopup.getAction(position).mTitle);
-                    }
-                }
-            }
-        });
     }
 
     @OnClick({R.id.tv_imply, R.id.tv_definition, R.id.button_above, R.id.button_below, R.id.button_left_to, R.id.button_right_to, R.id.button_align_center, R.id.button_align_left, R.id.button_align_right})
@@ -200,6 +185,32 @@ public class PopWinActivity extends BaseActivity implements PopupViewManager.Tip
                 mAlign = PopupView.ALIGN_RIGHT;
                 break;
         }
+    }
+
+    /**
+     *PopView 标题按钮上的弹窗
+     */
+    private void initPopupView() {
+        titlePopup = new PopupSingleView(context, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, R.layout.activity_popwin_item);
+        titlePopup.addAction(new ActionItem("标清"));
+        titlePopup.addAction(new ActionItem("高清"));
+        titlePopup.addAction(new ActionItem("超清"));
+        titlePopup.setColorItemText(R.color.darkgray);
+        titlePopup.setItemOnClickListener(new PopupSingleView.OnItemOnClickListener() {
+
+            @Override
+            public void onItemClick(ActionItem item, int position) {
+                // TODO Auto-generated method stub
+                if (titlePopup.getAction(position).mTitle.equals(mTvDefinition.getText())) {
+                    ToastTool.showToast(context, "当前已经为" + mTvDefinition.getText(), 500);
+                } else {
+                    if (position >= 0 && position < 3) {
+                        mTvDefinition.setText(titlePopup.getAction(position).mTitle);
+                    }
+                }
+            }
+        });
     }
 
     @Override

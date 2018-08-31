@@ -3,7 +3,7 @@ package com.veni.tools.interfaces;
 import android.support.design.widget.AppBarLayout;
 
 /**
- * 作者：xiyn on 2017/12/15
+ * 作者：kkan on 2017/12/15
  * 当前类注释:
  * AppBarLayout 滚动状态监听
  */

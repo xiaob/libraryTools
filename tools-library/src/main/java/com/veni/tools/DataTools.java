@@ -26,7 +26,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 数据处理相关
  * isNullString                : 判断字符串是否为空 为空即true
  * isEmpty                     : 判断对象是否为空 为空即true

@@ -6,16 +6,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.name.rmedal.R;
 import com.name.rmedal.modelbean.CardDataItem;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.view.ToastTool;
 import com.veni.tools.view.cardslide.CardAdapter;
+import com.veni.tools.view.imageload.ImageLoaderTool;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 层叠卡片的Adapter
+ */
 public class CardGroupAdapter extends CardAdapter {
 
     private List<CardDataItem> dataList;
@@ -78,7 +81,7 @@ public class CardGroupAdapter extends CardAdapter {
         }
 
         public void bindData(final CardDataItem itemData) {
-            Glide.with(context).load(itemData.getImagePath()).into(imageView);
+            ImageLoaderTool.display(context,imageView,itemData.getImagePath());
             userNameTv.setText(itemData.getUserName());
             imageNumTv.setText(itemData.getImageNum() + "");
             likeNumTv.setText(itemData.getLikeNum() + "");

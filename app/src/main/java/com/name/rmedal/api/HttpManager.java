@@ -29,15 +29,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * 作者：kkan on 2017/11/30
  * 当前类注释:
- *      使用Retrofit 封装 的网络请求
- *
- *      HttpManager.getOkHttpUrlService().login(username,password)
- *      .map(new Func1<Data, Data>() { @Override
- *      public Data call(Data data) {
- *      return data;
- *      }
- *      })
- *      .compose(RxSchedulers.<Data>io_main())
+ * 使用Retrofit 封装 的网络请求
+ * 用例:
+ * HttpManager.getOkHttpUrlService() .compose(RxSchedulers.<HttpRespose<Bean>io_main())
+ * .subscribe(new RxSubscriber<Bean>(mContext, "加载框信息,不传不显示") {
+ * public void _onNext(Bean data) {
+ * //处理返回数据,根据需要返回给页面
+ * }
+ * public void _onError(int code, String message) {
+ * //处理异常数据
+ * mView.onError(code, message);
+ * }
+ * });
  */
 public class HttpManager {
     //读超时长，单位：毫秒
@@ -47,47 +50,12 @@ public class HttpManager {
     private static final String TAG = HttpManager.class.getSimpleName();
 
     /*服务器跟地址*/
-    private static final String BASE_URL="http://123.56.190.116:8082/api/";
+    private static final String BASE_URL = "http://123.56.190.116:8082/api/";
     private volatile static HttpManager INSTANCE;
 
     private HttpUrlService httpUrlService;
     private OkHttpClient okHttpClient;
 
-    /*--------------缓存设置--------------*/
-/*
-   1. noCache 不使用缓存，全部走网络
-
-    2. noStore 不使用缓存，也不存储缓存
-
-    3. onlyIfCached 只使用缓存
-
-    4. maxAge 设置最大失效时间，失效则不使用 需要服务器配合
-
-    5. maxStale 设置最大失效时间，失效则不使用 需要服务器配合 感觉这两个类似 还没怎么弄清楚，清楚的同学欢迎留言
-
-    6. minFresh 设置有效时间，依旧如上
-
-    7. FORCE_NETWORK 只走网络
-
-    8. FORCE_CACHE 只走缓存*/
-
-    /**
-     * 缓存有效期-2小时
-     */
-    private static final long CACHE_STALE_SEC = 60 * 60 * 2;
-    /**
-     * 没网设置缓存有效期2小时
-     * 查询缓存的Cache-Control设置，为if-only-cache时只查询缓存而不会请求服务器，max-stale可以配合设置缓存失效时间
-     * max-stale 指示客户机可以接收超出超时期间的响应消息。如果指定max-stale消息的值，那么客户机可接收超出超时期指定值之内的响应消息。
-     */
-    private static final String CACHE_CONTROL_CACHE = "only-if-cached, max-stale=" + CACHE_STALE_SEC;
-    /**
-     * 有网有效期10秒
-     * 查询网络的Cache-Control设置，头部Cache-Control设为max-age=10
-     * (假如请求了服务器并在a时刻返回响应结果，则在max-age规定的秒数内，
-     * 浏览器将不会发送对应的请求到服务器，数据由缓存直接返回)时则不会使用缓存而请求服务器
-     */
-    private static final String CACHE_CONTROL_AGE = "max-age=10";
 
     /* 获取单例*/
     public static HttpManager getInstance() {
@@ -101,11 +69,13 @@ public class HttpManager {
         return INSTANCE;
     }
 
-    private static String TOKEN="";
+    /*--------------公共参数,只添加请求头--------------*/
+    private static String TOKEN = "";
 
     public static void setToken(String token) {
         TOKEN = token;
     }
+
     //构造方法私有
     private HttpManager(String BaseUrl) {
         //缓存
@@ -126,7 +96,7 @@ public class HttpManager {
             }
         };
         //2. 请求的拦截处理
-        /**
+        /*
          * 如果你的 token 是空的，就是还没有请求到 token，比如对于登陆请求，是没有 token 的，
          * 只有等到登陆之后才有 token，这时候就不进行附着上 token。另外，如果你的请求中已经带有验证 header 了，
          * 比如你手动设置了一个另外的 token，那么也不需要再附着这一个 token.
@@ -136,10 +106,9 @@ public class HttpManager {
             public Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 if (TextUtils.isEmpty(TOKEN)) {
-                    TOKEN = (String) SPTools.get(FutileTools.getContext(),SPTools.KEY_ACCESS_TOKEN, "");
+                    TOKEN = (String) SPTools.get(FutileTools.getContext(), SPTools.KEY_ACCESS_TOKEN, "");
                 }
-
-                /**
+                /*
                  * TOKEN == null，Login/Register noNeed Token
                  * noNeedAuth(originalRequest)    refreshToken api request is after log in before log out,but  refreshToken api no need auth
                  */
@@ -191,6 +160,7 @@ public class HttpManager {
                 .build();
         httpUrlService = retrofit.create(HttpUrlService.class);
     }
+
     /**
      * HttpUrlService
      */
@@ -201,7 +171,7 @@ public class HttpManager {
     /**
      * OkHttpClient
      */
-    private  OkHttpClient getOkHttpClient(){
+    private OkHttpClient getOkHttpClient() {
         return getInstance().okHttpClient;
     }
 

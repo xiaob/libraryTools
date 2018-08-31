@@ -36,6 +36,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * Toast
  */
 
 public class ToastActivity extends BaseActivity {
@@ -72,11 +73,18 @@ public class ToastActivity extends BaseActivity {
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, toastTitleView);
+        //设置返回点击事件
         toastTitleView.setLeftFinish(context);
+        //设置显示标题
         toastTitleView.setTitle("Toast_LabelsView");
+        //设置侧滑退出
         setSwipeBackLayout(0);
+
+        //SmartRefreshLayout 刷新加载监听
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
@@ -88,22 +96,30 @@ public class ToastActivity extends BaseActivity {
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
+        // 初始化Recyclerview 的Adapter
         functionadapter =new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.activity_toast_spink) {
             @Override
             protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
             }
         };
 
+        // Recyclerview 添加Header
         functionadapter.addHeaderView(upHeaderView());
+        //开启Recyclerview Item的加载动画
         functionadapter.openLoadAnimation();
+        // 初始化Recyclerview配置
         toastRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         toastRecyclerview.setAdapter(functionadapter);
     }
 
+    /**
+     * Recyclerview 添加Header
+     * @return HeaderView
+     */
     private View upHeaderView(){
-
         //添加Header
         View header = LayoutInflater.from(this).inflate(R.layout.activity_toast_lables, null, false);
 
@@ -125,6 +141,9 @@ public class ToastActivity extends BaseActivity {
         });
         return header;
     }
+    /**
+     *  LabelsView 的点击事件
+     */
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
             case "系统提示":
@@ -149,8 +168,11 @@ public class ToastActivity extends BaseActivity {
 
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -159,6 +181,6 @@ public class ToastActivity extends BaseActivity {
                         toastRefreshlayout.finishRefresh();
                         toastRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
     }
 }

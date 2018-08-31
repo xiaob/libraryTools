@@ -44,6 +44,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * 图文混排
  */
 
 public class RichTextActivity extends BaseActivity {
@@ -87,18 +88,25 @@ public class RichTextActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置启动动画对应的view
         ViewCompat.setTransitionName(richPhotoIv, AppConstant.TRANSITION_ANIMATION);
 
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //Toolbar是否可点击
         onCreateCustomToolBar(richToolbarView);
+        //设置Toolbar显示标题
         richToolbarView.setTitle("图文混排");
+        //设置侧滑退出
         setSwipeBackLayout(0);
 
+        //展开时显示的标题
         richToolbarLayout.setTitle("图文混排");
 
         richToolbarLayout.setExpandedTitleColor(ContextCompat.getColor(this, R.color.white));
         richToolbarLayout.setCollapsedTitleTextColor(ContextCompat.getColor(this, R.color.alpha_85_white));
 
+        //AppBarLayout的滚动状态监听
         richBar.addOnOffsetChangedListener(new AppBarStateChangeListener() {
             @Override
             public void onStateChanged(AppBarLayout appBarLayout, int state) {
@@ -118,7 +126,7 @@ public class RichTextActivity extends BaseActivity {
             }
         });
 
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -126,9 +134,12 @@ public class RichTextActivity extends BaseActivity {
                     public void accept(Long aLong) throws Exception {
                         upviewdata();
                     }
-                });
+                }));
     }
 
+    /**
+     * 模拟图文混排数据
+     */
     private void upviewdata() {
 
         richTextView.setRichText(body);

@@ -7,6 +7,11 @@ import com.name.rmedal.R;
 import com.veni.tools.LogTools;
 import com.veni.tools.base.AlertDialogBuilder;
 
+/**
+ * 作者：kkan on 2017/11/30
+ * 当前类注释:
+ * 网络请求的加载框
+ */
 public class RxHttpTipLoadDialog {
 
     private volatile static RxHttpTipLoadDialog instance;

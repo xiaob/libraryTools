@@ -18,6 +18,7 @@ import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseFragment;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.name.rmedal.bigimage.BigImageBean;
+import com.name.rmedal.html5.WebViewActivity;
 import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
 import com.name.rmedal.test.CardGroupActivity;
@@ -81,15 +82,15 @@ public class HomeFragment extends BaseFragment {
         super.onAttach(context);
 
     }
+
     @Override
-    public void onHiddenChanged(boolean hidden) {
+    public void onHiddenChanged(boolean hidden) { /*Fragment在不在最前端界面显示*/
         super.onHiddenChanged(hidden);
         if(hidden){//不在最前端界面显示，相当于调用了onPause()
 
-
         }else{//重新显示到最前端 ,相当于调用了onResume()
-
-            //进行网络数据刷新  此处执行必须要在 Fragment与Activity绑定了 即需要添加判断是否完成绑定，否则将会报空（即非第一个显示出来的fragment，虽然onCreateView没有被调用,
+            //进行网络数据刷新  此处执行必须要在 Fragment与Activity绑定了 即需要添加判断是否完成绑定，
+            // 否则将会报空（即非第一个显示出来的fragment，虽然onCreateView没有被调用,
             //但是onHiddenChanged也会被调用，所以如果你尝试去获取活动的话，注意防止出现空指针）
 
         }
@@ -98,7 +99,10 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(context, homeRxtitle);
+
+        //SmartRefreshLayout 刷新加载监听
         homeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -110,8 +114,10 @@ public class HomeFragment extends BaseFragment {
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         homeRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
+        // 初始化Recyclerview 的Adapter
         functionadapter = new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.fragment_function_item) {
 
             @Override
@@ -127,12 +133,17 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         };
+        //开启Recyclerview Item的加载动画
         functionadapter.openLoadAnimation();
+        // 初始化Recyclerview配置
         homeFunctions.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         homeFunctions.setAdapter(functionadapter);
         setfuctionview();
     }
 
+    /**
+     * 模拟数据
+     */
     private void setfuctionview() {
         List<FunctionBean> functionlist = new ArrayList<>();
         functionlist.add(new FunctionBean("Dialog展示", R.mipmap.ic_dialog, new OnNoFastClickListener() {
@@ -228,7 +239,12 @@ public class HomeFragment extends BaseFragment {
                 startActivityForResult(intent, AppConstant.REQUEST_QRCODE);
             }
         }));
-        functionlist.add(new FunctionBean("没有图片", 0,null));
+        functionlist.add(new FunctionBean("WebView", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                WebViewActivity.startAction(context,"https://gitee.com/KKan/RMedal","测试",true);
+            }
+        }));
         functionadapter.replaceData(functionlist);
     }
 
@@ -236,7 +252,7 @@ public class HomeFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) { // Successfully.
-            if (requestCode == AppConstant.REQUEST_QRCODE) {//扫码
+            if (requestCode == AppConstant.REQUEST_QRCODE) {//扫码回调
                 Bundle bundle = data.getExtras();
                String zxqrcode = bundle.getString("result");
                 LogTools.e(TAG, "" + zxqrcode);
@@ -257,8 +273,11 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -267,7 +286,7 @@ public class HomeFragment extends BaseFragment {
                         homeRefreshlayout.finishRefresh();
                         homeRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
 
     }
 }

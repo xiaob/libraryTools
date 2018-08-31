@@ -3,7 +3,7 @@ package com.name.rmedal.api;
 /**
  * 作者：kkan on 2017/11/30
  * 当前类注释:
- *      基类fragment
+ *   APP常量
  */
 public class AppConstant {
     public static final String  pageSize = "20";

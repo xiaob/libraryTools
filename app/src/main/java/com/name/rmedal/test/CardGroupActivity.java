@@ -22,6 +22,7 @@ import butterknife.BindView;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * 拖拽式层叠卡片
  */
 
 public class CardGroupActivity extends BaseActivity {
@@ -51,29 +52,34 @@ public class CardGroupActivity extends BaseActivity {
 
     }
 
-    private CardSlidePanel.CardSwitchListener cardSwitchListener;
-    private CardGroupAdapter cardGroupAdapter;
+    private CardSlidePanel.CardSwitchListener cardSwitchListener;// 左右滑动监听
+    private CardGroupAdapter cardGroupAdapter;//层叠卡片的Adapter
     private List<CardDataItem> dataList = new ArrayList<>();
 
     @Override
     public void initView(Bundle savedInstanceState) {
-//        View view = cardgroupviewTitleView.getTvTitle();
-//        ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, cardgroupviewTitleView);
+        //设置返回点击事件
         cardgroupviewTitleView.setLeftFinish(context);
+        //设置显示标题
         cardgroupviewTitleView.setTitle("拖拽式层叠卡片");
+        //设置标题栏右侧图片
         cardgroupviewTitleView.setRightIcon(R.mipmap.card_left2);
+        //显示标题栏右侧图片
         cardgroupviewTitleView.setRightIconVisibility(true);
+        //标题栏右侧图片点击事件
         cardgroupviewTitleView.setRightIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 addCard();
                 addCard();
                 cardGroupAdapter.upData(dataList);
             }
         });
+        //设置侧滑退出
         setSwipeBackLayout(0);
         // 1. 左右滑动监听
         cardSwitchListener = new CardSlidePanel.CardSwitchListener() {
@@ -88,14 +94,20 @@ public class CardGroupActivity extends BaseActivity {
                 LogTools.e(TAG, "正在消失---" + index + " 消失type=" + type);
             }
         };
+        // 添加左右滑动监听
         slidePanel.setCardSwitchListener(cardSwitchListener);
+        //初始化层叠卡片的Adapter
         cardGroupAdapter = new CardGroupAdapter(context);
         slidePanel.setAdapter(cardGroupAdapter);
+        //更新显示数据
         addCard();
         addCard();
         cardGroupAdapter.upData(dataList);
     }
 
+    /**
+     * 模拟数据
+     */
     private void addCard() {
         dataList.add(new CardDataItem("http://a0.att.hudong.com/31/35/300533991095135084358827466.jpg"
                 ,"美女111"));

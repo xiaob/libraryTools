@@ -41,6 +41,8 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 作者：kkan on 2018/04/20
  * 当前类注释:
+ * 设备信息
+ * 主要是展示权限获取
  */
 
 public class PhoneInfoActivity extends BaseActivity {
@@ -80,13 +82,21 @@ public class PhoneInfoActivity extends BaseActivity {
     private List<DeviceBean> devicelist = new ArrayList<>();
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置启动动画对应的view
         View view = phoneInfoTitle.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, phoneInfoTitle);
+        //设置返回点击事件
         phoneInfoTitle.setLeftFinish(context);
+        //设置显示标题
         phoneInfoTitle.setTitle("设备信息");
+        //设置侧滑退出
         setSwipeBackLayout(0);
+
+        //SmartRefreshLayout 刷新加载监听
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshlayout) {
@@ -98,8 +108,10 @@ public class PhoneInfoActivity extends BaseActivity {
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
+        // 初始化Recyclerview 的Adapter
         functionadapter =new BaseQuickAdapter<DeviceBean, BaseViewHolder>(R.layout.activity_device_info_item) {
             @Override
             protected void convert(BaseViewHolder viewHolder, DeviceBean item) {
@@ -108,9 +120,12 @@ public class PhoneInfoActivity extends BaseActivity {
             }
         };
 
+        //开启Recyclerview Item的加载动画
         functionadapter.openLoadAnimation();
+        // 初始化Recyclerview配置
         toastRecyclerview.setLayoutManager(new LinearLayoutManager(this));
         toastRecyclerview.setAdapter(functionadapter);
+        // 权限请求
         PermissionsTools.with(context).addPermission(Manifest.permission.READ_PHONE_STATE).initPermission();
     }
 
@@ -124,6 +139,9 @@ public class PhoneInfoActivity extends BaseActivity {
         }
     }
 
+    /**
+     * 获取设备信息
+     */
     private void getPhoneInfo() {
         devicelist.add(new DeviceBean("是否为手机", DeviceTools.isPhone(context)?"是":"否"));
         devicelist.add(new DeviceBean("手机类型", DeviceTools.getPhoneType(context)+""));
@@ -156,8 +174,11 @@ public class PhoneInfoActivity extends BaseActivity {
         functionadapter.replaceData(devicelist);
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -166,7 +187,7 @@ public class PhoneInfoActivity extends BaseActivity {
                         toastRefreshlayout.finishRefresh();
                         toastRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
     }
     public class DeviceBean {
 

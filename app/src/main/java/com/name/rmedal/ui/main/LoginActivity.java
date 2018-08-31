@@ -21,7 +21,6 @@ import com.veni.tools.ACache;
 import com.veni.tools.CaptchaTime;
 import com.veni.tools.DataTools;
 import com.veni.tools.KeyboardTools;
-import com.veni.tools.LogTools;
 import com.veni.tools.RegTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -87,12 +86,18 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, loginRootRv);
+        //状态栏字体颜色及icon变黑
         StatusBarTools.darkMode(this, true);
+        //设置侧滑退出
         setSwipeBackLayout(0);
 
-        initEvent();
+        //设置监听
+        initListener();
+        //键盘高度变化监听
         loginRootRv.setKeyboardListener(new KeyboardLayout.KeyboardLayoutListener() {
             @Override
             public void onKeyboardStateChanged(boolean isActive, int keyboardHeight, int bottom) {
@@ -119,7 +124,9 @@ public class LoginActivity extends BaseActivity {
 //                lastdist = dist;
             }
         });
+        //获取上次获取验证码的倒计时
         long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
+        //倒计时大于两秒显示相关信息
         if (codetime / 1000 > 2) {
             timeCount = new CaptchaTime(loginGetCaptcha, codetime / 1000);
             loginMobileEt.setText(ACache.get(context).getAsString(AppConstant.LG_Code));
@@ -186,7 +193,10 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    private void initEvent() {
+    /**
+     * 设置监听
+     */
+    private void initListener() {
         loginMobileEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

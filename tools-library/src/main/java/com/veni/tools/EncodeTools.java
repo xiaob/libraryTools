@@ -9,7 +9,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 编码解码相关工具类
  * urlEncode                   : URL编码
  * urlDecode                   : URL解码

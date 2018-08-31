@@ -4,7 +4,7 @@ import android.os.CountDownTimer;
 import android.widget.TextView;
 
 /**
- * 作者：xiyn on 2017/12/19
+ * 作者：kkan on 2017/12/19
  * 当前类注释:
  * 验证码倒计时
  */

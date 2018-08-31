@@ -16,14 +16,14 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 作者：xiyn on 2017/01/30
+ * 作者：kkan on 2017/01/30
  * 当前类注释:基类fragment
  */
 public abstract class BaseFragment<T extends BasePresenter> extends FragmentBase {
 
-    protected View rootView;
-    public T mPresenter;
-    public RxManager mRxManager;
+    protected View rootView;//根视图
+    public T mPresenter;//Presenter 对象
+    public RxManager mRxManager;//Rxjava管理
     private Unbinder unbinder;
     protected String TAG;
     protected AntiShake antiShake;//防止重复点击
@@ -68,7 +68,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends FragmentBase
         if (mPresenter != null) {
             mPresenter.onDestroy();
         }
-        mRxManager.clear();
+        if (mRxManager != null) {
+            mRxManager.clear();
+        }
     }
 
 

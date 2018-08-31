@@ -4,9 +4,9 @@ package com.name.rmedal.ui.main.presenter;
 import com.name.rmedal.R;
 import com.name.rmedal.api.HttpManager;
 import com.name.rmedal.api.HttpRespose;
-import com.name.rmedal.modelbean.PersonalModelBean;
-import com.name.rmedal.ui.main.contract.MainContract;
 import com.name.rmedal.api.RxSubscriber;
+import com.name.rmedal.modelbean.PersonalModelBean;
+import com.name.rmedal.ui.main.contract.SVGContract;
 import com.veni.tools.baserx.RxSchedulers;
 
 import java.util.HashMap;
@@ -15,9 +15,9 @@ import java.util.List;
 /**
  * 作者：Administrator on 2017/12/04 10:36
  * 当前类注释:
- * Presenter
+ * 欢迎页的Presenter
  */
-public class MainPresenter extends MainContract.Presenter {
+public class SVGPresenter extends SVGContract.Presenter {
 
     @Override
     public void checkVersion(String type) {

@@ -70,12 +70,17 @@ public class Dialog_ProgressActivity extends BaseActivity {
     private BaseQuickAdapter<FunctionBean, BaseViewHolder> functionadapter;
     @Override
     public void initView(Bundle savedInstanceState) {
-
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, toastTitleView);
+        //设置返回点击事件
         toastTitleView.setLeftFinish(context);
+        //设置显示标题
         toastTitleView.setTitle("Dialog_Progress");
+        //设置侧滑退出
         setSwipeBackLayout(0);
+        //SmartRefreshLayout 刷新加载监听
         toastRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -86,8 +91,10 @@ public class Dialog_ProgressActivity extends BaseActivity {
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         toastRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
 
+        // 初始化Recyclerview 的Adapter
         functionadapter =new BaseQuickAdapter<FunctionBean, BaseViewHolder>(R.layout.activity_toast_spink) {
             @Override
             protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
@@ -99,12 +106,14 @@ public class Dialog_ProgressActivity extends BaseActivity {
         };
         //添加Recyclerview头部
         functionadapter.addHeaderView(upHeaderView());
+        //开启Recyclerview Item的加载动画
         functionadapter.openLoadAnimation();
+        //初始化Recyclerview配置
         toastRecyclerview.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         toastRecyclerview.setAdapter(functionadapter);
 
+        //模拟数据
         List<FunctionBean> functionlist = new ArrayList<>();
-
         for(int i=0;i< Style.values().length;i++){
             Style style = Style.values()[i];
             Sprite drawable = SpriteFactory.create(style);
@@ -116,9 +125,14 @@ public class Dialog_ProgressActivity extends BaseActivity {
             drawable.setBounds(0, 0, 100, 120);
             functionlist.add(new FunctionBean(style.name(),drawable,null));
         }
+        //刷新adapter
         functionadapter.replaceData(functionlist);
     }
 
+    /**
+     * Recyclerview 添加Header
+     * @return HeaderView
+     */
     private View upHeaderView(){
 
         //添加Header
@@ -154,6 +168,9 @@ public class Dialog_ProgressActivity extends BaseActivity {
         return header;
     }
 
+    /**
+     *  LabelsView 的点击事件
+     */
     private void setfuctionview(String labelstr) {
         switch (labelstr) {
             case "Dialog":
@@ -299,8 +316,11 @@ public class Dialog_ProgressActivity extends BaseActivity {
 
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -309,6 +329,6 @@ public class Dialog_ProgressActivity extends BaseActivity {
                         toastRefreshlayout.finishRefresh();
                         toastRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
     }
 }

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * 作者：xiyn on 2017/01/30
+ * 作者：kkan on 2017/01/30
  * 当前类注释:基类fragment
  */
 public abstract class FragmentBase extends Fragment {

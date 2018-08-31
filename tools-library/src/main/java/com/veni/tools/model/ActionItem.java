@@ -1,7 +1,7 @@
 package com.veni.tools.model;
 
 /**
- * @author xiyn 功能描述：弹窗内部子类项（绘制标题和图标）
+ * @author kkan 功能描述：弹窗内部子类项（绘制标题和图标）
  */
 public class ActionItem {
     // 定义文本对象

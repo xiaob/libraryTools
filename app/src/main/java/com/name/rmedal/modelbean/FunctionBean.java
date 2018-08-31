@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  * 作者：kkan on 2018/02/26
  * 当前类注释:
+ * 首页功能模块实体类(不是必须)
  */
 
 public class FunctionBean implements Serializable {

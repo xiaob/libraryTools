@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 常用工具类
  * hideKeyboard                : 点击隐藏软键盘
  * fixListViewHeight           : 手动计算出listView的高度，但是不再具有滚动效果

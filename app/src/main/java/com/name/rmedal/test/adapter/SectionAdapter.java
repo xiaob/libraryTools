@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+ * 分组
  */
 public class SectionAdapter extends BaseSectionQuickAdapter<PersonalSection, BaseViewHolder> {
     /**

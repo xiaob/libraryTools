@@ -20,7 +20,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by xiyn on 2016/12/21.
+ * Created by kkan on 2016/12/21.
  * 崩溃日志处理工具
  */
 

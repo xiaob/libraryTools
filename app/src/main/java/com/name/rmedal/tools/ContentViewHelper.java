@@ -19,10 +19,10 @@ import com.veni.tools.StatusBarTools;
 import com.veni.tools.ToolBarUtils;
 
 /**
- * 作者：xiyn on 2017/12/15
+ * 作者：kkan on 2017/12/15
  * 当前类注释:
+ * 根布局视图构造器
  */
-
 public class ContentViewHelper {
     private Context context;
 
@@ -49,7 +49,7 @@ public class ContentViewHelper {
         this.context = context;
         this.toolbarcolor = toolbarcolor;
         mInflater = LayoutInflater.from(this.context);
-        //初始化整个内容
+        //初始化根布局
         initContentView();
         //初始化toolbar
         initToolBar();
@@ -59,7 +59,9 @@ public class ContentViewHelper {
         }
     }
 
-
+    /**
+     * 构造空布局
+     */
     private void initContentView() {
         //直接创建一个帧布局，作为视图容器的父容器
         contentView = new LinearLayout(context);
@@ -68,6 +70,9 @@ public class ContentViewHelper {
 
     }
 
+    /**
+     * 构造toolbar
+     */
     private void initToolBar() {
         if (toolbarcolor != 0) {
             toolbarLayout = new FrameLayout(context);
@@ -89,6 +94,9 @@ public class ContentViewHelper {
         }
     }
 
+    /**
+     * 初始化自定义布局
+     */
     private void initUserView(Object layout) {
         // content FrameLayout
         userView = new FrameLayout(context);
@@ -102,6 +110,9 @@ public class ContentViewHelper {
         contentView.addView(userView, params);
     }
 
+    /**
+     * 设置toolbar属性
+     */
     public void onCreateCustomToolBar(Context context, Toolbar toolbarBaseTb) {
         ((AppCompatActivity) context).setSupportActionBar(toolbarBaseTb);
         ActionBar actionBar = ((AppCompatActivity) context).getSupportActionBar();
@@ -113,46 +124,79 @@ public class ContentViewHelper {
         }
     }
 
+    /**
+     *
+     * @return 根布局视图
+     */
     public LinearLayout getContentView() {
         return contentView;
     }
 
+    /**
+     * @return toolbar 布局视图 FrameLayout
+     */
     public FrameLayout getToolbarLayout() {
         return toolbarLayout;
     }
 
+    /**
+     *
+     * @return 自定义布局视图
+     */
     public View getuserView() {
         return userView;
     }
 
+    /**
+     * @return toolbar标题 布局视图
+     */
     public View getTitleTv() {
         return toolbarTvTitle;
     }
 
+    /**
+     * @return toolbar 布局视图 Toolbar
+     */
     public Toolbar getToolBar() {
         return toolbarBaseTb;
     }
 
+    /**
+     * 设置 toolbar 按钮
+     */
     public void setNavigationIcon(int resId) {
         if (toolbarBaseTb != null) {
             toolbarBaseTb.setNavigationIcon(resId);
         }
     }
 
+    /**
+     * 设置 toolbar 按钮
+     */
     public void setNavigationIcon(Drawable icon) {
         if (toolbarBaseTb != null) {
             toolbarBaseTb.setNavigationIcon(icon);
         }
     }
 
+    /**
+     * 增加状态栏的高度
+     */
     public void initToolbarState() {
         StatusBarTools.setPaddingSmart(context, toolbarLayout);
     }
 
+    /**
+     * 设置 toolbar 标题
+     */
     public void setTitletext(CharSequence toolbarstring) {
         ToolBarUtils.getToolBarUtils().setTitletext(toolbarBaseTb, toolbarTvTitle, toolbarstring);
     }
 
+    /**
+     * 设置 toolbar 标题
+     * mode =位置
+     */
     public void setTitletext(CharSequence title, int mode) {
         ToolBarUtils.getToolBarUtils().setTitletext(toolbarBaseTb, toolbarTvTitle, title, mode);
     }

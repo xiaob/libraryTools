@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 /**
- * 作者：xiyn on 2017/01/30
+ * 作者：kkan on 2017/01/30
  * 当前类注释:
  *      修复viewpager
  *     v4 的ViewPager点击会崩溃

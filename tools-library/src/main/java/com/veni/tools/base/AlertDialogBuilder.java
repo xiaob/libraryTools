@@ -34,7 +34,7 @@ import com.veni.tools.view.progressing.style.WanderingCubes;
 import com.veni.tools.view.progressing.style.Wave;
 
 /**
- * 作者：xiyn on 2017/12/04 10:36
+ * 作者：kkan on 2017/12/04 10:36
  * 当前类注释:
  */
 

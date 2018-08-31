@@ -11,6 +11,11 @@ import android.widget.TextView;
  * 作者：kkan on 2017/12/18
  * 当前类注释:
  * TextView 工具类
+ * 经常遇到一些信息的展示,类似这样而且左右颜色不一致的
+ * 订单号:18863256211
+ * 手机号码:18863256211
+ * 姓名:18863256211
+ * TextViewTools.upitemtvforhtml_onetv(tv,"订单号","18863256211","#b2b2b2", "#4a4a4a");
  */
 
 public class TextViewTools {

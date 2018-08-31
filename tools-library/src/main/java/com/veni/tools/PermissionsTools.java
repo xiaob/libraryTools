@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by xiyn on 2017/8/18.
+ * Created by kkan on 2017/8/18.
  * 权限请求操作工具类
  * addPermission               : 添加权限
  * initPermission              : 请求权限

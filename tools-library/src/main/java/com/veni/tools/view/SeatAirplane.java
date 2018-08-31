@@ -34,7 +34,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by xiyn on 16/7/22.
+ * Created by kkan on 16/7/22.
  * 飞机票选座控件
  */
 public class SeatAirplane extends View {

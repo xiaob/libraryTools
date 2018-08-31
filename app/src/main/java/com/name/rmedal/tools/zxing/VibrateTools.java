@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Vibrator;
 
 /**
- * Created by xiyn on 2017/7/25.
+ * Created by kkan on 2017/7/25.
  * 震动帮助类
  * androidManifest.xml中加入 以下权限
  * <uses-permission android:name="android.permission.VIBRATE" />

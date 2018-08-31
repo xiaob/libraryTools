@@ -36,7 +36,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * 作者：xiyn on 2017/01/30
+ * 作者：kkan on 2017/01/30
  * 当前类注释:
  * 本地文件缓存工具类
  * -------------------使用例子-------------------------

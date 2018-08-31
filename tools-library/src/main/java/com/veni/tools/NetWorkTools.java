@@ -16,7 +16,7 @@ import java.util.List;
 
 
 /**
- * Created by xiyn on 2016/1/29.
+ * Created by kkan on 2016/1/29.
  * 网络相关
  * <p>
  * ping                        : 判断是否有外网连接

@@ -18,7 +18,7 @@ import static com.veni.tools.ConstantTools.MIN;
 import static com.veni.tools.ConstantTools.SEC;
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 时间相关工具类
  * formatData(dataFormat, timeStamp); 时间戳转特定格式时间
  * convertToSecond(time); 将毫秒转换成秒

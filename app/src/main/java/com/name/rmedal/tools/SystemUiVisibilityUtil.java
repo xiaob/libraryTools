@@ -21,6 +21,9 @@ import android.app.Activity;
 import android.os.Build;
 import android.view.View;
 
+/**
+ * 显示或隐藏状态栏
+ */
 @TargetApi(Build.VERSION_CODES.KITKAT)
 public class SystemUiVisibilityUtil {
 

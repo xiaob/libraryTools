@@ -26,7 +26,7 @@ import com.veni.tools.R;
  * 【解决屏幕上多个侧滑删除菜单】：内设一个类静态View类型变量 ViewCache，存储的是当前正处于右滑状态的CstSwipeMenuItemViewGroup，
  * 每次Touch时对比，如果两次Touch的不是一个View，那么令ViewCache恢复普通状态，并且设置新的CacheView
  * 只要有一个侧滑菜单处于打开状态， 就不给外层布局上下滑动了
- * <com.xiyn.rxtools.view.swipemenu.SwipeMenuLayout
+ * <com.kkan.rxtools.view.swipemenu.SwipeMenuLayout
  * android:layout_width="match_parent"
  * android:layout_height="wrap_content"
  * android:clickable="true">
@@ -43,7 +43,7 @@ import com.veni.tools.R;
  * android:background="@color/red_ff4a57"
  * android:text="删除"
  * android:textColor="@android:color/white"/>
- * </com.xiyn.rxtools.view.swipemenu.SwipeMenuLayout>
+ * </com.kkan.rxtools.view.swipemenu.SwipeMenuLayout>
  * Created by zhangxutong .
  * Date: 16/04/24
  */

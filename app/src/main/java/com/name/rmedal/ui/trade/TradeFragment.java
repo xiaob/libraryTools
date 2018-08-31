@@ -55,11 +55,15 @@ public class TradeFragment extends BaseFragment{
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(context, tradeTitleView);
+        //设置显示标题
         tradeTitleView.setTitle("添加购物车");
 
+        //设置需要滚动的字符
         tradeMadeCount.setCharacterList(TickerUtils.getDefaultNumberList());
         tradeMadeCount.setText("￥0.0", true);
+        //购物车控件点击监听
         tradeSv1.setOnShoppingClickListener(new ShoppingView.ShoppingClickListener() {
             @Override
             public void onAddClick(int num) {
@@ -71,6 +75,8 @@ public class TradeFragment extends BaseFragment{
                 tradeMadeCount.setText("数量："+num, false);
             }
         });
+
+        //SmartRefreshLayout 刷新加载监听
         tradeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -82,6 +88,7 @@ public class TradeFragment extends BaseFragment{
                 clooserefreshlayout();
             }
         });
+        //SmartRefreshLayout 刷新加载Header样式
         tradeRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
     }
 
@@ -95,8 +102,11 @@ public class TradeFragment extends BaseFragment{
         }
     }
 
+    /**
+     * 模拟刷新加载
+     */
     private void clooserefreshlayout() {
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -107,7 +117,7 @@ public class TradeFragment extends BaseFragment{
                         tradeRefreshlayout.finishRefresh();
                         tradeRefreshlayout.finishLoadMore();
                     }
-                });
+                }));
 
     }
 }

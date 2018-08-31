@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * 多行文字上下滚动
- * Created by xiyn on 2016/7/20.
+ * Created by kkan on 2016/7/20.
  */
 public class TextViewVerticalMore extends ViewFlipper {
 

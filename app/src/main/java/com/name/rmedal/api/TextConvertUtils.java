@@ -2,6 +2,7 @@ package com.name.rmedal.api;
 
 /**
  * Created by zenglb on 2016/7/4.
+ * UniCode转码
  */
 public class TextConvertUtils {
 

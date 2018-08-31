@@ -16,7 +16,7 @@ import com.veni.tools.DataTools;
 
 /**
  * 弧形进度条
- * @author xiyn
+ * @author kkan
  *
  */
 public class RoundProgress extends View {

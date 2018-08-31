@@ -13,7 +13,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import java.util.Hashtable;
 
 /**
- * Created by xiyn on 2017/2/17.
+ * Created by kkan on 2017/2/17.
  * 二维码
  * <p>
  * //二维码生成方式一  推荐此方法

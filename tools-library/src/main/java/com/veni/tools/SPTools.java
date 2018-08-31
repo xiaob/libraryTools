@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * SharedPreferences工具类
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  */
 
 public class SPTools {

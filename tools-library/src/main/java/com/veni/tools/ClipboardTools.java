@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 /**
- * Created by xiyn on 2016/12/21.
+ * Created by kkan on 2016/12/21.
  * copyText                    : 复制文本到剪贴板
  * getText                     : 获取剪贴板的文本
  * copyUri                     : 复制uri到剪贴板

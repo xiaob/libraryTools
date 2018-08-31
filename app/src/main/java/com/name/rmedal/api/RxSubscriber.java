@@ -2,6 +2,7 @@ package com.name.rmedal.api;
 
 import android.content.Context;
 import android.os.NetworkOnMainThreadException;
+import android.support.annotation.CallSuper;
 
 import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
@@ -23,35 +24,54 @@ import retrofit2.HttpException;
  * 订阅封装
  * <p>
  * ----------------使用例子----------------*
- * _apiService.login(mobile, verifyCode)
- * .//省略
- * .subscribe(new RxSubscriber<User user>(mContext,false) {
  * <p>
- * public void _onNext(User user) {
- * // 处理user
+ * HttpManager.getOkHttpUrlService() .compose(RxSchedulers.<HttpRespose<Bean>io_main())
+ * .subscribe(new RxSubscriber<Bean>(mContext, "加载框信息,不传不显示") {
+ * public void _onNext(Bean data) {
+ * //处理返回数据,根据需要返回给页面
  * }
- * public void _onError(String msg) {
- * RxToast.error(mActivity, msg);
+ * public void _onError(int code, String message) {
+ * //处理异常数据
+ * mView.onError(code, message);
+ * }
  * });
  */
 public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
     private Context context;
-    private final int RESPONSE_FATAL_EOR = -1;    //返回数据失败,严重的错误
-    private int errorCode = -1111;
-    private String errorMsg = "未知的错误！";
+    private final int RESPONSE_FATAL_EOR = -1;//返回数据失败,严重的错误
+    private int errorCode = -1111;//错误码
+    private String errorMsg = "未知的错误！";//错误信息
     private Disposable disposable;
 
+    /**
+     * 构造方法
+     * 无加载弹窗
+     */
     public RxSubscriber(Context context) {
         this.context = context;
     }
 
+    /**
+     * 构造方法
+     * 有加载弹窗
+     * loadmsg可为空
+     * 具体在RxHttpTipLoadDialog设置
+     */
     public RxSubscriber(Context context, String loadmsg) {
         this.context = context;
-        RxHttpTipLoadDialog.getHttpTipLoadDialog().showDialog(context,loadmsg);
+        RxHttpTipLoadDialog.getHttpTipLoadDialog().showDialog(context, loadmsg);
     }
 
+    /*抽象方法*/
     public abstract void _onNext(T t);
 
+    /*抽象方法
+    * 需要在 onError中同意处理异常 则可以写成
+    * @CallSuper
+    * public void _onError(int code, String message){
+    * //要统一处理的异常
+    *  }
+    */
     public abstract void _onError(int code, String message);
 
     @Override
@@ -59,10 +79,14 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
         disposable = d;
     }
 
+    /**
+     * 请求数据处理
+     */
     @Override
     public void onNext(HttpRespose<T> response) {
         disposeIt();
         LogTools.e("Observer.onNext", JsonTools.toJson(response));
+        //服务器返回对应的code码
         if (response.success()) {
             // 这里拦截一下使用测试
             _onNext(response.getData());
@@ -71,6 +95,9 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
         }
     }
 
+    /**
+     * 异常处理
+     */
     @Override
     public void onError(Throwable t) {
         LogTools.e("Observer.java", t.getMessage() + "");
@@ -125,7 +152,7 @@ public abstract class RxSubscriber<T> implements Observer<HttpRespose<T>> {
     }
 
     /**
-     * 获取详细的错误的信息 errorCode,errorMsg
+     * 获取详细的错误的信息 errorCode,errorMsg 尝试UniCode转码
      * <p>
      * 以登录的时候的Grant_type 故意写错为例子,这个时候的http 应该是直接的返回401=httpException.code()
      * 但是是怎么导致401的？我们的服务器会在respose.errorBody 中的content 中说明

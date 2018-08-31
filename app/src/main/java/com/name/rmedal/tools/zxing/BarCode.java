@@ -10,7 +10,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 /**
- * Created by xiyn on 2017/2/17.
+ * Created by kkan on 2017/2/17.
  * 条形码
  * <p>
  * <p>

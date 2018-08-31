@@ -20,6 +20,11 @@ package com.name.rmedal.modelbean;
 
 /**
  * Some SVGs to play with
+ * SVG 动画 好看而已,暂时没用,根据实际情况来
+ * 需要的话:
+ * 可以自己去制作 可伸缩矢量图形
+ * 或者
+ * 更换其他动画库
  */
 public enum ModelSVG {
 

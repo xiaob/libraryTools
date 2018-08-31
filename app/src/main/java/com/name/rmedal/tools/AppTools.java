@@ -16,6 +16,7 @@ import java.util.HashMap;
 /**
  * 作者：kkan on 2018/02/26
  * 当前类注释:
+ * 依赖中没有的或者需要经常更改的Tools
  */
 
 public class AppTools {

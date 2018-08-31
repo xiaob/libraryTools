@@ -3,8 +3,8 @@ package com.name.rmedal.html5;
 import android.webkit.WebView;
 
 /**
- * 回调错误或者正确
- * Created by xiyn on 2017/6/16.
+ * Created by kkan on 2017/6/16.
+ * Web 回调
  */
 public interface WebUtilsListener {
     void onReceivedTitle(WebView view, String title);

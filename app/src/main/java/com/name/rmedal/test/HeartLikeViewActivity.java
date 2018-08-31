@@ -71,22 +71,27 @@ public class HeartLikeViewActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, heartlikeTitleView);
+        //设置返回点击事件
         heartlikeTitleView.setLeftFinish(context);
+        //设置显示标题
         heartlikeTitleView.setTitle("点赞");
+        //设置侧滑退出
         setSwipeBackLayout(0);
 
-
+        //点赞爆炸按钮
         mShineButton.init(this);
-
         porterShapeImageView1.init(this);
         porterShapeImageView2.init(this);
         porterShapeImageView3.init(this);
+        //点赞动画的旋转角度
         porterShapeImageView3.setShineTurnAngle(1);
 
+        //代码设置点赞按钮
         ShineButton shinebuttonjava = new ShineButton(this);
-
         shinebuttonjava.setBtnColor(Color.GRAY);
         shinebuttonjava.setBtnFillColor(Color.RED);
         shinebuttonjava.setShapeResource(R.mipmap.heart);
@@ -118,6 +123,7 @@ public class HeartLikeViewActivity extends BaseActivity {
                 break;
             case R.id.love:
                 LogTools.e(TAG, "-----");
+                //点赞气泡动画
                 mHeartLayout.post(new Runnable() {
                     @Override
                     public void run() {

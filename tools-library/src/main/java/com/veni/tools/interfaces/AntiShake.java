@@ -3,7 +3,7 @@ package com.veni.tools.interfaces;
 import java.util.Calendar;
 
 /**
- * 作者：xiyn on 2017/12/22
+ * 作者：kkan on 2017/12/22
  * 当前类注释:
  *  防止重复点击
  *  if(antiShake.check(view.getId()))return;

@@ -73,16 +73,24 @@ public class VerifyCodeActivity extends BaseActivity {
 
     @Override
     public void initView(Bundle savedInstanceState) {
+        //设置启动动画对应的view
         View view = tickerTitleView.getTvTitle();
         ViewCompat.setTransitionName(view, AppConstant.TRANSITION_ANIMATION);
+        //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        //增加状态栏的高度
         StatusBarTools.setPaddingSmart(this, tickerTitleView);
+        //设置返回点击事件
         tickerTitleView.setLeftFinish(context);
+        //设置显示标题
         tickerTitleView.setTitle("随机验证码");
+        //设置侧滑退出
         setSwipeBackLayout(0);
 
+        //刷新验证码
         verifycodeview.refreshCode();
         verifycodeview2.refreshCode();
+        //模拟网络刷新验证码
         getnetverifycode();
     }
 
@@ -123,9 +131,13 @@ public class VerifyCodeActivity extends BaseActivity {
                 break;
         }
     }
+
+    /**
+     * 模拟刷新加载
+     */
     private void getnetverifycode(){
 
-        Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -136,7 +148,7 @@ public class VerifyCodeActivity extends BaseActivity {
                         netVerifycodeview.setVisibility(View.VISIBLE);
                         netVerifycodeview.setvCode(code);
                     }
-                });
+                }));
     }
     /**
      * java生成随机数字和字母组合

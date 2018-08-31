@@ -13,7 +13,7 @@ import java.util.Stack;
 
 
 /**
- * Created by xiyn on 2016/1/24.
+ * Created by kkan on 2016/1/24.
  * 封装Activity操作相关工具类
  * addActivity                 : 添加Activity 到栈
  * currentActivity             : 获取当前的Activity（堆栈中最后一个压入的)

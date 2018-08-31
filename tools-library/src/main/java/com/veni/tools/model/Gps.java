@@ -1,7 +1,7 @@
 package com.veni.tools.model;
 
 /**
- * Created by xiyn on 2017/6/19.
+ * Created by kkan on 2017/6/19.
  */
 
 public class Gps {

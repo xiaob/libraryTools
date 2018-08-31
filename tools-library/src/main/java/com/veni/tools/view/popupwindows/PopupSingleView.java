@@ -24,7 +24,7 @@ import com.veni.tools.model.ActionItem;
 import java.util.ArrayList;
 
 /***
- * @author xiyn 功能描述：标题按钮上的弹窗（继承自PopupWindow）
+ * @author kkan 功能描述：标题按钮上的弹窗（继承自PopupWindow）
  */
 public class PopupSingleView extends PopupWindow {
     // 列表弹窗的间隔
