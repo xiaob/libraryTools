@@ -1,18 +1,29 @@
 package com.name.rmedal.ui.trade;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ShoppingView;
 import com.veni.tools.view.TitleView;
 import com.veni.tools.view.ticker.TickerUtils;
 import com.veni.tools.view.ticker.TickerView;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -29,6 +40,8 @@ public class TradeFragment extends BaseFragment{
     ShoppingView tradeSv1;
     @BindView(R.id.trade_made_count)
     TickerView tradeMadeCount;
+    @BindView(R.id.trade_refreshlayout)
+    SmartRefreshLayout tradeRefreshlayout;
 
     @Override
     protected int getLayoutId() {
@@ -55,9 +68,21 @@ public class TradeFragment extends BaseFragment{
 
             @Override
             public void onMinusClick(int num) {
-                tradeMadeCount.setText("数量："+num, true);
+                tradeMadeCount.setText("数量："+num, false);
             }
         });
+        tradeRefreshlayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                clooserefreshlayout();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshlayout) {
+                clooserefreshlayout();
+            }
+        });
+        tradeRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
     }
 
 
@@ -68,6 +93,22 @@ public class TradeFragment extends BaseFragment{
                 tradeSv1.setTextNum(1);
                 break;
         }
+    }
+
+    private void clooserefreshlayout() {
+        Observable.timer(2000, TimeUnit.MILLISECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) throws Exception {
+                        tradeMadeCount.setText("￥0.0", true);
+                        tradeSv1.setTextNum(0);
+                        tradeRefreshlayout.finishRefresh();
+                        tradeRefreshlayout.finishLoadMore();
+                    }
+                });
+
     }
 }
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author  xiyn on 16/7/10 17:59
+ * @author xiyn on 16/7/10 17:59
  * 商品数量加减控件
  */
 public class ShoppingView extends View {
@@ -450,7 +450,17 @@ public class ShoppingView extends View {
      */
     public void setTextNum(int num) {
         mNum = num;
-        mState = STATE_ROTATE_OVER;
+        if (num > 0) {
+            mState = STATE_ROTATE_OVER;
+        } else {
+            mNum = 0;
+            if (mShoppingClickListener != null) {
+                mShoppingClickListener.onMinusClick(0);
+            }
+            mState = STATE_ROTATE;
+            mIsForward = false;
+            startRotateAnim();
+        }
         invalidate();
     }
 
