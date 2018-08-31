@@ -103,7 +103,7 @@ public class TradeFragment extends BaseFragment{
                     @Override
                     public void accept(Long aLong) throws Exception {
                         tradeMadeCount.setText("￥0.0", true);
-                        tradeSv1.setTextNum(10);
+                        tradeSv1.setTextNum(0);
                         tradeRefreshlayout.finishRefresh();
                         tradeRefreshlayout.finishLoadMore();
                     }
