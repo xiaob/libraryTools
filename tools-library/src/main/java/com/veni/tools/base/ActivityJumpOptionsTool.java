@@ -24,6 +24,7 @@ import java.util.List;
 /**
  * 作者：kkan on 2017/12/22
  * 当前类注释:
+ * Activity跳转管理类
  */
 
 public class ActivityJumpOptionsTool {
@@ -47,16 +48,25 @@ public class ActivityJumpOptionsTool {
 
     private Type actionTag = Type.NEW_TASK;//intent标识
 
+    /**
+     *  设置上次下文
+     */
     public ActivityJumpOptionsTool setContext(Context context) {
         this.context = context;
         return this;
     }
 
+    /**
+     *  设置跳转目标Class
+     */
     public ActivityJumpOptionsTool setClass(Class<?> clas) {
         this.clas = clas;
         return this;
     }
 
+    /**
+     *  设置跳转参数
+     */
     public ActivityJumpOptionsTool setBundle(String key, Object value) {
         if (this.bundle == null) {
             this.bundle = new Bundle();
@@ -87,6 +97,9 @@ public class ActivityJumpOptionsTool {
         return this;
     }
 
+    /**
+     * 设置跳转intent的flag
+     */
     public ActivityJumpOptionsTool setActionTag(@NonNull Type actionTag) {
         this.actionTag = actionTag;
         return this;
@@ -104,16 +117,25 @@ public class ActivityJumpOptionsTool {
         return this;
     }
 
+    /**
+     * 设置进入动画
+     */
     public ActivityJumpOptionsTool setEnterResId(int enterResId) {
         this.enterResId = enterResId;
         return this;
     }
 
+    /**
+     * 设置退出动画
+     */
     public ActivityJumpOptionsTool setExitResId(int exitResId) {
         this.exitResId = exitResId;
         return this;
     }
 
+    /**
+     * 设置显示进入退出动画的view
+     */
     public ActivityJumpOptionsTool setView(View view) {
         this.view = view;
         return this;
@@ -134,6 +156,9 @@ public class ActivityJumpOptionsTool {
         return this;
     }
 
+    /**
+     * view动画的标识
+     */
     public ActivityJumpOptionsTool setActionString(String actionString) {
         this.actionString = actionString;
         return this;

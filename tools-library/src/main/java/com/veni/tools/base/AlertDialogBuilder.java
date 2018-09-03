@@ -36,6 +36,7 @@ import com.veni.tools.view.progressing.style.Wave;
 /**
  * 作者：kkan on 2017/12/04 10:36
  * 当前类注释:
+ * Dialog构造器
  */
 
 public class AlertDialogBuilder {
@@ -275,7 +276,7 @@ public class AlertDialogBuilder {
     /**
      * 判断页面是否已经被销毁（异步回调时使用）
      */
-    public boolean isDestroyedCompatible() {
+    private boolean isDestroyedCompatible() {
         if (Build.VERSION.SDK_INT >= 17) {
             return isDestroyedCompatible17();
         } else {
@@ -318,12 +319,12 @@ public class AlertDialogBuilder {
     private View getDefault_Dialog() {
         View mDialogView = View.inflate(context, R.layout.dialog_default, null);
 
-        TextView dialogTitle = (TextView) mDialogView.findViewById(R.id.dialog_title);
-        TextView dialogMessageTv = (TextView) mDialogView.findViewById(R.id.dialog_message_tv);
-        TextView dialogLeftbtn = (TextView) mDialogView.findViewById(R.id.dialog_leftbtn);
-        TextView dialogLineV = (TextView) mDialogView.findViewById(R.id.dialog_line_v);
-        TextView dialogLineH = (TextView) mDialogView.findViewById(R.id.dialog_line_h);
-        TextView dialogRightbtn = (TextView) mDialogView.findViewById(R.id.dialog_rightbtn);
+        TextView dialogTitle = mDialogView.findViewById(R.id.dialog_title);
+        TextView dialogMessageTv = mDialogView.findViewById(R.id.dialog_message_tv);
+        TextView dialogLeftbtn =  mDialogView.findViewById(R.id.dialog_leftbtn);
+        TextView dialogLineV = mDialogView.findViewById(R.id.dialog_line_v);
+        TextView dialogLineH = mDialogView.findViewById(R.id.dialog_line_h);
+        TextView dialogRightbtn =  mDialogView.findViewById(R.id.dialog_rightbtn);
 
         if (dialog_title != null && !dialog_title.equals("")) {
             dialogTitle.setVisibility(View.VISIBLE);
@@ -377,7 +378,7 @@ public class AlertDialogBuilder {
 
     private View getLoading_Dialog() {
         View loadingdialog = View.inflate(context, R.layout.dialog_loading, null);
-        TextView loading_tv = (TextView) loadingdialog.findViewById(R.id.loading_tv);
+        TextView loading_tv = loadingdialog.findViewById(R.id.loading_tv);
         if (messageDrawable != null) {
             ImageView loading_iv = new ImageView(context);
             loading_iv.setImageDrawable(messageDrawable);
@@ -407,7 +408,6 @@ public class AlertDialogBuilder {
      * (int) (width * 0.80)
      *
      * @param gravity Gravity.CENTER
-     * @return
      */
     private AlertDialogBuilder setDialogSeat(int gravity, int width, int height) {
         if (dialog != null) {

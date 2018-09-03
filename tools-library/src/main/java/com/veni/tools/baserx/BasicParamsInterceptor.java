@@ -15,6 +15,7 @@ import okhttp3.Response;
  * 作者：kkan on 2018/05/21
  * 当前类注释:
  * 公共参数拦截器
+ * 使用这个类增加公共参数时 请求头和请求参数都增加
  */
 
 public class BasicParamsInterceptor implements Interceptor {

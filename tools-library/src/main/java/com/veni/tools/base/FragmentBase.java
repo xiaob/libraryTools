@@ -21,9 +21,7 @@ public abstract class FragmentBase extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         context = getContext();
-
         return rootView;
     }
 
@@ -31,6 +29,7 @@ public abstract class FragmentBase extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        //关闭Dialog
         destroyDialogBuilder();
     }
 

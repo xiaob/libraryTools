@@ -25,6 +25,7 @@ import static okhttp3.internal.platform.Platform.INFO;
 
 /**
  * 重新的重写Log 的定义
+ * 打印Header参数
  * <p>
  * <p>
  * Created by zlb on 2017/11/7.
