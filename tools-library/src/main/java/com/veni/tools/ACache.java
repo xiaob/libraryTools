@@ -134,12 +134,13 @@ public class ACache {
             fileWriter =new FileWriter(file);
             out = new BufferedWriter(fileWriter, 1024);
             out.write(value);
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             FileTools.closeIO(out,fileWriter);
 //            if (out != null) {
 //                try {
-//                    out.flush();
+////                    out.flush();
 //                    out.close();
 //                } catch (IOException ignored) {
 //                }

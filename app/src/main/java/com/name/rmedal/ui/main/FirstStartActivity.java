@@ -57,7 +57,7 @@ public class FirstStartActivity extends BaseActivity {
         StatusBarTools.immersive(this);
         //设置标识表示app不再是第一次启动,我为了测试,数据有效期为一天,实际可以将ACache.TIME_DAY去掉,也可以用SPTools,对应的也的做出相应修改
         ACache.get(context).put(AppConstant.FIRST_TIME, "true", ACache.TIME_DAY);
-//                SPTools.put(context, SPTools.FIRST_TIME, false);
+        SPTools.put(context, AppConstant.FIRST_TIME, false);
         //设置进入主页的监听
         setListener();
         //设置图片

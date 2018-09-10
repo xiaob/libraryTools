@@ -16,6 +16,7 @@ import com.name.rmedal.ui.main.contract.SVGContract;
 import com.name.rmedal.ui.main.presenter.SVGPresenter;
 import com.veni.tools.ACache;
 import com.veni.tools.LogTools;
+import com.veni.tools.SPTools;
 import com.veni.tools.StatusBarTools;
 
 import java.util.List;
@@ -58,8 +59,9 @@ public class SVGActivity extends BaseActivity<SVGPresenter> implements SVGContra
         mPresenter.setVM(this);
     }
 
-    private boolean svgisok=false;
-    private boolean chikcisok=false;
+    private boolean svgisok = false;
+    private boolean chikcisok = false;
+
     @Override
     public void initView(Bundle savedInstanceState) {
         //设置沉侵状态栏
@@ -81,9 +83,9 @@ public class SVGActivity extends BaseActivity<SVGPresenter> implements SVGContra
         mSvgView.setOnStateChangeListener(new AnimatedSvgView.OnStateChangeListener() {
             @Override
             public void onStateChange(int state) {
-                LogTools.e(TAG,"state--"+state);
-                if(AnimatedSvgView.STATE_FINISHED==state){
-                    svgisok=true;
+                LogTools.e(TAG, "state--" + state);
+                if (AnimatedSvgView.STATE_FINISHED == state) {
+                    svgisok = true;
                     isfirstin();
                 }
             }
@@ -112,13 +114,14 @@ public class SVGActivity extends BaseActivity<SVGPresenter> implements SVGContra
      * 第一次打开app
      */
     private void isfirstin() {
-        if(!svgisok||!chikcisok){
+        if (!svgisok || !chikcisok) {
             return;
         }
         // 第一次打开app
         String isfirst = ACache.get(context).getAsString(AppConstant.FIRST_TIME);
+        boolean isfirstsp = (Boolean) SPTools.get(context, AppConstant.FIRST_TIME, true);
 //                        if ((Boolean) SPTools.get(context, SPTools.FIRST_TIME, true)) {
-        if (isfirst == null) {
+        if (isfirst == null || isfirstsp) {
             FirstStartActivity.startAction(context);
         } else {
             MainActivity.startAction(context);
@@ -127,13 +130,13 @@ public class SVGActivity extends BaseActivity<SVGPresenter> implements SVGContra
 
     @Override
     public void returnVersionData(List<PersonalModelBean> data) {
-        chikcisok=true;
+        chikcisok = true;
         isfirstin();
     }
 
     @Override
     public void onError(int code, String errtipmsg) {
-        chikcisok=true;
+        chikcisok = true;
         isfirstin();
     }
 }

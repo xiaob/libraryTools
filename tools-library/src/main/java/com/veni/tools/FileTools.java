@@ -380,7 +380,7 @@ public class FileTools {
      * 文件复制.
      */
     public static boolean copy(String srcFile, String destFile) {
-        boolean copyok=false;
+        boolean copyok = false;
         FileInputStream in = null;
         FileOutputStream out = null;
         try {
@@ -391,13 +391,13 @@ public class FileTools {
             while ((c = in.read(bytes)) != -1) {
                 out.write(bytes, 0, c);
             }
-            copyok=true;
+            copyok = true;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            closeIO(in,out);
+            closeIO(in, out);
         }
         return copyok;
     }
@@ -435,8 +435,8 @@ public class FileTools {
                     e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
-                }finally {
-                    closeIO(output,input);
+                } finally {
+                    closeIO(output, input);
                 }
             }
             if (temp.isDirectory()) {// 如果是子文件夹
@@ -707,7 +707,7 @@ public class FileTools {
                 FileInputStream fileInputStream = null;
                 try {
                     fileInputStream = new FileInputStream(f);
-                    fc=fileInputStream.getChannel();
+                    fc = fileInputStream.getChannel();
                     ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
                     while (fc.read(bb) != -1) {
                         bb.flip();
@@ -717,7 +717,7 @@ public class FileTools {
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 } finally {
-                    closeIO(fc,fileInputStream);
+                    closeIO(fc, fileInputStream);
                 }
             }
             Log.d(TAG, "拼接完成");
@@ -1491,14 +1491,14 @@ public class FileTools {
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromString(File file, String content, boolean append) {
-        boolean iswriteok=false;
+        boolean iswriteok = false;
         if (file == null || content == null) return false;
         if (!createOrExistsFile(file)) return false;
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file, append);
             fileWriter.write(content);
-            iswriteok= true;
+            iswriteok = true;
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -1771,24 +1771,22 @@ public class FileTools {
      */
     public static void closeIO(Closeable... closeables) {
         if (closeables == null) return;
-            for (Closeable closeable : closeables) {
-                if (closeable != null) {
-
-                    if (closeable instanceof Flushable) {
-                        try {
-                            ((Flushable) closeable).flush();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        LogTools.e("closeIO","flush");
-                    }
+        for (Closeable closeable : closeables) {
+            if (closeable != null) {
+                if (closeable instanceof Flushable) {
                     try {
-                        closeable.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        ((Flushable) closeable).flush();
+                    } catch (IOException ignored) {
                     }
                 }
+                try {
+                    closeable.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                closeable = null;
             }
+        }
     }
 
     /**

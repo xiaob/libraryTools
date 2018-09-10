@@ -61,6 +61,7 @@ public class PatternlockActivity extends BaseActivity {
     public void initView(Bundle savedInstanceState) {
         //设置沉侵状态栏
         StatusBarTools.immersive(this);
+        ACache.get(context).put(AppConstant.PatternlockKey, "012345678");
         //初始化手势密码参数
         initlockview();
     }
@@ -101,12 +102,11 @@ public class PatternlockActivity extends BaseActivity {
         patterLockView.setTactileFeedbackEnabled(true);
         //完全禁用模式锁定视图中的任何输入
         patterLockView.setInputEnabled(true);
-        ACache.get(context).put(AppConstant.PatternlockKey, "012345678");
         /*以下监听选择一个就行*/
         //设置手势密码滑动监听
         patterLockView.addPatternLockListener(mPatternLockViewListener);
         //设置手势密码滑动监听
-        RxPatternLockView.patternChanges(patterLockView)
+        mRxManager.add(RxPatternLockView.patternChanges(patterLockView)
                 .subscribe(new Consumer<PatternLockCompoundEvent>() {
                     @Override
                     public void accept(PatternLockCompoundEvent event) throws Exception {
@@ -123,7 +123,7 @@ public class PatternlockActivity extends BaseActivity {
                             LogTools.d(getClass().getName(), "Pattern has been cleared");
                         }
                     }
-                });
+                }));
     }
 
     /**
