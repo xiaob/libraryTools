@@ -773,7 +773,7 @@ public class DataTools {
      */
     public static String byte2FitSize(long byteNum) {
         if (byteNum < 0) {
-            return "shouldn't be less than zero!";
+            return "0.00KB";
         } else if (byteNum < ConstantTools.KB) {
             return String.format(Locale.getDefault(), "%.3fB", (double) byteNum);
         } else if (byteNum < ConstantTools.MB) {

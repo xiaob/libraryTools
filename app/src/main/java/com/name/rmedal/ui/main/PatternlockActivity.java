@@ -147,6 +147,7 @@ public class PatternlockActivity extends BaseActivity {
                     PatternLockUtils.patternToString(patterLockView, pattern));
             String inputpwd=PatternLockUtils.patternToString(patterLockView, pattern);
             String pwd=  ACache.get(context).getAsString(AppConstant.PatternlockKey);
+            LogTools.d(getClass().getName(), "pwd" +pwd);
             if(pwd.equals(inputpwd)){
                 ACache.get(context).put(AppConstant.PatternlockOK, "1", ACache.TIME_DAY);
                 finish();

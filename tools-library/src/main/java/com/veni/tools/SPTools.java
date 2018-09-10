@@ -23,13 +23,6 @@ public class SPTools {
     private static final String FILE_NAME = "sp_data";
     private static final String str= BuildConfig.APPLICATION_ID;
 
-    public static final String FIRST_TIME = "first_time";
-    public static final String KEY_ACCESS_TOKEN = "KEY_ACCESS_TOKEN";
-
-    // 消息通知 0:允许 1：不允许
-    public static final String MESSAGE_STATE = "message_state";
-
-
     private static String myAppName() {
         String nstr = str.substring(str.lastIndexOf(".")+1, str.length());
         return "_" + nstr;
@@ -135,6 +128,7 @@ public class SPTools {
                 Class clz = SharedPreferences.Editor.class;
                 return clz.getMethod("apply");
             } catch (NoSuchMethodException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -149,8 +143,11 @@ public class SPTools {
                     return;
                 }
             } catch (IllegalArgumentException e) {
+                e.printStackTrace();
             } catch (IllegalAccessException e) {
+                e.printStackTrace();
             } catch (InvocationTargetException e) {
+                e.printStackTrace();
             }
             editor.commit();
         }
@@ -165,6 +162,12 @@ public class SPTools {
                 Environment.MEDIA_MOUNTED)) {
             deleteDir(context.getExternalCacheDir());
         }
+    }
+    /**
+     * 清除应用数据缓存
+     */
+    public static void clearDataCache(Context context) {
+        deleteDir(context.getCacheDir());
     }
     /**
      * 清除缓存--删除缓存文件

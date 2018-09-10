@@ -62,6 +62,9 @@
             android:name=".test.ACacheActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
+            android:name=".test.CacheActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
+        <activity
             android:name=".test.HeartLikeViewActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity

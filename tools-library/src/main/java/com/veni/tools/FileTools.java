@@ -1771,18 +1771,24 @@ public class FileTools {
      */
     public static void closeIO(Closeable... closeables) {
         if (closeables == null) return;
-        try {
             for (Closeable closeable : closeables) {
                 if (closeable != null) {
+
                     if (closeable instanceof Flushable) {
-                        ((Flushable) closeable).flush();
+                        try {
+                            ((Flushable) closeable).flush();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        LogTools.e("closeIO","flush");
                     }
-                    closeable.close();
+                    try {
+                        closeable.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**

@@ -21,6 +21,7 @@ import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.html5.WebViewActivity;
 import com.name.rmedal.modelbean.FunctionBean;
 import com.name.rmedal.test.ACacheActivity;
+import com.name.rmedal.test.CacheActivity;
 import com.name.rmedal.test.CardGroupActivity;
 import com.name.rmedal.test.Dialog_ProgressActivity;
 import com.name.rmedal.test.HeartLikeViewActivity;
@@ -243,6 +244,12 @@ public class HomeFragment extends BaseFragment {
             @Override
             protected void onNoDoubleClick(View view) {
                 WebViewActivity.startAction(context,"https://gitee.com/KKan/RMedal","测试",true);
+            }
+        }));
+        functionlist.add(new FunctionBean("没图", 0, new OnNoFastClickListener() {
+            @Override
+            protected void onNoDoubleClick(View view) {
+                CacheActivity.startAction(context);
             }
         }));
         functionadapter.replaceData(functionlist);

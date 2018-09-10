@@ -136,19 +136,20 @@ public class ACache {
             out.write(value);
         } catch (IOException ignored) {
         } finally {
-            if (out != null) {
-                try {
+            FileTools.closeIO(out,fileWriter);
+//            if (out != null) {
+//                try {
 //                    out.flush();
-                    out.close();
-                } catch (IOException ignored) {
-                }
-            }
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException ignored) {
-                }
-            }
+//                    out.close();
+//                } catch (IOException ignored) {
+//                }
+//            }
+//            if (fileWriter != null) {
+//                try {
+//                    fileWriter.close();
+//                } catch (IOException ignored) {
+//                }
+//            }
             mCache.put(file);
         }
     }

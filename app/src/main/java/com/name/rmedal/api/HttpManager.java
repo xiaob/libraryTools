@@ -107,7 +107,7 @@ public class HttpManager {
             public Response intercept(Chain chain) throws IOException {
                 Request originalRequest = chain.request();
                 if (TextUtils.isEmpty(TOKEN)) {
-                    TOKEN = (String) SPTools.get(FutileTools.getContext(), SPTools.KEY_ACCESS_TOKEN, "");
+                    TOKEN = (String) SPTools.get(FutileTools.getContext(), AppConstant.KEY_ACCESS_TOKEN, "");
                 }
                 /*
                  * TOKEN == null，Login/Register noNeed Token
