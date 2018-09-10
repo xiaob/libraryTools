@@ -16,6 +16,8 @@
    - modelbean 实体类
    - ui 视图 mvp
 2.  [tools-library 常用封装工具](https://gitee.com/KKan/RMedal/tree/master/tools-library)
+#### 备注个问题
+1. 09-10测试的时候 关于SP清除缓存后Acache读取不到文件，加打印后就不复现这问题，以后会留意
 
 #### 开发环境信息
 1. AS版本3.1

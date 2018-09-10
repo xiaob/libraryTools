@@ -1781,10 +1781,8 @@ public class FileTools {
                 }
                 try {
                     closeable.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ignored) {
                 }
-                closeable = null;
             }
         }
     }
