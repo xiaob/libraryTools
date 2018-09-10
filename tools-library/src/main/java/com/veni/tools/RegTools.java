@@ -33,6 +33,7 @@ import static com.veni.tools.DataTools.isNullString;
  * validateIdCard              : 15位和18位身份证号码的正则表达式 身份证验证
  * isIDCard15                  : 验证身份证号码15位
  * isIDCard18                  : 验证身份证号码18位
+ * IDCardValidate                  : 验证身份证号码18位
  * isEmail                     : 验证邮箱
  * isURL                       : 验证URL
  * isChz                       : 验证汉字
@@ -262,7 +263,7 @@ public class RegTools {
         Ai = Ai + strVerifyCode;
 
         if (IDStr.length() == 18) {
-            if (Ai.equals(IDStr) == false) {
+            if (!Ai.equals(IDStr)) {
                 errorInfo = "身份证无效，不是合法的身份证号码";
                 return errorInfo;
             }
