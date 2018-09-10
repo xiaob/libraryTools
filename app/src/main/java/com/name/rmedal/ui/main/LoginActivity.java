@@ -78,7 +78,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     private String mobile = "";
-    private String pwddata = "";
+    private String loginp = "";
     private String captcha = "";
     private CaptchaTime timeCount;
 //    private int lastdist;
@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity {
                     ToastTool.error("请输入验证码");
                     return;
                 }
-                if (DataTools.isNullString(pwddata)) {
+                if (DataTools.isNullString(loginp)) {
                     ToastTool.error("请输入密码");
                     return;
                 }
@@ -235,7 +235,7 @@ public class LoginActivity extends BaseActivity {
                     loginPasswordEt.setSelection(s.length());
                     return;
                 }
-                pwddata = s.toString();
+                loginp = s.toString();
             }
         });
         loginCaptchaEt.addTextChangedListener(new TextWatcher() {

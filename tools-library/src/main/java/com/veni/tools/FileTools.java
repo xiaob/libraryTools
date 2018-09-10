@@ -704,8 +704,10 @@ public class FileTools {
             outChannel = fileOutputStream.getChannel();
             for (File f : files) {
                 FileChannel fc = null;
+                FileInputStream fileInputStream = null;
                 try {
-                    fc = new FileInputStream(f).getChannel();
+                    fileInputStream = new FileInputStream(f);
+                    fc=fileInputStream.getChannel();
                     ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
                     while (fc.read(bb) != -1) {
                         bb.flip();
@@ -715,7 +717,7 @@ public class FileTools {
                 } catch (IOException ioe) {
                     ioe.printStackTrace();
                 } finally {
-                    closeIO(fc);
+                    closeIO(fc,fileInputStream);
                 }
             }
             Log.d(TAG, "拼接完成");
