@@ -74,6 +74,9 @@ public class ACache {
 
     public static ACache get(File cacheDir, long max_zise, int max_count) {
         ACache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
+        if (!cacheDir.exists() && !cacheDir.mkdirs()) {
+            throw new RuntimeException("can't make dirs in " + cacheDir.getAbsolutePath());
+        }
         if (manager == null) {
             manager = new ACache(cacheDir, max_zise, max_count);
             mInstanceMap.put(cacheDir.getAbsolutePath() + myPid(), manager);
