@@ -183,7 +183,7 @@ public class ContentViewHelper {
      * 增加状态栏的高度
      */
     public void initToolbarState() {
-        StatusBarTools.setPaddingSmart(context, toolbarLayout);
+        StatusBarTools.setPaddingSmart(context, toolbarBaseTb);
     }
 
     /**
