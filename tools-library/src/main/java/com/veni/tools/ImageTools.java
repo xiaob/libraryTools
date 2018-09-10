@@ -296,10 +296,12 @@ public class ImageTools {
             byte[] data = dataStream.toByteArray();
             bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             data = null;
-            return bitmap;
         } catch (IOException e) {
-            return null;
+            e.printStackTrace();
+        } finally {
+            FileTools.closeIO(in,out);
         }
+        return bitmap;
     }
 
     private static void copy(InputStream in, OutputStream out) throws IOException {

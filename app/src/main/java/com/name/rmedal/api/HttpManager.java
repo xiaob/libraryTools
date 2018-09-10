@@ -70,10 +70,11 @@ public class HttpManager {
     }
 
     /*--------------公共参数,只添加请求头--------------*/
-    private static String TOKEN = "";
+    private  String TOKEN = "";
 
-    public static void setToken(String token) {
+    public HttpManager setToken(String token) {
         TOKEN = token;
+        return INSTANCE;
     }
 
     //构造方法私有

@@ -816,7 +816,12 @@ public class DataTools {
      * @return 字节数组
      */
     public static byte[] inputStream2Bytes(InputStream is) {
-        return input2OutputStream(is).toByteArray();
+        byte[] b =null;
+        ByteArrayOutputStream os =input2OutputStream(is);
+        if(os!=null){
+            b=os.toByteArray();
+        }
+        return b;
     }
 
     /**
@@ -970,8 +975,8 @@ public class DataTools {
      * @return
      */
     public static String getRoundUp(double value, int digit) {
-        BigDecimal result = new BigDecimal(value);
-        return result.setScale(digit, BigDecimal.ROUND_HALF_UP).toString();
+        BigDecimal result = BigDecimal.valueOf(value);
+        return getRoundUp(result,digit);
     }
 
     /**
@@ -985,8 +990,8 @@ public class DataTools {
         if (isNullString(value)) {
             return "0";
         }
-        BigDecimal result = new BigDecimal(Double.parseDouble(value));
-        return result.setScale(digit, BigDecimal.ROUND_HALF_UP).toString();
+        BigDecimal result = BigDecimal.valueOf(Double.parseDouble(value));
+        return getRoundUp(result,digit);
     }
 
     /**
@@ -997,7 +1002,7 @@ public class DataTools {
      * @return
      */
     public static String getPercentValue(BigDecimal value, int digit) {
-        BigDecimal result = value.multiply(new BigDecimal(100));
+        BigDecimal result = value.multiply(BigDecimal.valueOf(100));
         return getRoundUp(result, digit);
     }
 
@@ -1009,7 +1014,7 @@ public class DataTools {
      * @return
      */
     public static String getPercentValue(double value, int digit) {
-        BigDecimal result = new BigDecimal(value);
+        BigDecimal result = BigDecimal.valueOf(value);
         return getPercentValue(result, digit);
     }
 
@@ -1020,7 +1025,7 @@ public class DataTools {
      * @return
      */
     public static String getPercentValue(double value) {
-        BigDecimal result = new BigDecimal(value);
+        BigDecimal result = BigDecimal.valueOf(value);
         return getPercentValue(result, 2);
     }
 

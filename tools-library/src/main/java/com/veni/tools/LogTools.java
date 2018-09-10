@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -23,13 +24,15 @@ public class LogTools {
 
 
     @NonNull
-    private static SimpleDateFormat getLOG_FORMAT(){
+    private static SimpleDateFormat getLOG_FORMAT() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 日志的输出格式
     }
+
     @NonNull
-    private static SimpleDateFormat getFILE_SUFFIX(){
+    private static SimpleDateFormat getFILE_SUFFIX() {
         return new SimpleDateFormat("yyyy-MM-dd");// 日志文件格式
     }
+
     private static Boolean LOG_SWITCH = true; // 日志文件总开关
     private static Boolean LOG_TO_FILE = false; // 日志写入文件开关
     private static String LOG_TAG = "TAG"; // 默认的tag
@@ -38,7 +41,7 @@ public class LogTools {
     private static String LOG_FILE_PATH; // 日志文件保存路径
     private static String LOG_FILE_NAME;// 日志文件保存名称
 
-    public static void init(Context context,boolean logswitch,boolean logtofile) { // 在Application中初始化
+    public static void init(Context context, boolean logswitch, boolean logtofile) { // 在Application中初始化
         LOG_FILE_PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + context.getPackageName();
         LOG_FILE_NAME = "Log";
         LOG_SWITCH = logswitch;
@@ -159,15 +162,17 @@ public class LogTools {
             destDir.mkdirs();
         }
         File file = new File(LOG_FILE_PATH, LOG_FILE_NAME + date);
+        FileWriter filerWriter = null;
+        BufferedWriter bufWriter = null;
         try {
-            FileWriter filerWriter = new FileWriter(file, true);
-            BufferedWriter bufWriter = new BufferedWriter(filerWriter);
+            filerWriter = new FileWriter(file, true);
+            bufWriter = new BufferedWriter(filerWriter);
             bufWriter.write(dateLogContent);
             bufWriter.newLine();
-            bufWriter.close();
-            filerWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            FileTools.closeIO(filerWriter,bufWriter);
         }
     }
 
@@ -175,7 +180,7 @@ public class LogTools {
      * 删除指定的日志文件
      */
     public static void delFile() {// 删除日志文件
-        String needDelFiel =  getFILE_SUFFIX().format(getDateBefore());
+        String needDelFiel = getFILE_SUFFIX().format(getDateBefore());
         File file = new File(LOG_FILE_PATH, needDelFiel + LOG_FILE_NAME);
         if (file.exists()) {
             file.delete();
@@ -200,19 +205,23 @@ public class LogTools {
         if (!fileDir.exists()) {
             fileDir.mkdirs();
         }
-
         File file = new File(fileDir, TimeTools.getCurrentDate(TimeTools.dateFormatYMD_f) + ".txt");
+        PrintStream ps = null;
         try {
             if (file.exists()) {
-                PrintStream ps = new PrintStream(new FileOutputStream(file, true));
-                ps.append("\n\n\n" + TimeTools.getCurrentDate(TimeTools.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
+                ps = new PrintStream(new FileOutputStream(file, true));
+                ps.append("\n\n\n").append(TimeTools.getCurrentDate(TimeTools.dateFormatYMDHMS)).append("\n").append(message);// 往文件里写入字符串
             } else {
-                PrintStream ps = new PrintStream(new FileOutputStream(file));
+                ps = new PrintStream(new FileOutputStream(file));
                 file.createNewFile();
                 ps.println(TimeTools.getCurrentDate(TimeTools.dateFormatYMDHMS) + "\n" + message);// 往文件里写入字符串
             }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            FileTools.closeIO(ps);
         }
     }
 }

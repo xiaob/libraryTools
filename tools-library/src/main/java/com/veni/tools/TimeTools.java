@@ -225,12 +225,13 @@ public class TimeTools {
      * from yyyy-MM-dd HH:mm:ss to MM-dd HH:mm
      */
     public static String formatDate(String before) {
-        return formatDate(before,dateFormatYMDHMS,dateFormatMDHM);
+        return formatDate(before, dateFormatYMDHMS, dateFormatMDHM);
     }
+
     /**
      * from yyyy-MM-dd HH:mm:ss to MM-dd HH:mm
      */
-    public static String formatDate(String before,String beforepattern,String afterpattern) {
+    public static String formatDate(String before, String beforepattern, String afterpattern) {
         String after;
         try {
             Date date = new SimpleDateFormat(beforepattern, Locale.getDefault())
@@ -241,6 +242,7 @@ public class TimeTools {
         }
         return after;
     }
+
     /**
      * 描述：Date类型转化为String类型.
      *
@@ -337,6 +339,7 @@ public class TimeTools {
         }
         return curDateTime;
     }
+
     //获取当前系统前后第几小时
     public static String getNextHour(int i) {
         String curDateTime = null;
@@ -540,8 +543,9 @@ public class TimeTools {
         try {
             String currentDate = getCurrentDate(dateFormatYMD);
             date = getDateByFormat(currentDate + " 00:00:00", dateFormatYMDHMS);
-            return date.getTime();
+            return date == null ? 0 : date.getTime();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return -1;
     }
@@ -556,8 +560,9 @@ public class TimeTools {
         try {
             String currentDate = getCurrentDate(dateFormatYMD);
             date = getDateByFormat(currentDate + " 24:00:00", dateFormatYMDHMS);
-            return date.getTime();
+            return date == null ? 0 : date.getTime();
         } catch (Exception e) {
+            e.printStackTrace();
         }
         return -1;
     }
@@ -594,7 +599,7 @@ public class TimeTools {
                     return h + "小时前";
                 } else if (h < 0) {
                     return Math.abs(h) + "小时后";
-                } else if (h == 0) {
+                } else {
                     int m = getOffectMinutes(c1.getTimeInMillis(), c2.getTimeInMillis());
                     if (m > 0) {
                         return m + "分钟前";
@@ -610,7 +615,7 @@ public class TimeTools {
                 } else if (d == 2) {
                     return "前天";
                 }
-            } else if (d < 0) {
+            } else {
                 if (d == -1) {
                     return "明天";
                 } else if (d == -2) {
@@ -624,6 +629,7 @@ public class TimeTools {
                 return out;
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return strDate;
@@ -699,9 +705,6 @@ public class TimeTools {
         Date time = new Date();
         time.setTime(ms);
 
-        if (time == null) {
-            return "Unknown";
-        }
         String ftime = "";
         Calendar cal = Calendar.getInstance();
 
@@ -776,6 +779,7 @@ public class TimeTools {
 
     /**
      * 过了多少个小时
+     *
      * @param dateStr
      * @return
      */
@@ -787,18 +791,18 @@ public class TimeTools {
         try {
             sendDate = sdf.parse(dateStr);
             Date dateNow = new Date(System.currentTimeMillis());
-            Log.e("JPush","date="+sendDate);
+            Log.e("JPush", "date=" + sendDate);
             long times = dateNow.getTime() - sendDate.getTime();
-            Log.e("JPush","date.getTime()="+sendDate.getTime());
+            Log.e("JPush", "date.getTime()=" + sendDate.getTime());
             if (times > 0) {
                 ret = ((int) (times / ONE_HOUR_MILLISECONDS));
-                int sdqf =(int)Math.floor(times /ONE_HOUR_MILLISECONDS);
+//                int sdqf = (int) Math.floor(times / ONE_HOUR_MILLISECONDS);
             } else {
                 ret = -1;
             }
         } catch (ParseException ignored) {
         }
-        Log.e("JPush","ret="+ret);
+        Log.e("JPush", "ret=" + ret);
         return ret;
     }
 
@@ -833,12 +837,10 @@ public class TimeTools {
         boolean b = false;
         Date time = new Date(sdate);
         Date today = new Date();
-        if (time != null) {
-            String nowDate = dateFormater2.get().format(today);
-            String timeDate = dateFormater2.get().format(time);
-            if (nowDate.equals(timeDate)) {
-                b = true;
-            }
+        String nowDate = dateFormater2.get().format(today);
+        String timeDate = dateFormater2.get().format(time);
+        if (nowDate.equals(timeDate)) {
+            b = true;
         }
         return b;
     }
@@ -916,6 +918,7 @@ public class TimeTools {
         tmpDuration %= 1;
         return str;
     }
+
     /**
      * 友好的时间间隔2
      *
@@ -925,9 +928,9 @@ public class TimeTools {
     public static String getFriendlyDuration2(long duration) {
         String str = "";
         long tmpDuration = duration;
-        str += (tmpDuration / 60>0?tmpDuration / 60+"'":"");
+        str += (tmpDuration / 60 > 0 ? tmpDuration / 60 + "'" : "");
         tmpDuration %= 60;
-        str += (tmpDuration / 1>=10?tmpDuration / 1+"''":"0"+tmpDuration / 1+"''");
+        str += (tmpDuration / 1 >= 10 ? tmpDuration / 1 + "''" : "0" + tmpDuration / 1 + "''");
         tmpDuration %= 1;
         return str;
     }
@@ -983,12 +986,13 @@ public class TimeTools {
 
     /**
      * 返回聊天时间
+     *
      * @return
      */
-    public static  String getChatTimeForShow(long time){
-        if(TimeTools.isToday(time)){
+    public static String getChatTimeForShow(long time) {
+        if (TimeTools.isToday(time)) {
             return TimeTools.getStringByFormat(time, TimeTools.dateFormatHMofChinese);
-        }else{
+        } else {
             return TimeTools.getStringByFormat(time, TimeTools.dateFormatMDHMofChinese);
         }
     }
@@ -996,10 +1000,10 @@ public class TimeTools {
     /**
      * 获取指定时间的毫秒值
      */
-    public static long getDatelongMills(String fomat,String dateStr){
+    public static long getDatelongMills(String fomat, String dateStr) {
         SimpleDateFormat sdf = new SimpleDateFormat(fomat);
         Date date;
-        long longDate =0;
+        long longDate = 0;
         try {
             date = sdf.parse(dateStr);
             longDate = date.getTime();
@@ -1010,6 +1014,7 @@ public class TimeTools {
 
     /**
      * 两个日期比较
+     *
      * @param DATE1
      * @param DATE2
      * @return
@@ -1019,7 +1024,7 @@ public class TimeTools {
         try {
             Date dt1 = df.parse(DATE1);
             Date dt2 = df.parse(DATE2);
-            if (dt1.getTime() - dt2.getTime()>0) {//date1>date2
+            if (dt1.getTime() - dt2.getTime() > 0) {//date1>date2
                 return 1;
             } else {
                 return -1;

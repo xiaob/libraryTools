@@ -376,8 +376,7 @@ public class DeviceTools {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        String version = packInfo.versionName;
-        return version;
+        return packInfo==null?"0.0.0":packInfo.versionName;
     }
 
     /**
@@ -393,8 +392,7 @@ public class DeviceTools {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        int version = packInfo.versionCode;
-        return version;
+        return packInfo==null?0:packInfo.versionCode;
     }
 
     /**

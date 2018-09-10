@@ -46,11 +46,13 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
+import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -68,13 +70,13 @@ import java.util.Vector;
  * getDataPath                 : 获取SD卡Data路径
  * getFreeSpace                : 获取SD卡剩余空间
  * sdCardIsAvailable           : SD卡是否可用
- *
+ * <p>
  * fileExists                  : 文件或者文件夹是否存在
  * delAllFile                  : 删除指定文件夹下所有文件, 不保留文件夹.
  * copy                        : 文件复制(文件路径)
  * copyFile                    : 复制文件(文件/InputStream流)
  * copyFolder                  : 复制整个文件夹内
- *  renameFile                  : 重命名文件
+ * renameFile                  : 重命名文件
  * getSDCardAvailaleSize       : 获取磁盘可用空间
  * getDirSize                  : 获取某个目录可用大小
  * getFileAllSize              : 获取文件或者文件夹大小
@@ -124,7 +126,7 @@ import java.util.Vector;
  * getFileName                 : 获取全路径中的文件名
  * getFileNameNoExtension      : 获取全路径中的不带拓展名的文件名
  * getFileExtension            : 获取全路径中的文件拓展名
- *
+ * <p>
  * 清除数据
  * cleanInternalCache          : 清除内部缓存
  * cleanInternalFiles          : 清除内部文件
@@ -378,21 +380,26 @@ public class FileTools {
      * 文件复制.
      */
     public static boolean copy(String srcFile, String destFile) {
+        boolean copyok=false;
+        FileInputStream in = null;
+        FileOutputStream out = null;
         try {
-            FileInputStream in = new FileInputStream(srcFile);
-            FileOutputStream out = new FileOutputStream(destFile);
+            in = new FileInputStream(srcFile);
+            out = new FileOutputStream(destFile);
             byte[] bytes = new byte[1024];
             int c;
             while ((c = in.read(bytes)) != -1) {
                 out.write(bytes, 0, c);
             }
-            in.close();
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            return false;
+            copyok=true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeIO(in,out);
         }
-        return true;
+        return copyok;
     }
 
     /**
@@ -402,36 +409,39 @@ public class FileTools {
      * @param newPath string 复制后路径如：f:/fqf/ff.
      */
     public static void copyFolder(String oldPath, String newPath) {
-        try {
-            (new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
-            File a = new File(oldPath);
-            String[] file = a.list();
-            File temp = null;
-            for (int i = 0; i < file.length; i++) {
-                if (oldPath.endsWith(File.separator)) {
-                    temp = new File(oldPath + file[i]);
-                } else {
-                    temp = new File(oldPath + File.separator + file[i]);
-                }
+        (new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
+        File a = new File(oldPath);
+        String[] file = a.list();
+        File temp = null;
+        for (String aFile : file) {
+            if (oldPath.endsWith(File.separator)) {
+                temp = new File(oldPath + aFile);
+            } else {
+                temp = new File(oldPath + File.separator + aFile);
+            }
 
-                if (temp.isFile()) {
-                    FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()).toString());
+            if (temp.isFile()) {
+                FileInputStream input = null;
+                FileOutputStream output = null;
+                try {
+                    input = new FileInputStream(temp);
+                    output = new FileOutputStream(newPath + "/" + (temp.getName()).toString());
                     byte[] b = new byte[1024 * 5];
                     int len;
                     while ((len = input.read(b)) != -1) {
                         output.write(b, 0, len);
                     }
-                    output.flush();
-                    output.close();
-                    input.close();
-                }
-                if (temp.isDirectory()) {// 如果是子文件夹
-                    copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }finally {
+                    closeIO(output,input);
                 }
             }
-        } catch (NullPointerException e) {
-        } catch (Exception e) {
+            if (temp.isDirectory()) {// 如果是子文件夹
+                copyFolder(oldPath + "/" + aFile, newPath + "/" + aFile);
+            }
         }
     }
 
@@ -568,7 +578,6 @@ public class FileTools {
                 fos.write(data, 0, len);
                 totalBytes += len;
             }
-            fos.flush();
         } finally {
             fos.close();
         }
@@ -579,31 +588,40 @@ public class FileTools {
      * 保存InputStream流到文件.
      */
     public static void saveFile(InputStream inputStream, String filePath) {
+        OutputStream outputStream = null;
         try {
-            OutputStream outputStream = new FileOutputStream(new File(filePath), false);
+            outputStream = new FileOutputStream(new File(filePath), false);
             int len;
             byte[] buffer = new byte[1024];
             while ((len = inputStream.read(buffer)) != -1) {
                 outputStream.write(buffer, 0, len);
             }
-            outputStream.flush();
-            outputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            closeIO(outputStream);
         }
     }
 
     /**
      * 用UTF8保存一个文件.
      */
-    public static void saveFileUTF8(String path, String content, Boolean append) throws IOException {
-        FileOutputStream fos = new FileOutputStream(path, append);
-        Writer out = new OutputStreamWriter(fos, "UTF-8");
-        out.write(content);
-        out.flush();
-        out.close();
-        fos.flush();
-        fos.close();
+    public static void saveFileUTF8(String path, String content, Boolean append) {
+        FileOutputStream fos = null;
+        Writer out = null;
+        try {
+            fos = new FileOutputStream(path, append);
+            out = new OutputStreamWriter(fos, "UTF-8");
+            out.write(content);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeIO(out, fos);
+        }
     }
 
     /**
@@ -617,9 +635,15 @@ public class FileTools {
             int length = fin.available();
             byte[] buffer = new byte[length];
             fin.read(buffer);
-            fin.close();
             result = new String(buffer, "UTF-8");
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            closeIO(fin);
         }
         return result;
     }
@@ -674,28 +698,31 @@ public class FileTools {
      */
     public static void mergeFiles(Context context, File outFile, List<File> files) {
         FileChannel outChannel = null;
+        FileOutputStream fileOutputStream = null;
         try {
-            outChannel = new FileOutputStream(outFile).getChannel();
+            fileOutputStream = new FileOutputStream(outFile);
+            outChannel = fileOutputStream.getChannel();
             for (File f : files) {
-                FileChannel fc = new FileInputStream(f).getChannel();
-                ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
-                while (fc.read(bb) != -1) {
-                    bb.flip();
-                    outChannel.write(bb);
-                    bb.clear();
+                FileChannel fc = null;
+                try {
+                    fc = new FileInputStream(f).getChannel();
+                    ByteBuffer bb = ByteBuffer.allocate(BUFSIZE);
+                    while (fc.read(bb) != -1) {
+                        bb.flip();
+                        outChannel.write(bb);
+                        bb.clear();
+                    }
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                } finally {
+                    closeIO(fc);
                 }
-                fc.close();
             }
             Log.d(TAG, "拼接完成");
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } finally {
-            try {
-                if (outChannel != null) {
-                    outChannel.close();
-                }
-            } catch (IOException ignore) {
-            }
+            closeIO(fileOutputStream, outChannel);
         }
     }
 
@@ -708,33 +735,35 @@ public class FileTools {
      * @return
      */
     public static String getNativeM3u(final Context context, File file, List<File> pathList) {
-        InputStream in = null;
         int num = 0;
         //需要生成的目标buff
-        StringBuffer buf = new StringBuffer();
-        try {
-            if (file != null) {
+        StringBuilder buf = new StringBuilder("");
+        if (file != null) {
+            InputStream in = null;
+            BufferedReader reader = null;
+            try {
                 in = new FileInputStream(file);
-            }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                if (line.length() > 0 && line.startsWith("http://")) {
-                    //replce 这行的内容
+                reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    if (line.length() > 0 && line.startsWith("http://")) {
+                        //replce 这行的内容
 //                    Log.d("ts替换", line + "  replce  " + pathList.get(num).getAbsolutePath());
-                    buf.append("file:" + pathList.get(num).getAbsolutePath() + "\r\n");
-                    num++;
-                } else {
-                    buf.append(line + "\r\n");
+                        buf.append("file:").append(pathList.get(num).getAbsolutePath()).append("\r\n");
+                        num++;
+                    } else {
+                        buf.append(line).append("\r\n");
+                    }
                 }
+                write(file.getAbsolutePath(), buf.toString());
+                Log.d("ts替换", "ts替换完成");
+            } catch (FileNotFoundException e1) {
+                e1.printStackTrace();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            } finally {
+                closeIO(in, reader);
             }
-            in.close();
-            write(file.getAbsolutePath(), buf.toString());
-            Log.d("ts替换", "ts替换完成");
-        } catch (FileNotFoundException e1) {
-            e1.printStackTrace();
-        } catch (IOException e1) {
-            e1.printStackTrace();
         }
         return buf.toString();
     }
@@ -1418,8 +1447,9 @@ public class FileTools {
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromIS(File file, InputStream is, boolean append) {
-        if (file == null || is == null) return false;
-        if (!createOrExistsFile(file)) return false;
+        boolean writeok = false;
+        if (file == null || is == null) return writeok;
+        if (!createOrExistsFile(file)) return writeok;
         OutputStream os = null;
         try {
             os = new BufferedOutputStream(new FileOutputStream(file, append));
@@ -1428,13 +1458,14 @@ public class FileTools {
             while ((len = is.read(data, 0, ConstantTools.KB)) != -1) {
                 os.write(data, 0, len);
             }
-            return true;
+            writeok = true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            writeok = false;
         } finally {
             closeIO(is, os);
         }
+        return writeok;
     }
 
     /**
@@ -1458,19 +1489,20 @@ public class FileTools {
      * @return {@code true}: 写入成功<br>{@code false}: 写入失败
      */
     public static boolean writeFileFromString(File file, String content, boolean append) {
+        boolean iswriteok=false;
         if (file == null || content == null) return false;
         if (!createOrExistsFile(file)) return false;
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file, append);
             fileWriter.write(content);
-            return true;
+            iswriteok= true;
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
         } finally {
             closeIO(fileWriter);
         }
+        return iswriteok;
     }
 
     /**
@@ -1740,6 +1772,9 @@ public class FileTools {
         try {
             for (Closeable closeable : closeables) {
                 if (closeable != null) {
+                    if (closeable instanceof Flushable) {
+                        ((Flushable) closeable).flush();
+                    }
                     closeable.close();
                 }
             }
@@ -1851,6 +1886,7 @@ public class FileTools {
 
     /**
      * 将文件转换成uri(支持7.0)
+     *
      * @param mContext
      * @param file
      * @return
@@ -2046,9 +2082,10 @@ public class FileTools {
             while ((count = fis.read(buffer)) != -1) {
                 bos.write(buffer, 0, count);
             }
-            fis.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            closeIO(fis);
         }
         base64String = Base64.encodeToString(bos.toByteArray(), Base64.DEFAULT);
         return base64String;
@@ -2074,12 +2111,7 @@ public class FileTools {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                fileWriter.flush();
-                fileWriter.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            closeIO(fileWriter);
         }
     }
 

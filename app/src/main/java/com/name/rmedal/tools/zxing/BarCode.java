@@ -87,30 +87,31 @@ public class BarCode {
 
     public static Bitmap createBarCode(CharSequence content, int BAR_WIDTH, int BAR_HEIGHT, int backgroundColor, int codeColor) {
         Bitmap bitmap = null;
-         //条形码的编码类型
-         BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
-         final int backColor = backgroundColor;
-         final int barCodeColor = codeColor;
+        //条形码的编码类型
+        BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
+        final int backColor = backgroundColor;
+        final int barCodeColor = codeColor;
 
-         MultiFormatWriter writer = new MultiFormatWriter();
-         BitMatrix result = null;
-         try {
-         result = writer.encode(content + "", barcodeFormat, BAR_WIDTH, BAR_HEIGHT, null);
-         } catch (WriterException ignored) {
-         }
+        MultiFormatWriter writer = new MultiFormatWriter();
+        BitMatrix result = null;
+        try {
+            result = writer.encode(content + "", barcodeFormat, BAR_WIDTH, BAR_HEIGHT, null);
+            int width = result.getWidth();
+            int height = result.getHeight();
+            int[] pixels = new int[width * height];
+            // All are 0, or black, by default
+            for (int y = 0; y < height; y++) {
+                int offset = y * width;
+                for (int x = 0; x < width; x++) {
+                    pixels[offset + x] = result.get(x, y) ? barCodeColor : backColor;
+                }
+            }
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+        } catch (WriterException ignored) {
+        }
 
-         int width = result.getWidth();
-         int height = result.getHeight();
-         int[] pixels = new int[width * height];
-         // All are 0, or black, by default
-         for (int y = 0; y < height; y++) {
-         int offset = y * width;
-         for (int x = 0; x < width; x++) {
-         pixels[offset + x] = result.get(x, y) ? barCodeColor : backColor;
-         }
-         }
-         bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
+
         return bitmap;
     }
 

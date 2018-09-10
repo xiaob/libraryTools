@@ -25,11 +25,7 @@ public class ToolBarUtils {
 
     public static ToolBarUtils getToolBarUtils() {
         if (toolBarUtils == null) {
-            synchronized (ToolBarUtils.class) {
-                if (toolBarUtils == null) {
-                    toolBarUtils = new ToolBarUtils();
-                }
-            }
+            toolBarUtils = new ToolBarUtils();
         }
         return toolBarUtils;
     }

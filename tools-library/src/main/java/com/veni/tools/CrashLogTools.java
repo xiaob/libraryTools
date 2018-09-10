@@ -29,7 +29,7 @@ public class CrashLogTools {
     private static final String FILE_SEP = System.getProperty("file.separator");
 
     //----------------------------------------------------------------------------------------------
-    private static final Format FORMAT = new SimpleDateFormat("MM-dd HH-mm-ss", Locale.getDefault());
+    private static final Format FORMAT ;
     private static final String CRASH_HEAD;
     private static final UncaughtExceptionHandler DEFAULT_UNCAUGHT_EXCEPTION_HANDLER;
     private static final UncaughtExceptionHandler UNCAUGHT_EXCEPTION_HANDLER;
@@ -41,7 +41,7 @@ public class CrashLogTools {
     private static ExecutorService sExecutor;
 
     static {
-
+        FORMAT = new SimpleDateFormat("MM-dd HH-mm-ss", Locale.getDefault());
 
         CRASH_HEAD = "\n************* Crash Log Head ****************" +
                 "\nDevice Manufacturer: " + Build.MANUFACTURER +// 设备厂商
