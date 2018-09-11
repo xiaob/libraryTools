@@ -144,27 +144,21 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/qrcode_create_codeiv_rl"
+    <TextView
+        android:id="@+id/qrcode_create_codetip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="↑↑点击生成二维码或条形码↑↑"
+        android:background="@color/white"
+        android:gravity="center"
+        android:textSize="@dimen/font_14"
+        android:textColor="@color/deep_gray_2"
+        android:paddingTop="@dimen/hight_10"/>
+
+    <ImageView
+        android:id="@+id/qrcode_create_codeiv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/qrcode_create_codetip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="↑↑点击生成二维码或条形码↑↑"
-            android:paddingBottom="@dimen/hight_10"
-            android:gravity="center"
-            android:textSize="@dimen/font_14"
-            android:textColor="@color/deep_gray_2"
-            android:paddingTop="@dimen/hight_10"/>
-        <ImageView
-            android:id="@+id/qrcode_create_codeiv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+        android:background="@color/white"/>
 
 </LinearLayout>

@@ -53,8 +53,6 @@ public class QRCodeActivity extends BaseActivity {
     ImageView qrcodeCreateCodeiv;
     @BindView(R.id.qrcode_create_codetip)
     TextView qrcodeCreateCodetip;
-    @BindView(R.id.qrcode_create_codeiv_rl)
-    LinearLayout qrcodeCreateCodeivRl;
 
     /**
      * 启动入口
@@ -78,9 +76,9 @@ public class QRCodeActivity extends BaseActivity {
 
     private int create_count;
     private int scaner_count;
-    private int bitmap_height=900;
-    private int bitmap_width=1000;
-    private int bitmap_math=900;
+    private int bar_height = 300;
+    private int bar_width = 1000;
+    private int qr_math = 600;
 
     private Bitmap create_bitmap;
 
@@ -120,47 +118,39 @@ public class QRCodeActivity extends BaseActivity {
                 startActivityForResult(intent, AppConstant.REQUEST_QRCODE);
                 break;
             case R.id.qrcode_create_qr://生成二维码
-                qrcodeCreateCodetip.setText("长按图片识别二维码");
+                qrcodeCreateCodetip.setText("↓↓长按图片识别二维码↓↓");
+                /*
+                 * 生成二维码
+                 * 1 边长必须 >=  151像素
+                 * 否则生成的图片无法识别
+                 */
                 create_bitmap = QRCode.builder(getCharAndNumr()).
                         backColor(getResources().getColor(R.color.white)).
                         codeColor(getResources().getColor(R.color.black)).
-                        codeSide(bitmap_math).
+                        codeSide(qr_math).
                         into(qrcodeCreateCodeiv);
                 upCreateData();
                 break;
-            case R.id.qrcode_create_bar://生成条形码
-                qrcodeCreateCodetip.setText("长按图片识别条形码");
-                create_bitmap = BarCode.builder( getCharAndNumr()).
+            case R.id.qrcode_create_bar:
+                /*
+                 * 生成条形码
+                 * 1 宽必须大于高
+                 * 2 宽必须 >= 510像素
+                 *   宽 等于510像素时 高必须小于宽的1/2
+                 * 否则生成的图片无法识别
+                 */
+                qrcodeCreateCodetip.setText("↓↓长按图片识别条形码↓↓");
+                create_bitmap = BarCode.builder(getCharAndNumr()).
                         backColor(getResources().getColor(R.color.white)).
                         codeColor(getResources().getColor(R.color.black)).
-                        codeWidth(bitmap_width).
-                        codeHeight(bitmap_height/3).
-                        isShowContent(true).
+                        codeWidth(bar_width).
+                        codeHeight(bar_height).
                         into(qrcodeCreateCodeiv);
                 upCreateData();
                 break;
         }
     }
-    /**
-     * java生成随机数字和字母组合
-     */
-    public String getCharAndNumr() {
-        StringBuilder val = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 18; i++) {
-            // 输出字母还是数字
-            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
-            // 字符串
-            if ("char".equalsIgnoreCase(charOrNum)) {
-                // 取得大写字母还是小写字母
-                int choice = random.nextInt(2) % 2 == 0 ? 65 : 97;
-                val.append((char) (choice + random.nextInt(26)));
-            } else if ("num".equalsIgnoreCase(charOrNum)) { // 数字
-                val.append(String.valueOf(random.nextInt(10)));
-            }
-        }
-        return val.toString();
-    }
+
     private void initListener() {
 
         //设置长按识别二维码条形码
@@ -175,28 +165,68 @@ public class QRCodeActivity extends BaseActivity {
                 if (rawResult != null) {
                     initDialogResult(rawResult);
                 } else {
-                    ToastTool.success("图片识别失败!");
+                    ToastTool.error("图片识别失败!");
                 }
                 return true;
             }
         });
         //获取二维码显示View的宽高
-        qrcodeCreateCodeivRl.getViewTreeObserver().addOnGlobalLayoutListener(
-                new ViewTreeObserver.OnGlobalLayoutListener(){
+        qrcodeCreateCodeiv.getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
-                    public void onGlobalLayout(){
+                    public void onGlobalLayout() {
                         //只需要获取一次高度，获取后移除监听器
-                        qrcodeCreateCodeivRl.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                        qrcodeCreateCodeiv.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                         //这里高度应该定义为成员变量，定义为局部为展示代码方便
-                        bitmap_height = qrcodeCreateCodeivRl.getHeight()- ImageTools.dpToPx(context,40);
-                        bitmap_width= qrcodeCreateCodeivRl.getWidth()- ImageTools.dpToPx(context,40);
-                        if(bitmap_width>bitmap_height){
-                            bitmap_math=bitmap_height;
-                        }else {
-                            bitmap_math=bitmap_width;
-                        }
+                        bar_height = qrcodeCreateCodeiv.getHeight() - ImageTools.dpToPx(context, 20);
+                        bar_width = qrcodeCreateCodeiv.getWidth() - ImageTools.dpToPx(context, 20);
+                        initQrBarHeight();
                     }
                 });
+    }
+
+    /**
+     * 根据显示View的大小
+     *  动态计算二维码条形码边长
+     */
+    private void initQrBarHeight() {
+        //计算qr_math 正方形二维码的宽度
+        if (bar_width > bar_height) {
+            qr_math = bar_height;
+        } else {
+            qr_math = bar_width;
+        }
+        //判断原始高度是否大于原始宽度
+        if (bar_height > bar_width) {
+            //使宽=高 高=宽
+            bar_height = bar_height + bar_width;
+            bar_width = bar_height - bar_width;//h
+            bar_height = bar_height - bar_width;//w
+        }
+        //计算bar_height 是否过小
+        if (bar_height > bar_width / 2) {
+            bar_height = bar_width / 2;
+        }
+        /*
+         * 生成条形码
+         * 1 宽必须大于高
+         * 2 宽必须 >= 510像素
+         *   宽 等于510像素时 高必须小于宽的1/2
+         * 否则生成的图片无法识别
+         */
+        if (bar_width < 510) {
+            bar_width=510;
+            bar_height=251;
+        }
+        /*
+         * 生成二维码
+         * 1 边长必须 >=  151像素
+         * 否则生成的图片无法识别
+         */
+        if (qr_math < 151) {
+            ToastTool.error("图片位置过小!");
+            qr_math=151;
+        }
     }
 
     private void upTickerViews() {
@@ -215,7 +245,7 @@ public class QRCodeActivity extends BaseActivity {
             LogTools.v("扫描结果", realContent);
         }
         if (realContent.equals("")) {
-            ToastTool.success("扫描失败!");
+            ToastTool.error("扫描失败!");
         } else {
             upScanerData(realContent);
         }
@@ -238,6 +268,27 @@ public class QRCodeActivity extends BaseActivity {
                 .setCancelable(true)
                 .builder().show();
         upTickerViews();
+    }
+
+    /**
+     * java生成随机数字和字母组合
+     */
+    public String getCharAndNumr() {
+        StringBuilder val = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 18; i++) {
+            // 输出字母还是数字
+            String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
+            // 字符串
+            if ("char".equalsIgnoreCase(charOrNum)) {
+                // 取得大写字母还是小写字母
+                int choice = random.nextInt(2) % 2 == 0 ? 65 : 97;
+                val.append((char) (choice + random.nextInt(26)));
+            } else if ("num".equalsIgnoreCase(charOrNum)) { // 数字
+                val.append(String.valueOf(random.nextInt(10)));
+            }
+        }
+        return val.toString();
     }
 
     @Override

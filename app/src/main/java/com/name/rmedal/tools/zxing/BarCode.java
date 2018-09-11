@@ -59,8 +59,6 @@ public class BarCode {
 
         private int codeHeight = 300;
 
-        private boolean isShowContent = false;
-
         private CharSequence content;
 
         public Builder backColor(int backgroundColor) {
@@ -70,11 +68,6 @@ public class BarCode {
 
         public Builder codeColor(int codeColor) {
             this.codeColor = codeColor;
-            return this;
-        }
-
-        public Builder isShowContent(boolean isShowContent) {
-            this.isShowContent = isShowContent;
             return this;
         }
 
@@ -93,7 +86,7 @@ public class BarCode {
         }
 
         public Bitmap into(ImageView imageView) {
-            Bitmap bitmap = BarCode.createBarCode(content, codeWidth, codeHeight, backgroundColor, codeColor,isShowContent);
+            Bitmap bitmap = BarCode.createBarCode(content, codeWidth, codeHeight, backgroundColor, codeColor);
             if (imageView != null) {
                 imageView.setImageBitmap(bitmap);
             }
@@ -103,7 +96,7 @@ public class BarCode {
 
     //-----------以下为生成二维码算法
 
-    public static Bitmap createBarCode(CharSequence content, int bar_width, int bar_height, int backgroundColor, int codeColor,boolean isShowContent) {
+    public static Bitmap createBarCode(CharSequence content, int bar_width, int bar_height, int backgroundColor, int codeColor) {
         Bitmap bitmap = null;
         //配置参数
         Map<EncodeHintType,Object> hints = new HashMap<>();
@@ -146,7 +139,7 @@ public class BarCode {
      * @return
      */
     public static Bitmap createBarCode(String contents, int desiredWidth, int desiredHeight) {
-        return createBarCode(contents, desiredWidth, desiredHeight, 0xFF000000, 0xFFFFFFFF,false);
+        return createBarCode(contents, desiredWidth, desiredHeight, 0xFF000000, 0xFFFFFFFF);
     }
 
     /**
