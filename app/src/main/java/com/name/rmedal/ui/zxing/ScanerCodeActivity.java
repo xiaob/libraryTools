@@ -27,7 +27,7 @@ import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.AnimationTools;
 import com.name.rmedal.tools.zxing.BeepTools;
-import com.name.rmedal.tools.zxing.QrBarTool;
+import com.name.rmedal.tools.zxing.QrBarDecoder;
 import com.name.rmedal.tools.zxing.scancode.CameraManager;
 import com.name.rmedal.tools.zxing.scancode.CaptureActivityHandler;
 import com.name.rmedal.tools.zxing.scancode.decoding.InactivityTimer;
@@ -171,7 +171,7 @@ public class ScanerCodeActivity extends BaseActivity {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, originalUri);
 
                     // 开始对图像资源解码
-                    Result rawResult = QrBarTool.decodeFromPhoto(photo);
+                    Result rawResult = QrBarDecoder.decodeFromPhoto(photo);
                     if (rawResult != null) {
                         initDialogResult(rawResult);
                     } else {

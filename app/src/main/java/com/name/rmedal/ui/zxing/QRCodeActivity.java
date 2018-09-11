@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
@@ -17,9 +15,8 @@ import com.google.zxing.Result;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.name.rmedal.tools.zxing.BarCode;
-import com.name.rmedal.tools.zxing.QRCode;
-import com.name.rmedal.tools.zxing.QrBarTool;
+import com.name.rmedal.tools.zxing.QrBarDecoder;
+import com.name.rmedal.tools.zxing.QrBarEncoder;
 import com.veni.tools.ACache;
 import com.veni.tools.DataTools;
 import com.veni.tools.ImageTools;
@@ -124,10 +121,12 @@ public class QRCodeActivity extends BaseActivity {
                  * 1 边长必须 >=  151像素
                  * 否则生成的图片无法识别
                  */
-                create_bitmap = QRCode.builder(getCharAndNumr()).
+                create_bitmap = QrBarEncoder.builder(getCharAndNumr(100)).
                         backColor(getResources().getColor(R.color.white)).
                         codeColor(getResources().getColor(R.color.black)).
-                        codeSide(qr_math).
+                        codeFormat(QrBarEncoder.Type.QR).
+                        codeWidth(qr_math).
+                        codeHeight(qr_math).
                         into(qrcodeCreateCodeiv);
                 upCreateData();
                 break;
@@ -140,9 +139,10 @@ public class QRCodeActivity extends BaseActivity {
                  * 否则生成的图片无法识别
                  */
                 qrcodeCreateCodetip.setText("↓↓长按图片识别条形码↓↓");
-                create_bitmap = BarCode.builder(getCharAndNumr()).
+                create_bitmap = QrBarEncoder.builder(getCharAndNumr(18)).
                         backColor(getResources().getColor(R.color.white)).
                         codeColor(getResources().getColor(R.color.black)).
+                        codeFormat(QrBarEncoder.Type.Bar).
                         codeWidth(bar_width).
                         codeHeight(bar_height).
                         into(qrcodeCreateCodeiv);
@@ -161,7 +161,7 @@ public class QRCodeActivity extends BaseActivity {
                     return false;
                 }
                 // 开始对图像资源解码
-                Result rawResult = QrBarTool.decodeFromPhoto(create_bitmap);
+                Result rawResult = QrBarDecoder.decodeFromPhoto(create_bitmap);
                 if (rawResult != null) {
                     initDialogResult(rawResult);
                 } else {
@@ -187,7 +187,7 @@ public class QRCodeActivity extends BaseActivity {
 
     /**
      * 根据显示View的大小
-     *  动态计算二维码条形码边长
+     * 动态计算二维码条形码边长
      */
     private void initQrBarHeight() {
         //计算qr_math 正方形二维码的宽度
@@ -215,8 +215,8 @@ public class QRCodeActivity extends BaseActivity {
          * 否则生成的图片无法识别
          */
         if (bar_width < 510) {
-            bar_width=510;
-            bar_height=251;
+            bar_width = 510;
+            bar_height = 251;
         }
         /*
          * 生成二维码
@@ -225,7 +225,7 @@ public class QRCodeActivity extends BaseActivity {
          */
         if (qr_math < 151) {
             ToastTool.error("图片位置过小!");
-            qr_math=151;
+            qr_math = 151;
         }
     }
 
@@ -242,7 +242,7 @@ public class QRCodeActivity extends BaseActivity {
         } else if (BarcodeFormat.EAN_13.equals(type)) {//条形码扫描结果
             LogTools.v("条形码", realContent);
         } else {//扫描结果
-            LogTools.v("扫描结果", realContent);
+            LogTools.v("扫描结果", "type---" + type + "--realContent--" + realContent);
         }
         if (realContent.equals("")) {
             ToastTool.error("扫描失败!");
@@ -273,10 +273,10 @@ public class QRCodeActivity extends BaseActivity {
     /**
      * java生成随机数字和字母组合
      */
-    public String getCharAndNumr() {
+    public String getCharAndNumr(int le) {
         StringBuilder val = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < 18; i++) {
+        for (int i = 0; i < le; i++) {
             // 输出字母还是数字
             String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
             // 字符串

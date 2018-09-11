@@ -15,13 +15,14 @@ import java.util.Hashtable;
 import java.util.Vector;
 
 /**
- * Created by Vondear on 2017/10/11.
+ * 作者：kkan on 2018/9/11 16:48
+ * <p>
+ * 当前类注释:
+ * 解析图片中的 二维码 或者 条形码
  */
-
-public class QrBarTool {
+public class QrBarDecoder {
 
     /**
-     * 解析图片中的 二维码 或者 条形码
      *
      * @param photo 待解析的图片
      * @return Result 解析结果，解析识别时返回NULL
