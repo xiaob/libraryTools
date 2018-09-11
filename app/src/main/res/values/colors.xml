@@ -17,6 +17,7 @@
     <color name="alpha_85_white">#d8ffffff</color>
     <color name="alpha_10_black">#1A000000</color>
     <color name="alpha_75_gray">#c08a8a8a</color>
+    <color name="light_colorPrimary">#57a2fd</color>
     <color name="alpha_85_colorPrimary">#d84285F4</color>
     <color name="alpha_75_colorPrimary">#c04285F4</color>
 </resources>

@@ -97,35 +97,8 @@ public class LoginActivity extends BaseActivity {
 
         //设置监听
         initListener();
-        //键盘高度变化监听
-        loginRootRv.setKeyboardListener(new KeyboardLayout.KeyboardLayoutListener() {
-            @Override
-            public void onKeyboardStateChanged(boolean isActive, int keyboardHeight, int bottom) {
-//                int dist = loginContentLl.getBottom() - bottom;
-                if (isActive) {
-                    scrollToBottom();
-                }
-                if (keyboardHeight > 0) {
-//                    if (dist > 0 && lastdist != dist) {
-//                        viewIsZoom = true;
-//                        ZoomIn(dist);
-//                    }
-                    if (loginService.getVisibility() != View.INVISIBLE) {
-                        loginService.setVisibility(View.INVISIBLE);
-                    }
-                } else {
-                    if (loginService.getVisibility() != View.VISIBLE) {
-//                            && viewIsZoom) {
-//                        viewIsZoom = false;
-//                        ZoomOut();
-                        loginService.setVisibility(View.VISIBLE);
-                    }
-                }
-//                lastdist = dist;
-            }
-        });
         //获取上次获取验证码的倒计时
-        long codetime = ACache.get(context).getAsTime(AppConstant.LG_Code);
+        long codetime = ACache.get(context).getKeyTimes(AppConstant.LG_Code);
         //倒计时大于两秒显示相关信息
         if (codetime / 1000 > 2) {
             timeCount = new CaptchaTime(loginGetCaptcha, codetime / 1000);
@@ -252,6 +225,34 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 captcha = s.toString();
+            }
+        });
+
+        //键盘高度变化监听
+        loginRootRv.setKeyboardListener(new KeyboardLayout.KeyboardLayoutListener() {
+            @Override
+            public void onKeyboardStateChanged(boolean isActive, int keyboardHeight, int bottom) {
+//                int dist = loginContentLl.getBottom() - bottom;
+                if (isActive) {
+                    scrollToBottom();
+                }
+                if (keyboardHeight > 0) {
+//                    if (dist > 0 && lastdist != dist) {
+//                        viewIsZoom = true;
+//                        ZoomIn(dist);
+//                    }
+                    if (loginService.getVisibility() != View.INVISIBLE) {
+                        loginService.setVisibility(View.INVISIBLE);
+                    }
+                } else {
+                    if (loginService.getVisibility() != View.VISIBLE) {
+//                            && viewIsZoom) {
+//                        viewIsZoom = false;
+//                        ZoomOut();
+                        loginService.setVisibility(View.VISIBLE);
+                    }
+                }
+//                lastdist = dist;
             }
         });
     }

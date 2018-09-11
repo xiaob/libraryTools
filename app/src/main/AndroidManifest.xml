@@ -93,6 +93,9 @@
             android:name=".ui.main.PatternlockActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
         <activity
+            android:name=".ui.zxing.QRCodeActivity"
+            android:theme="@style/AppTheme.SwipeBack"/>
+        <activity
             android:name=".ui.zxing.ScanerCodeActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 

@@ -1,8 +1,6 @@
 package com.name.rmedal.ui.main;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +12,6 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.name.rmedal.R;
-import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseFragment;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.name.rmedal.bigimage.BigImageBean;
@@ -31,19 +28,16 @@ import com.name.rmedal.test.RichTextActivity;
 import com.name.rmedal.test.RunTextActivity;
 import com.name.rmedal.test.VerifyCodeActivity;
 import com.name.rmedal.test.ToastActivity;
-import com.name.rmedal.ui.zxing.ScanerCodeActivity;
+import com.name.rmedal.ui.zxing.QRCodeActivity;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-import com.veni.tools.DataTools;
 import com.veni.tools.JsonTools;
 import com.veni.tools.FutileTools;
-import com.veni.tools.LogTools;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.TitleView;
-import com.veni.tools.view.ToastTool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -234,10 +228,7 @@ public class HomeFragment extends BaseFragment {
         functionlist.add(new FunctionBean("二维码", R.mipmap.ic_scanercode, new OnNoFastClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(context, ScanerCodeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivityForResult(intent, AppConstant.REQUEST_QRCODE);
+                QRCodeActivity.startAction(context);
             }
         }));
         functionlist.add(new FunctionBean("WebView", 0, new OnNoFastClickListener() {
@@ -253,31 +244,6 @@ public class HomeFragment extends BaseFragment {
             }
         }));
         functionadapter.replaceData(functionlist);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) { // Successfully.
-            if (requestCode == AppConstant.REQUEST_QRCODE) {//扫码回调
-                Bundle bundle = data.getExtras();
-               String zxqrcode = bundle.getString("result");
-                LogTools.e(TAG, "" + zxqrcode);
-                if (!DataTools.isNullString(zxqrcode)) {
-                    creatDialogBuilder()
-                            .setDialog_title("扫描结果")
-                            .setDialog_message(zxqrcode)
-                            .setDialog_Left("确定")
-                            .setDialog_Right("取消")
-                            .setCancelable(true)
-                            .builder().show();
-                } else {
-                    ToastTool.success("扫描失败!");
-                }
-            }
-        } else if (resultCode == Activity.RESULT_CANCELED) { // User canceled.
-            LogTools.e(TAG, " User canceled.");
-        }
     }
 
     /**

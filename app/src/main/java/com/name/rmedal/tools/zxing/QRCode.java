@@ -79,39 +79,40 @@ public class QRCode {
 
     //----------------------------------------------------------------------------------------------以下为生成二维码算法
 
-    public static Bitmap creatQRCode(CharSequence content, int QR_WIDTH, int QR_HEIGHT, int backgroundColor, int codeColor) {
+    public static Bitmap creatQRCode(CharSequence content, int qr_width, int qr_height, int backgroundColor, int codeColor) {
         Bitmap bitmap = null;
         try {
             // 判断URL合法性
-            if (content == null || "".equals(content) || content.length() < 1) {
+            if (content == null || content.length() < 1) {
                 return null;
             }
+
             Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
             hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
             // 图像数据转换，使用了矩阵转换
-            BitMatrix bitMatrix = new QRCodeWriter().encode(content + "", BarcodeFormat.QR_CODE, QR_WIDTH, QR_HEIGHT, hints);
-            int[] pixels = new int[QR_WIDTH * QR_HEIGHT];
+            BitMatrix bitMatrix = new QRCodeWriter().encode(content + "", BarcodeFormat.QR_CODE, qr_width, qr_height, hints);
+            int[] pixels = new int[qr_width * qr_height];
             // 下面这里按照二维码的算法，逐个生成二维码的图片，
             // 两个for循环是图片横列扫描的结果
-            for (int y = 0; y < QR_HEIGHT; y++) {
-                for (int x = 0; x < QR_WIDTH; x++) {
+            for (int y = 0; y < qr_height; y++) {
+                for (int x = 0; x < qr_width; x++) {
                     if (bitMatrix.get(x, y)) {
-                        pixels[y * QR_WIDTH + x] = codeColor;
+                        pixels[y * qr_width + x] = codeColor;
                     } else {
-                        pixels[y * QR_WIDTH + x] = backgroundColor;
+                        pixels[y * qr_width + x] = backgroundColor;
                     }
                 }
             }
             // 生成二维码图片的格式，使用ARGB_8888
-            bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
+            bitmap = Bitmap.createBitmap(qr_width, qr_height, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, qr_width, 0, 0, qr_width, qr_height);
         } catch (WriterException ignored) {
         }
         return bitmap;
     }
 
-    public static Bitmap creatQRCode(CharSequence content, int QR_WIDTH, int QR_HEIGHT) {
-        return creatQRCode(content, QR_WIDTH, QR_HEIGHT, 0xffffffff, 0xff000000);
+    public static Bitmap creatQRCode(CharSequence content, int qr_width, int qr_height) {
+        return creatQRCode(content, qr_width, qr_height, 0xffffffff, 0xff000000);
     }
 
     public static Bitmap creatQRCode(CharSequence content) {
@@ -123,17 +124,17 @@ public class QRCode {
 
     /**
      * @param content   需要转换的字符串
-     * @param QR_WIDTH  二维码的宽度
-     * @param QR_HEIGHT 二维码的高度
+     * @param qr_width  二维码的宽度
+     * @param qr_height 二维码的高度
      * @param iv_code   图片空间
      */
-    public static void createQRCode(String content, int QR_WIDTH, int QR_HEIGHT, ImageView iv_code) {
-        iv_code.setImageBitmap(creatQRCode(content, QR_WIDTH, QR_HEIGHT));
+    public static void createQRCode(String content, int qr_width, int qr_height, ImageView iv_code) {
+        iv_code.setImageBitmap(creatQRCode(content, qr_width, qr_height));
     }
 
     /**
-     * QR_WIDTH  二维码的宽度
-     * QR_HEIGHT 二维码的高度
+     * qr_width  二维码的宽度
+     * qr_height 二维码的高度
      *
      * @param content 需要转换的字符串
      * @param iv_code 图片空间

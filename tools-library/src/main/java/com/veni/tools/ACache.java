@@ -217,7 +217,7 @@ public class ACache {
      * @param key 键
      * @return String 数据
      */
-    public long getAsTime(String key) {
+    public long getKeyTimes(String key) {
         File file = mCache.get(key);
         if (!file.exists())
             return 0;

@@ -159,13 +159,13 @@ public class ACacheActivity extends BaseActivity {
         switch (labelstr) {
             case "插入数据": {
                 ACache.get(context).put("数据", "-----", ACache.TIME_MINUTE);
-                long time = ACache.get(context).getAsTime("数据");
+                long time = ACache.get(context).getKeyTimes("数据");
                 replaceadapter("插入数据\nkey:数据\nvalue:-----\n剩余时间:" + time);
                 break;
             }
             case "读取插入数据": {
                 String value = ACache.get(context).getAsString("数据");
-                long time = ACache.get(context).getAsTime("数据");
+                long time = ACache.get(context).getKeyTimes("数据");
                 replaceadapter("读取数据\nkey:数据\nvalue:" + value + "\n剩余时间:" + time);
                 break;
             }

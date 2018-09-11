@@ -41,6 +41,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+/**
+ * 作者：kkan on 2018/04/20
+ * 当前类注释:
+ * 扫描二维码
+ */
 public class ScanerCodeActivity extends BaseActivity {
 
     @BindView(R.id.scaner_code_preview)
@@ -69,7 +74,7 @@ public class ScanerCodeActivity extends BaseActivity {
     private int mCropWidth = 0;//扫描边界的宽度
     private int mCropHeight = 0;//扫描边界的高度
     private boolean hasSurface;//是否有预览
-    private boolean vibrate = true;//扫描成功后是否震动
+    private boolean vibrate = false;//扫描成功后是否震动
     private boolean mFlashing = true;//闪光灯开启状态
 
     @Override
@@ -82,6 +87,7 @@ public class ScanerCodeActivity extends BaseActivity {
         initScanerAnimation();//扫描动画初始化
         CameraManager.init(context);//初始化 CameraManager
         hasSurface = false;
+        vibrate = true;
         inactivityTimer = new InactivityTimer(this);
     }
 
@@ -244,8 +250,6 @@ public class ScanerCodeActivity extends BaseActivity {
     private void initDialogResult(Result result) {
         BarcodeFormat type = result.getBarcodeFormat();
         String realContent = result.getText();
-
-
         if (BarcodeFormat.QR_CODE.equals(type)) {//二维码扫描结果
             LogTools.v("二维码", realContent);
         } else if (BarcodeFormat.EAN_13.equals(type)) {//条形码扫描结果

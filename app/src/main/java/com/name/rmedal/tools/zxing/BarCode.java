@@ -1,13 +1,24 @@
 package com.name.rmedal.tools.zxing;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Created by kkan on 2017/2/17.
@@ -48,6 +59,8 @@ public class BarCode {
 
         private int codeHeight = 300;
 
+        private boolean isShowContent = false;
+
         private CharSequence content;
 
         public Builder backColor(int backgroundColor) {
@@ -57,6 +70,11 @@ public class BarCode {
 
         public Builder codeColor(int codeColor) {
             this.codeColor = codeColor;
+            return this;
+        }
+
+        public Builder isShowContent(boolean isShowContent) {
+            this.isShowContent = isShowContent;
             return this;
         }
 
@@ -75,7 +93,7 @@ public class BarCode {
         }
 
         public Bitmap into(ImageView imageView) {
-            Bitmap bitmap = BarCode.createBarCode(content, codeWidth, codeHeight, backgroundColor, codeColor);
+            Bitmap bitmap = BarCode.createBarCode(content, codeWidth, codeHeight, backgroundColor, codeColor,isShowContent);
             if (imageView != null) {
                 imageView.setImageBitmap(bitmap);
             }
@@ -85,33 +103,35 @@ public class BarCode {
 
     //-----------以下为生成二维码算法
 
-    public static Bitmap createBarCode(CharSequence content, int BAR_WIDTH, int BAR_HEIGHT, int backgroundColor, int codeColor) {
+    public static Bitmap createBarCode(CharSequence content, int bar_width, int bar_height, int backgroundColor, int codeColor,boolean isShowContent) {
         Bitmap bitmap = null;
-        //条形码的编码类型
-        BarcodeFormat barcodeFormat = BarcodeFormat.CODE_128;
-        final int backColor = backgroundColor;
-        final int barCodeColor = codeColor;
-
+        //配置参数
+        Map<EncodeHintType,Object> hints = new HashMap<>();
+        hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
+        // 容错级别 这里选择最高H级别
+        hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         MultiFormatWriter writer = new MultiFormatWriter();
-        BitMatrix result = null;
+
         try {
-            result = writer.encode(content + "", barcodeFormat, BAR_WIDTH, BAR_HEIGHT, null);
-            int width = result.getWidth();
-            int height = result.getHeight();
-            int[] pixels = new int[width * height];
-            // All are 0, or black, by default
-            for (int y = 0; y < height; y++) {
-                int offset = y * width;
-                for (int x = 0; x < width; x++) {
-                    pixels[offset + x] = result.get(x, y) ? barCodeColor : backColor;
+            // 图像数据转换，使用了矩阵转换 参数顺序分别为：编码内容，编码类型，生成图片宽度，生成图片高度，设置参数
+            BitMatrix bitMatrix = writer.encode(content.toString(), BarcodeFormat.CODE_128, bar_width, bar_height, hints);
+            int[] pixels = new int[bar_width * bar_height];
+//             下面这里按照二维码的算法，逐个生成二维码的图片，
+            // 两个for循环是图片横列扫描的结果
+            for (int y = 0; y < bar_height; y++) {
+                for (int x = 0; x < bar_width; x++) {
+                    if (bitMatrix.get(x, y)) {
+                        pixels[y * bar_width + x] = codeColor;
+                    } else {
+                        pixels[y * bar_width + x] = backgroundColor;
+                    }
                 }
             }
-            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-            bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
-        } catch (WriterException ignored) {
+            bitmap = Bitmap.createBitmap(bar_width, bar_height, Bitmap.Config.ARGB_8888);
+            bitmap.setPixels(pixels, 0, bar_width, 0, 0, bar_width, bar_height);
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
-
-
         return bitmap;
     }
 
@@ -126,7 +146,7 @@ public class BarCode {
      * @return
      */
     public static Bitmap createBarCode(String contents, int desiredWidth, int desiredHeight) {
-        return createBarCode(contents, desiredWidth, desiredHeight, 0xFF000000, 0xFFFFFFFF);
+        return createBarCode(contents, desiredWidth, desiredHeight, 0xFF000000, 0xFFFFFFFF,false);
     }
 
     /**
