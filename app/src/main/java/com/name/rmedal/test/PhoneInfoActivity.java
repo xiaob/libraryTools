@@ -22,9 +22,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.veni.tools.DataTools;
 import com.veni.tools.DeviceTools;
-import com.veni.tools.JsonTools;
-import com.veni.tools.LogTools;
 import com.veni.tools.PermissionsTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -151,7 +150,8 @@ public class PhoneInfoActivity extends BaseActivity {
      * 权限请求
      */
     private void getPermission(){
-        PermissionsTools.with(context).addPermission(Manifest.permission.READ_PHONE_STATE).initPermission();
+        List<String> permissionList= PermissionsTools.with(context).addPermission(Manifest.permission.READ_PHONE_STATE).initPermission();
+        is_r_p_s = DataTools.isEmpty(permissionList) || !permissionList.contains(Manifest.permission.READ_PHONE_STATE);
     }
     /**
      * 注册权限申请回调

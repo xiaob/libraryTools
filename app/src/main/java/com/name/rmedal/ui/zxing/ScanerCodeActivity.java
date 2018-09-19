@@ -30,13 +30,14 @@ import com.name.rmedal.tools.zxing.QrBarDecoder;
 import com.name.rmedal.tools.zxing.scancode.CameraManager;
 import com.name.rmedal.tools.zxing.scancode.CaptureActivityHandler;
 import com.name.rmedal.tools.zxing.scancode.decoding.InactivityTimer;
-import com.veni.tools.JsonTools;
+import com.veni.tools.DataTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.PermissionsTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ToastTool;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import butterknife.BindView;
@@ -108,7 +109,7 @@ public class ScanerCodeActivity extends BaseActivity {
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     startActivityForResult(intent, AppConstant.GET_IMAGE_FROM_PHONE);
-                }else {
+                } else {
                     PermissionsTools.with(context)
                             .addPermission(Manifest.permission.CAMERA)
                             .addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -198,10 +199,11 @@ public class ScanerCodeActivity extends BaseActivity {
     //==============================================================================================解析结果 及 后续处理 end
     private void initView() {
         //请求Camera权限 与 文件读写 权限
-        PermissionsTools.with(context)
+        List<String> permissionList = PermissionsTools.with(context)
                 .addPermission(Manifest.permission.CAMERA)
                 .addPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .initPermission();
+        miswes = DataTools.isEmpty(permissionList) ||!permissionList.contains(Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     /*
