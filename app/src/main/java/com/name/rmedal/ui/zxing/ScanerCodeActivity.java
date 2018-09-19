@@ -297,7 +297,7 @@ public class ScanerCodeActivity extends BaseActivity {
             LogTools.v("扫描结果", realContent);
         }
         if (realContent.equals("")) {
-            ToastTool.success("扫描失败!");
+            ToastTool.error("扫描失败!");
 //        if (handler != null) {
 //            // 连续扫描，不发送此消息扫描一次结束后就不能再次扫描
 //            handler.sendEmptyMessage(R.id.restart_preview);
