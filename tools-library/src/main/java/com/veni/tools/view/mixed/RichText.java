@@ -119,6 +119,7 @@ public class RichText extends TextView implements Drawable.Callback, View.OnAtta
     public void onViewDetachedFromWindow(View v) {
         glideImageGeter.recycle();
     }
+
     //当View离开这个页面的时候调用
     @Override
     protected void onDetachedFromWindow() {

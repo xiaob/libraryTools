@@ -149,13 +149,15 @@ public class RichTextActivity extends BaseActivity {
             @Override
             public void imageClicked(List<String> imageUrls, int position) {
                 ToastTool.normal(imageUrls.get(position));
-
                 //放大查看图片
                 List<BigImageBean> img_list = new ArrayList<>();
-                img_list.add(new BigImageBean(imageUrls.get(position)
-                        , ""));
+                for(String imgurl:imageUrls){
+                    img_list.add(new BigImageBean(imgurl
+                            , ""));
+
+                }
                 String imglistjson = JsonTools.toJson(img_list);
-                BigImagePagerActivity.startAction(context, imglistjson, 0);
+                BigImagePagerActivity.startAction(context, imglistjson, position);
             }
         });
         ImageLoaderTool.display(context, richPhotoIv, "http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg");
