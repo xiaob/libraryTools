@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
@@ -126,7 +127,7 @@ public class RichTextActivity extends BaseActivity {
             }
         });
 
-        mRxManager.add(Observable.timer(2000, TimeUnit.MILLISECONDS)
+        mRxManager.add(Observable.timer(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Long>() {
@@ -141,7 +142,6 @@ public class RichTextActivity extends BaseActivity {
      * 模拟图文混排数据
      */
     private void upviewdata() {
-
         richTextView.setRichText(body);
         richTextView.setMovementMethod(LinkMovementMethod.getInstance());//加这句才能让里面的超链接生效,实测经常卡机崩溃
 
