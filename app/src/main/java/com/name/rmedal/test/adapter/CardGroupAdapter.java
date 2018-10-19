@@ -102,8 +102,7 @@ public class CardGroupAdapter extends CardAdapter {
                     List<BigImageBean> img_list = new ArrayList<>();
                     img_list.add(new BigImageBean(itemData.getImagePath()
                             , ""));
-                    String imglistjson = JsonTools.toJson(img_list);
-                    BigImagePagerActivity.startAction(context, imglistjson, 0);
+                    BigImagePagerActivity.startAction(context, img_list, 0);
                 }
             });
         }

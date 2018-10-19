@@ -156,8 +156,7 @@ public class RichTextActivity extends BaseActivity {
                             , ""));
 
                 }
-                String imglistjson = JsonTools.toJson(img_list);
-                BigImagePagerActivity.startAction(context, imglistjson, position);
+                BigImagePagerActivity.startAction(context, img_list, position);
             }
         });
         ImageLoaderTool.display(context, richPhotoIv, "http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg");

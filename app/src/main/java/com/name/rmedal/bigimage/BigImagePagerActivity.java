@@ -66,19 +66,20 @@ public class BigImagePagerActivity extends BaseActivity {
     public static final String INTENT_POSITION = "position";
     public static final String INTENT_TITLE = "needtitle";
 
-    public static void startAction(Context context, String imglistjson, int position) {
-        startAction(context, imglistjson, position, false);
+    public static void startAction(Context context, List<BigImageBean> img_list, int position) {
+        startAction(context, img_list, position, false);
     }
 
     /**
      * 页面跳转参数
      *
      * @param context     context
-     * @param imglistjson 图片集合的json数据
+     * @param img_list 图片集合的json数据
      * @param position    默认选中图片的位置
      * @param needtitle   是否读取 BigImageBean中的 图片标题
      */
-    public static void startAction(Context context, String imglistjson, int position, boolean needtitle) {
+    public static void startAction(Context context, List<BigImageBean> img_list, int position, boolean needtitle) {
+        String imglistjson = JsonTools.toJson(img_list);
         new ActivityJumpOptionsTool().setContext(context)
                 .setClass(BigImagePagerActivity.class)
                 .setBundle(INTENT_IMGLISTJSON, imglistjson)

@@ -167,8 +167,7 @@ public class HomeFragment extends BaseFragment {
                         ,"美女444"));
                 img_list.add(new BigImageBean("http://c.hiphotos.baidu.com/image/pic/item/9d82d158ccbf6c81924a92c5b13eb13533fa4099.jpg"
                         ,"美女555"));
-                String imglistjson = JsonTools.toJson(img_list);
-                BigImagePagerActivity.startAction(context, imglistjson, 0);
+                BigImagePagerActivity.startAction(context, img_list, 0);
             }
         }));
         functionlist.add(new FunctionBean("数据时效存储",  R.mipmap.ic_acache, new OnNoFastClickListener() {

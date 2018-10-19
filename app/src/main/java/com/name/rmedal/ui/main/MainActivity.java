@@ -120,6 +120,8 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
         mainBottomNavigation.addItem(homepage);
         mainBottomNavigation.addItem(tradepage);
         mainBottomNavigation.addItem(vippage);
+        //始终显示文字
+        mainBottomNavigation.setTitleState(AHBottomNavigation.TitleState.ALWAYS_SHOW);
         // Set background color
         mainBottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
         // 禁用CoordinatorLayout内部的转换
