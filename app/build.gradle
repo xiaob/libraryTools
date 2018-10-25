@@ -10,7 +10,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        multiDexEnabled true
+//        multiDexEnabled true
 
         vectorDrawables.useSupportLibrary = true
         ndk {
@@ -58,6 +58,8 @@ dependencies {
     //侧滑退出
     implementation project(':swipebacklayout')
 
+    //微信
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
     //SVG描边动画 http://blog.csdn.net/leaf_130/article/details/54848071
     implementation 'com.jaredrummler:animated-svg-view:1.0.5'
     // banner
