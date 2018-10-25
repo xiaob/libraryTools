@@ -105,6 +105,13 @@
         <activity android:name=".html5.WebViewActivity"
             android:theme="@style/AppTheme.SwipeBack"/>
 
+        <activity
+            android:name=".wxapi.WXPayEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>
