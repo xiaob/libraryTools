@@ -1,4 +1,4 @@
-package com.name.rmedal.test.adapter;
+package com.name.rmedal.ui.personal.adapter;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,6 +35,7 @@ public class SectionAdapter extends BaseSectionQuickAdapter<PersonalSection, Bas
     protected void convert(BaseViewHolder helper, PersonalSection item) {
         PersonalModelBean video = (PersonalModelBean) item.t;
         helper.setText(R.id.tv_contact_name, video.getName());
+        helper.addOnClickListener(R.id.persional_item_ll);
     }
 
     public int getLetterPosition(String letter){

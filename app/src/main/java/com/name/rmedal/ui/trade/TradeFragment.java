@@ -2,10 +2,15 @@ package com.name.rmedal.ui.trade;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseFragment;
+import com.name.rmedal.bigimage.BigImageBean;
+import com.name.rmedal.bigimage.BigImagePagerActivity;
+import com.name.rmedal.modelbean.BannerBean;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
@@ -13,13 +18,19 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.ShoppingView;
 import com.veni.tools.view.TitleView;
+import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.imageload.ImageLoaderTool;
 import com.veni.tools.view.ticker.TickerUtils;
 import com.veni.tools.view.ticker.TickerView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.bingoogolapple.bgabanner.BGABanner;
+import cn.bingoogolapple.bgabanner.BGABannerUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -42,6 +53,8 @@ public class TradeFragment extends BaseFragment{
     TickerView tradeMadeCount;
     @BindView(R.id.trade_refreshlayout)
     SmartRefreshLayout tradeRefreshlayout;
+    @BindView(R.id.trade_banner)
+    BGABanner tradeBanner;
 
     @Override
     protected int getLayoutId() {
@@ -90,6 +103,39 @@ public class TradeFragment extends BaseFragment{
         });
         //SmartRefreshLayout 刷新加载Header样式
         tradeRefreshlayout.setRefreshHeader(new ClassicsHeader(context));
+
+        tradeBanner.setAdapter(new BGABanner.Adapter<ImageView, BannerBean>() {
+            @Override
+            public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable BannerBean model, int position) {
+                if(model!=null){
+                    ImageLoaderTool.display(context,itemView,model.getBanner_url());
+                }
+            }
+        });
+        tradeBanner.setDelegate(new BGABanner.Delegate<ImageView, BannerBean>() {
+            @Override
+            public void onBannerItemClick(BGABanner banner, ImageView itemView, @Nullable BannerBean model, int position) {
+                if(model!=null){
+                    ToastTool.normal(model.getTips());
+                    //放大查看图片
+                    List<BigImageBean> img_list = new ArrayList<>();
+                    img_list.add(new BigImageBean(model.getBanner_url()
+                            , ""));
+                    BigImagePagerActivity.startAction(context, img_list, 0);
+                }
+            }
+        });
+        List<BannerBean> data =new ArrayList<>();
+        data.add(new BannerBean("http://a0.att.hudong.com/31/35/300533991095135084358827466.jpg"));
+        data.add(new BannerBean("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg"));
+        data.add(new BannerBean("http://x.itunes123.com/uploadfiles/1b13c3044431fb712bb712da97f42a2d.jpg"));
+        data.add(new BannerBean("http://x.itunes123.com/uploadfiles/a3864382d68ce93bb7ab84775cb12d17.jpg"));
+        data.add(new BannerBean("http://c.hiphotos.baidu.com/image/pic/item/9d82d158ccbf6c81924a92c5b13eb13533fa4099.jpg"));
+        List<String> tiplist = new ArrayList<>();
+        for(BannerBean homeBannerBean:data){
+            tiplist.add(homeBannerBean.getTips());
+        }
+        tradeBanner.setData(data, tiplist);
     }
 
 
