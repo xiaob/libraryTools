@@ -10,7 +10,6 @@ import com.name.rmedal.R;
 import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.name.rmedal.modelbean.CardDataItem;
-import com.veni.tools.JsonTools;
 import com.veni.tools.interfaces.OnNoFastClickListener;
 import com.veni.tools.view.ToastTool;
 import com.veni.tools.view.cardslide.CardAdapter;
@@ -84,7 +83,7 @@ public class CardGroupAdapter extends CardAdapter {
         }
 
         public void bindData(final CardDataItem itemData) {
-            ImageLoaderTool.display(context,imageView,itemData.getImagePath());
+            ImageLoaderTool.with(context).loadUrl(itemData.getImagePath()).into(imageView);
             userNameTv.setText(itemData.getUserName());
             imageNumTv.setText(itemData.getImageNum() + "");
             likeNumTv.setText(itemData.getLikeNum() + "");

@@ -30,7 +30,6 @@ import java.util.concurrent.TimeUnit;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.bingoogolapple.bgabanner.BGABanner;
-import cn.bingoogolapple.bgabanner.BGABannerUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
@@ -108,7 +107,7 @@ public class TradeFragment extends BaseFragment{
             @Override
             public void fillBannerItem(BGABanner banner, ImageView itemView, @Nullable BannerBean model, int position) {
                 if(model!=null){
-                    ImageLoaderTool.display(context,itemView,model.getBanner_url());
+                    ImageLoaderTool.with(context).loadUrl(model.getBanner_url()).into(itemView);
                 }
             }
         });

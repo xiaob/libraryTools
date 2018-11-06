@@ -3,14 +3,13 @@ package com.name.rmedal.bigimage;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.content.ContextCompat;
+import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,14 +21,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.name.rmedal.R;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.SystemUiVisibilityUtil;
+import com.veni.tools.view.imageload.ImageLoaderTool;
 import com.veni.tools.JsonTools;
 import com.veni.tools.TabLayoutTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -73,10 +72,10 @@ public class BigImagePagerActivity extends BaseActivity {
     /**
      * 页面跳转参数
      *
-     * @param context     context
-     * @param img_list 图片集合的json数据
-     * @param position    默认选中图片的位置
-     * @param needtitle   是否读取 BigImageBean中的 图片标题
+     * @param context   context
+     * @param img_list  图片集合的json数据
+     * @param position  默认选中图片的位置
+     * @param needtitle 是否读取 BigImageBean中的 图片标题
      */
     public static void startAction(Context context, List<BigImageBean> img_list, int position, boolean needtitle) {
         String imglistjson = JsonTools.toJson(img_list);
@@ -244,21 +243,20 @@ public class BigImagePagerActivity extends BaseActivity {
 
             loading.setVisibility(View.VISIBLE);
 
-            Glide.with(context).load(uri)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(me.iwf.photopicker.R.drawable.__picker_ic_photo_black_48dp)
-                    .error(R.drawable.ic_empty_picture)
-                    .dontAnimate().dontTransform().override(800, 800)
-                    .thumbnail(0.1f)
-                    .listener(new RequestListener<Uri, GlideDrawable>() {
+            ImageLoaderTool.with(context)
+                    .loadUrl(uri)
+                    .dontAnimate()
+                    .dontTransform()
+                    .override(800,800)
+                    .setRequestListener(new RequestListener<Drawable>() {
                         @Override
-                        public boolean onException(Exception e, Uri model, Target<GlideDrawable> target, boolean isFirstResource) {
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                             loading.setVisibility(View.GONE);
                             return false;
                         }
 
                         @Override
-                        public boolean onResourceReady(GlideDrawable resource, Uri model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target target, boolean isFirstResource) {
                             loading.setVisibility(View.GONE);
                             return false;
                         }

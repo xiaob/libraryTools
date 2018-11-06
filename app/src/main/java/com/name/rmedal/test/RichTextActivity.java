@@ -15,14 +15,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.veni.tools.IntentTools;
-import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
@@ -159,7 +157,7 @@ public class RichTextActivity extends BaseActivity {
                 BigImagePagerActivity.startAction(context, img_list, position);
             }
         });
-        ImageLoaderTool.display(context, richPhotoIv, "http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg");
+        ImageLoaderTool.with(context).loadUrl("http://a3.topitme.com/1/21/79/1128833621e7779211o.jpg").into(richPhotoIv);
     }
 
     @OnClick({R.id.rich_fab})

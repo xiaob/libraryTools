@@ -1,9 +1,7 @@
 package com.veni.tools.view.mixed;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -15,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.veni.tools.DataTools;
-import com.veni.tools.LogTools;
 
 import java.util.ArrayList;
 import java.util.List;
