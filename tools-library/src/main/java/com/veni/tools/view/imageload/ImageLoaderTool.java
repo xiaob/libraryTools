@@ -22,6 +22,16 @@ import com.veni.tools.R;
  * 当前类注释:
  * 图片加载工具类 使用{@link Glide }4.8.0 框架封装
  * <p>
+ * 缓存策略 diskCacheStrategy(DiskCacheStrategy.ALL)
+ * DiskCacheStrategy.NONE 什么都不缓存
+ * DiskCacheStrategy.SOURCE 仅仅只缓存原来的全分辨率的图像
+ * DiskCacheStrategy.RESULT 仅仅缓存最终的图像，即降低分辨率后的（或者是转换后的）
+ * DiskCacheStrategy.ALL 缓存所有版本的图像（默认行为）
+ * <p>
+ * 动态转换 centerCrop()
+ * <p>
+ * Glide.get(this).clearDiskCache();//清理磁盘缓存 需要在子线程中执行
+ * Glide.get(this).clearMemory();//清理内存缓存  可以在UI主线程中进行
  * <p>
  * ImageLoaderTool.with(context).loadUrl(ImagePath).into(imageView);
  */
@@ -53,11 +63,11 @@ public class ImageLoaderTool {
 //                    .centerCrop()
 //                    .format(DecodeFormat.PREFER_RGB_565)//清晰度 默认PREFER_ARGB_8888
                     .priority(Priority.HIGH)// 当前线程的优先级
-//                    .skipMemoryCache(true)//跳过内存缓存
-                    .diskCacheStrategy(DiskCacheStrategy.ALL);//缓存所有版本的图像
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE);//跳过磁盘缓存
-//                    .diskCacheStrategy(DiskCacheStrategy.DATA);//只缓存原来分辨率的图片
-//                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE);//只缓存最终的图片
+//                    .skipMemoryCache(true)//是否将图片放到内存中
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);//缓存所有版本的图像（默认行为）
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE);//什么都不缓存
+//                    .diskCacheStrategy(DiskCacheStrategy.DATA);//仅仅只缓存原来的全分辨率的图像
+//                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE);//仅仅缓存最终的图像，即降低分辨率后的（或者是转换后的）
 
         }
 

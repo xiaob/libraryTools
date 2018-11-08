@@ -270,12 +270,14 @@ public class BigImagePagerActivity extends BaseActivity {
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+            // 覆写destroyItem并且空实现,这样每个View视图就不会被销毁
+//            container.removeView((View) object);
+//            super.destroyItem(container, position, object);
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view.equals(object);
         }
 
