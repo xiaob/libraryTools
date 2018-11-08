@@ -2,6 +2,7 @@ package com.veni.tools.view.mixed;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.Html;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -56,7 +57,12 @@ public class RichText extends TextView implements Drawable.Callback, View.OnAtta
             return;
         }
         glideImageGeter = new GlideImageGeter(getContext(), this);
-        Spanned spanned = Html.fromHtml(text, glideImageGeter, null);
+        Spanned spanned;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            spanned = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY,glideImageGeter, null);
+        } else {
+            spanned = Html.fromHtml(text,glideImageGeter, null);
+        }
         SpannableStringBuilder spannableStringBuilder;
         if (spanned instanceof SpannableStringBuilder) {
             spannableStringBuilder = (SpannableStringBuilder) spanned;

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
+import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -50,10 +51,11 @@ public class ImageLoaderTool {
                     .fitCenter()
                     //指定图片的缩放类型为centerCrop （等比例缩放图片，直到图片的宽高都大于等于ImageView的宽度，然后截取中间的显示。）
 //                    .centerCrop()
+//                    .format(DecodeFormat.PREFER_RGB_565)//清晰度 默认PREFER_ARGB_8888
                     .priority(Priority.HIGH)// 当前线程的优先级
 //                    .skipMemoryCache(true)//跳过内存缓存
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL);//缓存所有版本的图像
-                    .diskCacheStrategy(DiskCacheStrategy.NONE);//跳过磁盘缓存
+                    .diskCacheStrategy(DiskCacheStrategy.ALL);//缓存所有版本的图像
+//                    .diskCacheStrategy(DiskCacheStrategy.NONE);//跳过磁盘缓存
 //                    .diskCacheStrategy(DiskCacheStrategy.DATA);//只缓存原来分辨率的图片
 //                    .diskCacheStrategy(DiskCacheStrategy.RESOURCE);//只缓存最终的图片
 
@@ -64,6 +66,23 @@ public class ImageLoaderTool {
             return this;
         }
 
+        /**
+         * 图片高清
+         */
+        @SuppressLint("CheckResult")
+        public Builder bigPhoto() {
+            options.format(DecodeFormat.PREFER_ARGB_8888);
+            return this;
+        }
+
+        /**
+         * 图片标清
+         */
+        @SuppressLint("CheckResult")
+        public Builder smallPhoto() {
+            options.format(DecodeFormat.PREFER_RGB_565);
+            return this;
+        }
         /**
          * 加载圆角图片
          */

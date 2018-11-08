@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -212,8 +213,9 @@ public class BigImagePagerActivity extends BaseActivity {
         }
 
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, final int position) {
             View view = inflater.inflate(R.layout.item_pager_image, container, false);
             ImageView imageView = view.findViewById(R.id.image);
 

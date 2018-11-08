@@ -33,6 +33,7 @@ public class GlideImageGeter implements Html.ImageGetter {
     private HashSet<GifDrawable> gifDrawables;
     private final Context mContext;
     private final TextView mTextView;
+    private  RequestOptions requestOptions;
 
     public void recycle() {
         for (GifDrawable gifDrawable : gifDrawables) {
@@ -59,13 +60,16 @@ public class GlideImageGeter implements Html.ImageGetter {
     }
 
     private RequestOptions getOptions() {
-        return new RequestOptions()
-                //指定图片的缩放类型为fitCenter （等比例缩放图片，宽或者是高等于ImageView的宽或者是高。）
-                .fitCenter()
-                //指定图片的缩放类型为centerCrop （等比例缩放图片，直到图片的狂高都大于等于ImageView的宽度，然后截取中间的显示。）
-                .centerCrop()
-                .priority(Priority.HIGH)// 当前线程的优先级
-                .skipMemoryCache(true);//跳过内存缓存
+        if(requestOptions==null){
+            requestOptions= new RequestOptions()
+                    //指定图片的缩放类型为fitCenter （等比例缩放图片，宽或者是高等于ImageView的宽或者是高。）
+                    .fitCenter()
+                    //指定图片的缩放类型为centerCrop （等比例缩放图片，直到图片的狂高都大于等于ImageView的宽度，然后截取中间的显示。）
+                    .centerCrop()
+                    .priority(Priority.HIGH)// 当前线程的优先级
+                    .skipMemoryCache(true);//跳过内存缓存
+        }
+        return requestOptions;
     }
 
     private class DrawableTarget extends SimpleTarget<Drawable> {
