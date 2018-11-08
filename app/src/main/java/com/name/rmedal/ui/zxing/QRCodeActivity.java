@@ -119,7 +119,7 @@ public class QRCodeActivity extends BaseActivity {
                 /*
                  * 生成二维码
                  * 1 边长必须 >=  151像素
-                 * 否则生成的图片无法识别
+                 * 否则生成的图片有可能无法识别
                  */
                 create_bitmap = QrBarEncoder.builder(getCharAndNumr(100)).
                         backColor(getResources().getColor(R.color.white)).
@@ -136,7 +136,7 @@ public class QRCodeActivity extends BaseActivity {
                  * 1 宽必须大于高
                  * 2 宽必须 >= 510像素
                  *   宽 等于510像素时 高必须小于宽的1/2
-                 * 否则生成的图片无法识别
+                 * 否则生成的图片有可能无法识别
                  */
                 qrcodeCreateCodetip.setText("↓↓长按图片识别条形码↓↓");
                 create_bitmap = QrBarEncoder.builder(getCharAndNumr(18)).

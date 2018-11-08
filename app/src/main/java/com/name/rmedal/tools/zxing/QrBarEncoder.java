@@ -53,6 +53,7 @@ public class QrBarEncoder {
 
         private CharSequence content;
 
+        private int margin=0; //白边大小，取值范围0~4
         /*
          * 条形码
          * BarcodeFormat.CODE_128
@@ -85,6 +86,11 @@ public class QrBarEncoder {
             return this;
         }
 
+        public Builder margin(int margin) {
+            this.margin = margin;
+            return this;
+        }
+
         public Builder(@NonNull CharSequence text) {
             this.content = text;
         }
@@ -96,7 +102,7 @@ public class QrBarEncoder {
             }else {
                 barcodeFormat=BarcodeFormat.CODE_128;
             }
-            Bitmap bitmap = creatCodeFormat(content, codeWidth, codeHeight, backgroundColor, codeColor,barcodeFormat);
+            Bitmap bitmap = creatCodeFormat(content, codeWidth, codeHeight, backgroundColor, codeColor,barcodeFormat,margin);
             if (imageView != null) {
                 imageView.setImageBitmap(bitmap);
             }
@@ -104,7 +110,8 @@ public class QrBarEncoder {
         }
     }
 
-    private static Bitmap creatCodeFormat(CharSequence content, int code_width, int code_height, int backgroundColor, int codeColor,BarcodeFormat barcodeFormat) {
+    private static Bitmap creatCodeFormat(CharSequence content, int code_width, int code_height,
+                                          int backgroundColor,int codeColor,BarcodeFormat barcodeFormat,int margin) {
         Bitmap bitmap = null;
         // 判断URL合法性
         if (content == null || content.length() < 1) {
@@ -115,6 +122,7 @@ public class QrBarEncoder {
         hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
         // 容错级别 这里选择最高H级别
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
+        hints.put(EncodeHintType.MARGIN, margin); //设置白边大小
         MultiFormatWriter writer = new MultiFormatWriter();
 
         try {
