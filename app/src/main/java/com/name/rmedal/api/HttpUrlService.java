@@ -15,6 +15,10 @@ import retrofit2.http.POST;
  * 作者：kkan on 2017/11/30
  * 当前类注释:
  * 请求地址
+ *
+ * 表单的方式传递键值对@FormUrlEncoded
+ * 单文件上传@Multipart  例 @Part MultipartBody.Part photo
+ * 多文件上传@PartMap 例 registerUser(@PartMap Map<String, RequestBody> params,  @Part("password") RequestBody password);
  */
 public interface HttpUrlService {
     //版本更新
