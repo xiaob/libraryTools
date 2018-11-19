@@ -3,11 +3,8 @@ package com.veni.tools.view;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffColorFilter;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.NinePatchDrawable;
 import android.os.Build;
 import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
@@ -46,7 +43,7 @@ public class ToastTool {
     private static final int WARNING_COLOR = Color.parseColor("#FFA900");
 
     @ColorInt
-    private static final int NORMAL = Color.parseColor("#808080");
+    private static final int NORMAL_COLOR = Color.parseColor("#808080");
 
     private static final String TOAST_TYPEFACE = "sans-serif-condensed";
 
@@ -248,7 +245,7 @@ public class ToastTool {
             drawableFrame = tint9PatchDrawableFrame(context, tintColor);
         } else {
 //            drawableFrame = getDrawable(context, R.drawable.toast_frame);
-            drawableFrame = tint9PatchDrawableFrame(context, NORMAL);
+            drawableFrame = tint9PatchDrawableFrame(context, NORMAL_COLOR);
         }
         setBackground(toastLayout, drawableFrame);
 
