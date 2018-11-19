@@ -13,6 +13,7 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +44,9 @@ public class ToastTool {
 
     @ColorInt
     private static final int WARNING_COLOR = Color.parseColor("#FFA900");
+
+    @ColorInt
+    private static final int NORMAL = Color.parseColor("#808080");
 
     private static final String TOAST_TYPEFACE = "sans-serif-condensed";
 
@@ -114,7 +118,9 @@ public class ToastTool {
     public static void error(@NonNull String message) {
         error(FutileTools.getContext(), message, Toast.LENGTH_SHORT, true).show();
     }
-    //===========================================使用ApplicationContext 方法=========================
+    public static void error(@NonNull int resId) {
+        error(FutileTools.getContext(), FutileTools.getContext().getResources().getString(resId), Toast.LENGTH_SHORT, true).show();
+    }    //===========================================使用ApplicationContext 方法=========================
 
     //*******************************************常规方法********************************************
 
@@ -241,7 +247,8 @@ public class ToastTool {
         if (shouldTint) {
             drawableFrame = tint9PatchDrawableFrame(context, tintColor);
         } else {
-            drawableFrame = getDrawable(context, R.drawable.toast_frame);
+//            drawableFrame = getDrawable(context, R.drawable.toast_frame);
+            drawableFrame = tint9PatchDrawableFrame(context, NORMAL);
         }
         setBackground(toastLayout, drawableFrame);
 
@@ -262,8 +269,10 @@ public class ToastTool {
     }
 
     public static final Drawable tint9PatchDrawableFrame(@NonNull Context context, @ColorInt int tintColor) {
-        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_frame);
-        toastDrawable.setColorFilter(new PorterDuffColorFilter(tintColor, PorterDuff.Mode.SRC_IN));
+//        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_frame);
+        Drawable toastDrawable = getDrawable(context, R.drawable.corners30_gray);
+        DrawableCompat.setTint(toastDrawable, tintColor);
+//        toastDrawable.setColorFilter(new PorterDuffColorFilter(tintColor, PorterDuff.Mode.SRC_IN));
         return toastDrawable;
     }
     //===========================================内需方法============================================
