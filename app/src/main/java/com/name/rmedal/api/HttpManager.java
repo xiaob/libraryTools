@@ -50,7 +50,7 @@ public class HttpManager {
     private static final String TAG = HttpManager.class.getSimpleName();
 
     /*服务器跟地址*/
-    private static final String BASE_URL = "http://123.56.190.116:8082/api/";
+    private static final String BASE_URL = "https://www.baidu.com/";
     private volatile static HttpManager INSTANCE;
 
     private HttpUrlService httpUrlService;
