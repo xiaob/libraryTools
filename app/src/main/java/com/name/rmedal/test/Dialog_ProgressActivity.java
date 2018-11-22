@@ -24,7 +24,6 @@ import com.veni.tools.view.TitleView;
 import com.veni.tools.view.progressing.SpinKitView;
 import com.veni.tools.view.progressing.SpriteFactory;
 import com.veni.tools.view.progressing.Style;
-import com.veni.tools.view.progressing.sprite.Sprite;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,8 +99,16 @@ public class Dialog_ProgressActivity extends BaseActivity {
             protected void convert(BaseViewHolder viewHolder, FunctionBean item) {
                 viewHolder.setText(R.id.spink_tv, item.getFunctionName());
                 SpinKitView spinKitView = viewHolder.getView(R.id.spink_item);
-                Sprite drawable = item.getSprite();
-                spinKitView.setIndeterminateDrawable(drawable);
+                Style style =  item.getStyle();
+//                Sprite sprite = SpriteFactory.create(style);
+//                sprite.setBounds(0, 0, 70, 90);
+                //left 组件在容器X轴上的起点
+                // top 组件在容器Y轴上的起点
+                // right 组件的长度
+                // bottom 组件的高度
+//                sprite.setBounds(0, 0, 70, 90);
+                spinKitView.setColor(context.getResources().getColor(R.color.colorPrimaryDark));
+                spinKitView.setIndeterminateDrawable(SpriteFactory.create(style));
             }
         };
         //添加Recyclerview头部
@@ -116,14 +123,7 @@ public class Dialog_ProgressActivity extends BaseActivity {
         List<FunctionBean> functionlist = new ArrayList<>();
         for(int i=0;i< Style.values().length;i++){
             Style style = Style.values()[i];
-            Sprite drawable = SpriteFactory.create(style);
-            drawable.setColor(R.color.colorAccent);
-            //left 组件在容器X轴上的起点
-            // top 组件在容器Y轴上的起点
-            // right 组件的长度
-            // bottom 组件的高度
-            drawable.setBounds(0, 0, 100, 120);
-            functionlist.add(new FunctionBean(style.name(),drawable,null));
+            functionlist.add(new FunctionBean(style.name(),style,null));
         }
         //刷新adapter
         functionadapter.replaceData(functionlist);

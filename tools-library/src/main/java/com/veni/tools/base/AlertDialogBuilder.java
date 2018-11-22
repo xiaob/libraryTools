@@ -380,8 +380,8 @@ public class AlertDialogBuilder {
         View loadingdialog = View.inflate(context, R.layout.dialog_loading, null);
         TextView loading_tv = loadingdialog.findViewById(R.id.loading_tv);
         if (messageDrawable != null) {
-            ImageView loading_iv = new ImageView(context);
-            loading_iv.setImageDrawable(messageDrawable);
+//            ImageView loading_iv = new ImageView(context);
+//            loading_iv.setImageDrawable(messageDrawable);
             loading_tv.setCompoundDrawables(drawableseat == 0 ? messageDrawable : null
                     , drawableseat == 1 ? messageDrawable : null
                     , drawableseat == 2 ? messageDrawable : null

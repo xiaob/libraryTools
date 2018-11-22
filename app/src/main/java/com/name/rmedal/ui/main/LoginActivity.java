@@ -110,7 +110,6 @@ public class LoginActivity extends BaseActivity {
      * 弹出软键盘时将SVContainer滑到底
      */
     private void scrollToBottom() {
-
         loginScrollView.postDelayed(new Runnable() {
 
             @Override

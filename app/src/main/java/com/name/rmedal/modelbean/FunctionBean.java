@@ -3,7 +3,7 @@ package com.name.rmedal.modelbean;
 import android.support.annotation.DrawableRes;
 
 import com.veni.tools.interfaces.OnNoFastClickListener;
-import com.veni.tools.view.progressing.sprite.Sprite;
+import com.veni.tools.view.progressing.Style;
 
 import java.io.Serializable;
 
@@ -20,7 +20,7 @@ public class FunctionBean implements Serializable {
 
     private OnNoFastClickListener noFastClickListener = null;
 
-    private Sprite sprite = null;
+    private Style style = null;
 
     public FunctionBean(String functionName, @DrawableRes int functionImage, OnNoFastClickListener noFastClickListener) {
         this.functionName = functionName;
@@ -28,9 +28,9 @@ public class FunctionBean implements Serializable {
         this.noFastClickListener = noFastClickListener;
     }
 
-    public FunctionBean(String functionName, Sprite sprite, OnNoFastClickListener noFastClickListener) {
+    public FunctionBean(String functionName, Style style, OnNoFastClickListener noFastClickListener) {
         this.functionName = functionName;
-        this.sprite = sprite;
+        this.style = style;
         this.noFastClickListener = noFastClickListener;
     }
 
@@ -58,11 +58,11 @@ public class FunctionBean implements Serializable {
         this.noFastClickListener = noFastClickListener;
     }
 
-    public Sprite getSprite() {
-        return sprite;
+    public Style getStyle() {
+        return style;
     }
 
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
+    public void setStyle(Style style) {
+        this.style = style;
     }
 }

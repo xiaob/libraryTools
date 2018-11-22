@@ -18,6 +18,7 @@ import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.zxing.QrBarDecoder;
 import com.name.rmedal.tools.zxing.QrBarEncoder;
 import com.veni.tools.ACache;
+import com.veni.tools.ClipboardTools;
 import com.veni.tools.DataTools;
 import com.veni.tools.ImageTools;
 import com.veni.tools.LogTools;
@@ -257,7 +258,7 @@ public class QRCodeActivity extends BaseActivity {
         upTickerViews();
     }
 
-    private void upScanerData(String zxqrcode) {
+    private void upScanerData(final String zxqrcode) {
         scaner_count++;
         ACache.get(context).put(AppConstant.ScanerCount, scaner_count);
         creatDialogBuilder()
@@ -265,6 +266,13 @@ public class QRCodeActivity extends BaseActivity {
                 .setDialog_message(zxqrcode)
                 .setDialog_Left("确定")
                 .setDialog_Right("取消")
+                .setLeftlistener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ToastTool.success("扫描结果已复制到剪切板");
+                        ClipboardTools.copyText(context,zxqrcode);
+                    }
+                })
                 .setCancelable(true)
                 .builder().show();
         upTickerViews();

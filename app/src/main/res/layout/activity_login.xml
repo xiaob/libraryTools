@@ -9,20 +9,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:layout_width="@dimen/hight_100"
-            android:visibility="gone"
-            android:layout_height="@dimen/hight_100"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/hight_80"
-            android:background="@null"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher" />
 
         <ScrollView
             android:id="@+id/login_scrollView"
@@ -185,6 +171,4 @@
                 android:textColor="#b0b8b2"
                 android:textSize="@dimen/font_14" />
         </LinearLayout>
-
-    </RelativeLayout>
 </com.veni.tools.view.KeyboardLayout>
