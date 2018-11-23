@@ -19,7 +19,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.veni.tools.interfaces.OnDelayListener;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

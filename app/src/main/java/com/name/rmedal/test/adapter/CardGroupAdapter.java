@@ -11,7 +11,7 @@ import com.name.rmedal.bigimage.BigImageBean;
 import com.name.rmedal.bigimage.BigImagePagerActivity;
 import com.name.rmedal.modelbean.CardDataItem;
 import com.veni.tools.interfaces.OnNoFastClickListener;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 import com.veni.tools.view.cardslide.CardAdapter;
 import com.veni.tools.view.imageload.ImageLoaderTool;
 

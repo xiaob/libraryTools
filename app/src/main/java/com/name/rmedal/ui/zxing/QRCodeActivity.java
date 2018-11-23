@@ -25,7 +25,7 @@ import com.veni.tools.LogTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 import com.veni.tools.view.ticker.TickerUtils;
 import com.veni.tools.view.ticker.TickerView;
 

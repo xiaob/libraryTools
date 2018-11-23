@@ -14,7 +14,7 @@ import com.name.rmedal.ui.personal.adapter.SectionAdapter;
 import com.veni.tools.JsonTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.view.TitleView;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 import com.veni.tools.view.sidebar.PinnedHeaderDecoration;
 import com.veni.tools.view.sidebar.WaveSideBarView;
 

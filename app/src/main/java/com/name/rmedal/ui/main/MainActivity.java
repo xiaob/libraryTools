@@ -30,7 +30,7 @@ import com.veni.tools.LogTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.interfaces.OnNoFastClickListener;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;

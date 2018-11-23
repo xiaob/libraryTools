@@ -13,7 +13,6 @@ import android.widget.Toast;
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.base.BaseActivity;
-import com.veni.tools.LogTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.interfaces.OnNoFastClickListener;
@@ -21,7 +20,7 @@ import com.veni.tools.view.RunTextView;
 import com.veni.tools.view.TextViewVertical;
 import com.veni.tools.view.TextViewVerticalMore;
 import com.veni.tools.view.TitleView;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 import java.util.ArrayList;
 import java.util.HashMap;

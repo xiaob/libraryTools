@@ -25,7 +25,7 @@ import com.veni.tools.RegTools;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.KeyboardLayout;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 import butterknife.BindView;
 import butterknife.OnClick;

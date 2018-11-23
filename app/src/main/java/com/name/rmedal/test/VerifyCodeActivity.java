@@ -14,7 +14,7 @@ import com.name.rmedal.base.BaseActivity;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
 import com.veni.tools.view.TitleView;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 import com.veni.tools.view.VerificationCodeView;
 
 import java.util.Random;

@@ -34,7 +34,7 @@ import com.veni.tools.DataTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.PermissionsTools;
 import com.veni.tools.StatusBarTools;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 import java.io.IOException;
 import java.util.List;

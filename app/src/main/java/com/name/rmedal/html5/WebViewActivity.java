@@ -20,7 +20,7 @@ import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.ContentViewHelper;
 import com.veni.tools.StatusBarTools;
 import com.veni.tools.base.ActivityJumpOptionsTool;
-import com.veni.tools.view.ToastTool;
+import com.veni.tools.view.itoast.ToastTool;
 
 
 /**
