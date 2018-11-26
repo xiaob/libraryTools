@@ -174,6 +174,7 @@ public class CustomToast implements IToast {
 
     @Override
     public void cancel() {
+        sHandler.removeCallbacksAndMessages("");
         handleTimeout();
     }
 
@@ -193,13 +194,6 @@ public class CustomToast implements IToast {
         }
     }
 
-
-    private final Runnable mHide = new Runnable() {
-        @Override
-        public void run() {
-            hideView();
-        }
-    };
     final void showView() {
         if (nextView != null) {
             if (mView != null&&mView.getParent() != null) {

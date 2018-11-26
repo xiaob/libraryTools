@@ -13,6 +13,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,7 +42,7 @@ public class ToastTool {
     @ColorInt
     private static int DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF");
     @ColorInt
-    private static int ERROR_COLOR = Color.parseColor("#D50000");
+    private static int ERROR_COLOR = Color.parseColor("#FD4C5B");
     @ColorInt
     private static int INFO_COLOR = Color.parseColor("#3F51B5");
     @ColorInt
@@ -49,7 +50,7 @@ public class ToastTool {
     @ColorInt
     private static int WARNING_COLOR = Color.parseColor("#FFA900");
     @ColorInt
-    private static int NORMAL_COLOR = Color.parseColor("#353A3E");
+    private static int NORMAL_COLOR = Color.parseColor("#808080");
 
     private static final Typeface LOADED_TOAST_TYPEFACE = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static Typeface currentTypeface = LOADED_TOAST_TYPEFACE;
@@ -143,25 +144,25 @@ public class ToastTool {
 
     @CheckResult
     public static IToast normal(@NonNull Context context, @StringRes int message, int duration,
-                               Drawable icon) {
+                                Drawable icon) {
         return normal(context, context.getString(message), duration, icon, true);
     }
 
     @CheckResult
     public static IToast normal(@NonNull Context context, @NonNull CharSequence message, int duration,
-                               Drawable icon) {
+                                Drawable icon) {
         return normal(context, message, duration, icon, true);
     }
 
     @CheckResult
     public static IToast normal(@NonNull Context context, @StringRes int message, int duration,
-                               Drawable icon, boolean withIcon) {
+                                Drawable icon, boolean withIcon) {
         return custom(context, context.getString(message), icon, NORMAL_COLOR, duration, withIcon, true);
     }
 
     @CheckResult
     public static IToast normal(@NonNull Context context, @NonNull CharSequence message, int duration,
-                               Drawable icon, boolean withIcon) {
+                                Drawable icon, boolean withIcon) {
         return custom(context, message, icon, NORMAL_COLOR, duration, withIcon, true);
     }
 
@@ -295,42 +296,43 @@ public class ToastTool {
 
     @CheckResult
     public static IToast custom(@NonNull Context context, @StringRes int message, Drawable icon,
-                               int duration, boolean withIcon) {
+                                int duration, boolean withIcon) {
         return custom(context, context.getString(message), icon, -1, duration, withIcon, false);
     }
 
     @CheckResult
     public static IToast custom(@NonNull Context context, @NonNull CharSequence message, Drawable icon,
-                               int duration, boolean withIcon) {
+                                int duration, boolean withIcon) {
         return custom(context, message, icon, -1, duration, withIcon, false);
     }
 
     @CheckResult
     public static IToast custom(@NonNull Context context, @StringRes int message, @DrawableRes int iconRes,
-                               @ColorInt int tintColor, int duration,
-                               boolean withIcon, boolean shouldTint) {
+                                @ColorInt int tintColor, int duration,
+                                boolean withIcon, boolean shouldTint) {
         return custom(context, context.getString(message), getDrawable(context, iconRes),
                 tintColor, duration, withIcon, shouldTint);
     }
 
     @CheckResult
     public static IToast custom(@NonNull Context context, @NonNull CharSequence message, @DrawableRes int iconRes,
-                               @ColorInt int tintColor, int duration,
-                               boolean withIcon, boolean shouldTint) {
+                                @ColorInt int tintColor, int duration,
+                                boolean withIcon, boolean shouldTint) {
         return custom(context, message, getDrawable(context, iconRes),
                 tintColor, duration, withIcon, shouldTint);
     }
 
     @CheckResult
     public static IToast custom(@NonNull Context context, @StringRes int message, Drawable icon,
-                               @ColorInt int tintColor, int duration,
-                               boolean withIcon, boolean shouldTint) {
+                                @ColorInt int tintColor, int duration,
+                                boolean withIcon, boolean shouldTint) {
         return custom(context, context.getString(message), icon, tintColor, duration,
                 withIcon, shouldTint);
     }
     //===========================================常规方法============================================
 
     //*******************************************内需方法********************************************
+
     /**
      * @param context    上下文
      * @param message    提示信息
@@ -344,13 +346,13 @@ public class ToastTool {
     @SuppressLint("ShowIToast")
     @CheckResult
     public static IToast custom(@NonNull Context context, @NonNull CharSequence message, Drawable icon,
-                               @ColorInt int tintColor, int duration,
-                               boolean withIcon, boolean shouldTint) {
-        if (currentToast != null) {
-            currentToast.cancel();
-            currentToast = null;
-        }
-        currentToast=ToastFactory.getInstance(context);
+                                @ColorInt int tintColor, int duration,
+                                boolean withIcon, boolean shouldTint) {
+//        if (currentToast != null) {
+//            currentToast.cancel();
+//            currentToast = null;
+//        }
+        currentToast = ToastFactory.getInstance(context);
         final View toastLayout = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                 .inflate(R.layout.rx_toast_layout, null);
         final ImageView toastIcon = toastLayout.findViewById(R.id.toast_icon);
@@ -360,7 +362,8 @@ public class ToastTool {
         if (shouldTint) {
             drawableFrame = tint9PatchDrawableFrame(context, tintColor);
         } else {
-            drawableFrame = getDrawable(context, R.drawable.toast_frame);
+            drawableFrame = tint9PatchDrawableFrame(context, NORMAL_COLOR);
+//            drawableFrame = getDrawable(context, R.drawable.toast_frame);
         }
         setBackground(toastLayout, drawableFrame);
 
@@ -390,7 +393,9 @@ public class ToastTool {
     }
 
     private static Drawable tint9PatchDrawableFrame(@NonNull Context context, @ColorInt int tintColor) {
-        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_frame);
+//        final NinePatchDrawable toastDrawable = (NinePatchDrawable) getDrawable(context, R.drawable.toast_frame);
+        Drawable toastDrawable = getDrawable(context, R.drawable.corners30_gray);
+        DrawableCompat.setTint(toastDrawable, tintColor);
         return tintIcon(toastDrawable, tintColor);
     }
 
@@ -437,7 +442,7 @@ public class ToastTool {
 
         public static void reset() {
             ToastTool.DEFAULT_TEXT_COLOR = Color.parseColor("#FFFFFF");
-            ToastTool.ERROR_COLOR = Color.parseColor("#D50000");
+            ToastTool.ERROR_COLOR = Color.parseColor("#FD4C5B");
             ToastTool.INFO_COLOR = Color.parseColor("#3F51B5");
             ToastTool.SUCCESS_COLOR = Color.parseColor("#388E3C");
             ToastTool.WARNING_COLOR = Color.parseColor("#FFA900");
