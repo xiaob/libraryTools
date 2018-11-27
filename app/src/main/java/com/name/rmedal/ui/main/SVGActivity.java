@@ -129,12 +129,12 @@ public class SVGActivity extends BaseActivity<SVGPresenter> implements SVGContra
 
     @Override
     public void returnVersionData(List<PersonalModelBean> data) {
-        chikcisok = true;
-        isfirstin();
+//        chikcisok = true;
+//        isfirstin();
     }
 
     @Override
-    public void onError(int code, String errtipmsg) {
+    public void onErrorSuccess(int code,String message, boolean isSuccess, boolean showTips) {
         chikcisok = true;
         isfirstin();
     }

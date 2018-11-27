@@ -99,8 +99,14 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     }
 
     @Override
-    public void onError(int code, String errtipmsg) {
-        ToastTool.error(errtipmsg);
+    public void onErrorSuccess(int code,String message, boolean isSuccess, boolean showTips) {
+        if(showTips){
+            if (isSuccess) {
+                ToastTool.normal(message);
+            } else {
+                ToastTool.error(message);
+            }
+        }
     }
 
     private int mainposition=-1;

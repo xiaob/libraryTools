@@ -106,20 +106,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-    /**
-     * 弹出软键盘时将SVContainer滑到底
-     */
-    private void scrollToBottom() {
-        loginScrollView.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                loginScrollView.smoothScrollTo(0, loginScrollView.getBottom() + StatusBarTools.getStatusBarHeight(context));
-            }
-        }, 100);
-
-    }
-
     @OnClick({R.id.login_content_ll, R.id.login_btn, R.id.login_get_captcha, R.id.login_about_us, R.id.login_contact_customer_service})
     public void onViewClicked(View view) {
         KeyboardTools.hideSoftInput(context);
@@ -254,6 +240,19 @@ public class LoginActivity extends BaseActivity {
 //                lastdist = dist;
             }
         });
+    }
+
+    /**
+     * 弹出软键盘时将SVContainer滑到底
+     * 滑动高度根据实际情况修改
+     */
+    private void scrollToBottom() {
+        loginScrollView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loginScrollView.smoothScrollTo(0, loginScrollView.getBottom() + StatusBarTools.getStatusBarHeight(context));
+            }
+        }, 100);
     }
 
     private void ZoomIn(int dist) {

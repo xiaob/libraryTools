@@ -8,6 +8,7 @@ import com.name.rmedal.api.RxSubscriber;
 import com.name.rmedal.modelbean.PersonalModelBean;
 import com.name.rmedal.ui.main.contract.SVGContract;
 import com.veni.tools.baserx.RxSchedulers;
+import com.veni.tools.view.itoast.ToastTool;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +34,8 @@ public class SVGPresenter extends SVGContract.Presenter {
                     }
 
                     @Override
-                    public void _onError(int code, String message) {
-                        mView.onError(code, message);
+                    public void onErrorSuccess(int code, String message, boolean issuccess) {
+                        mView.onErrorSuccess(code, message, issuccess,false);
                     }
                 });
     }

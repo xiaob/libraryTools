@@ -56,6 +56,7 @@ public class KeyboardLayout extends FrameLayout {
         /**
          * @param isActive       输入法是否激活
          * @param keyboardHeight 输入法面板高度
+         * @param bottom 当前页面窗口高度
          */
         void onKeyboardStateChanged(boolean isActive, int keyboardHeight,int bottom);
     }
