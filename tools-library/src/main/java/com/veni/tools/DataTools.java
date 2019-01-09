@@ -185,7 +185,7 @@ public class DataTools {
      * @param str
      * @return
      */
-    private static boolean isNumeric(String str) {
+    public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("[0-9]*");
         Matcher isNum = pattern.matcher(str);
         if (!isNum.matches()) {

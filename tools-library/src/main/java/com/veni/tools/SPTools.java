@@ -39,7 +39,9 @@ public class SPTools {
 
         SharedPreferences sp = getSp(context);
         SharedPreferences.Editor editor = sp.edit();
-
+        if(object == null){
+            object="";
+        }
         if (object instanceof String) {
             editor.putString(key, (String) object);
         } else if (object instanceof Integer) {
