@@ -3,9 +3,11 @@ package com.name.rmedal.tools;
 
 import android.content.Context;
 
+import com.name.rmedal.api.AppConstant;
 import com.name.rmedal.modelbean.UserBean;
 import com.veni.tools.DataTools;
 import com.veni.tools.EncryptTools;
+import com.veni.tools.FutileTools;
 import com.veni.tools.JsonTools;
 import com.veni.tools.LogTools;
 import com.veni.tools.SPTools;
@@ -33,6 +35,13 @@ public class AppTools {
     public static final String USERDATA = "user_data";
 
 
+    public static String getToken(){
+        return (String) SPTools.get(FutileTools.getContext(), AppConstant.KEY_ACCESS_TOKEN, "");
+    }
+
+    public static void saveToken(Context context, String token){
+        SPTools.put(context, AppConstant.KEY_ACCESS_TOKEN, token);
+    }
 
     public static void saveUserBean(Context context, String userdata) {
         SPTools.put(context, USERDATA, userdata);

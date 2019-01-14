@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.name.rmedal.R;
 import com.name.rmedal.api.AppConstant;
+import com.name.rmedal.api.HttpManager;
 import com.name.rmedal.base.BaseActivity;
 import com.name.rmedal.tools.AnimationTools;
 import com.veni.tools.ACache;
@@ -95,6 +96,8 @@ public class LoginActivity extends BaseActivity {
         //设置侧滑退出
         setSwipeBackLayout(0);
 
+        //清空缓存token 重新加载HttpManager
+        HttpManager.getInstance().setToken("");
         //设置监听
         initListener();
         //获取上次获取验证码的倒计时
